@@ -11,7 +11,7 @@ env:
   AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
 jobs:
   startnotification:
-    name: 💬 Notify success 
+    name: 🤯 Starting deployment
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -43,6 +43,7 @@ jobs:
 
   buildnginx:
     name: 🌎 building nginx webserver
+    needs: [startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
@@ -81,6 +82,7 @@ jobs:
 
   builddjango:
       name: 🤠 building Django
+      needs: [startnotification]
       runs-on: ubuntu-latest
       steps:
         - name: 🗂  Getting code from Github
