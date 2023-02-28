@@ -81,9 +81,16 @@ jobs:
             aws lightsail push-container-image \
               --region ${{ env.AWS_REGION }} \
               --service-name ${service_name} \
-              --label csnl \
-              --image csnl:latest
+              --label mapmaker \
+              --image mapmaker:latest
         - name: =========== All done. Cleaning up ♻️  ===========
+          run: ls
+
+   redis:
+      name: 🤠 Redis ontainer...
+      runs-on: ubuntu-latest
+      steps:
+        - name: From Config file
           run: ls
 
 
