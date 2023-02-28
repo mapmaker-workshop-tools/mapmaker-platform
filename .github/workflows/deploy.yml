@@ -11,7 +11,8 @@ env:
   AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
 jobs:
   sendnotification:
-    name: Send message!
+    name: 💬 Notify success
+    needs: [deployimages]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -20,12 +21,13 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
+            Code successfully deployed to production 🚀
+            This changed: ${{ github.event.commits[0].message }}
+            Changes made by: ${{ github.actor }} 
             
-            Repository: ${{ github.repository }}
-            
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}    
+            See code changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            Check https://mapmaker.nl to verify your changes
+
   buildnginx:
     name: 🌎 nginx webserver container...
     runs-on: ubuntu-latest
