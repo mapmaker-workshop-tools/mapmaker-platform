@@ -9,7 +9,23 @@ permissions:
 env:
   AWS_REGION: eu-central-1
   AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
-jobs:    
+jobs:
+  sendnotification:
+    name: Send message
+    runs-on: ubuntu-latest
+    steps:
+      - name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}    
   buildnginx:
     name: 🌎 nginx webserver container...
     runs-on: ubuntu-latest
