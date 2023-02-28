@@ -13,8 +13,7 @@ print(initial_version)
 print(initial_state)
 
 attempts = 100
-print("\nStarting in 60 seconds - to give the CI time to send the container to AWS")
-time.sleep(60)
+
 
 print("\n###   Starting   ###")
 while True:
@@ -28,7 +27,7 @@ while True:
     print("   Current version: " +str(new_version))
     print("   Looking for a status: ACTIVE")
     print("   Current status: "+ str(new_state))
-    if new_version >= initial_version and new_state == 'ACTIVE':
+    if new_version > initial_version and new_state == 'ACTIVE':
         print("\n###   New Version found   ###")
         print("New version live and active. ")
         print("Validating if Django is running...")
