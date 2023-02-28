@@ -33,8 +33,10 @@ while True:
         exit(0)
     else:
         attempts = attempts - 1
-        print("\nResult -- Not yet ready")
-        print("Trying again in 10 seconds." + "remaining attempts: " + str(attempts))
+        print("\nResult:")
+        print("    Not yet ready")
+        print("remaining attempts: " + str(attempts))
+        print("Trying again in 10 seconds.")
         
     if attempts == 0:
         print("\n###   ERROR   ###")
