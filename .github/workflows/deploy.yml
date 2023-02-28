@@ -144,7 +144,6 @@ jobs:
         run: ls
   validatedeployment:
     name: 👀 Verifying everything is up and running
-    needs: [builddjango, buildnginx]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github

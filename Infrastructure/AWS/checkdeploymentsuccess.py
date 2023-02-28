@@ -12,7 +12,7 @@ print("Current version:")
 print(initial_version)
 print(initial_state)
 
-attempts = 100
+attempts = 250
 
 
 print("\n###   Starting   ###")
@@ -23,7 +23,8 @@ while True:
     
     new_version = x['deployments'][0]['version']
     new_state = x['deployments'][0]['state']
-    print("   Looking for a version higher than: " + str(initial_version -1))
+    timestamp = x['deployments'][0]['createdAt']
+    print("   Looking for a version higher than: " + str(initial_version))
     print("   Current version: " +str(new_version))
     print("   Looking for a status: ACTIVE")
     print("   Current status: "+ str(new_state))
@@ -44,12 +45,12 @@ while True:
         attempts = attempts - 1
         print("\nResult:")
         print("    Not yet ready")
-        print("remaining attempts: " + str(attempts))
-        print("Trying again in 10 seconds.")
+        print("    Remaining attempts: " + str(attempts))
+        print("    Trying again in 10 seconds.")
         
     if attempts == 0:
         print("\n###   ERROR   ###")
         print("No new version found -- No more attempts")
         exit(1)
     time.sleep(10)
-        
+    
