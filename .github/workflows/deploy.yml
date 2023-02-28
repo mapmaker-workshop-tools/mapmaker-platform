@@ -73,10 +73,10 @@ jobs:
             aws-region: ${{ env.AWS_REGION }}
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        - name: Running the actual tests
+        - name: Collecting all static files
           run: |
             ls
-            python3 manage.py collectstatic --noinput
+            python3 src/manage.py collectstatic --noinput
         - name: 🐳 Create a Docker Container for DJANGO
           run: docker build -t mapmaker:latest .
         - name: 📬 Upload Backend image to AWS container register
