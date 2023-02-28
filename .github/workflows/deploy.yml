@@ -86,13 +86,6 @@ jobs:
         - name: =========== All done. Cleaning up ♻️  ===========
           run: ls
 
-   redis:
-      name: 🤠 Redis ontainer...
-      runs-on: ubuntu-latest
-      steps:
-        - name: From Config file
-          run: ls
-
 
   deployimages:
     name: 🚀 Deploying the containers to the Amazon datacenter
