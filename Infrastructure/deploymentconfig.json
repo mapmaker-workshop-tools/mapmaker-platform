@@ -1,9 +1,13 @@
-{"citizen-science-nl-django": {
-    "image": ":citizen-science-nl.csnl.latest",
+{"mapmaker-django": {
+    "image": ":mapmaker.mapmaker.latest",
     "ports": {"8000": "HTTP"}
   },
-  "citizen-science-nl-nginx": {
-    "image": ":citizen-science-nl.nginx.latest",
+  "mapmaker-nginx": {
+    "image": ":mapmaker.nginx.latest",
     "ports": {"80": "HTTP"}
+  },
+  "mapmaker-redis-cache": {
+    "image": "redis/redis-stack:latest",
+    "ports": {"6379": "HTTP", "8001":"HTTP"}
   }
   }
