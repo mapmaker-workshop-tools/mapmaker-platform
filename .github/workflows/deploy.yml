@@ -1,0 +1,129 @@
+name: 🏗 Build and deploy containers to AWS
+# Only trigger, when the build workflow succeeded
+on:
+  push:
+    branches: [ "master" ]
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: eu-central-1
+  AWS_LIGHTSAIL_SERVICE_NAME: citizen-science-nl 
+jobs:    
+  buildnginx:
+    name: 🌎 nginx webserver container...
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🗂  Getting code from Github
+        uses: actions/checkout@v2
+      - name: ⚙️  Updating to the latest versions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
+      - name: 🏢 Install Amazon Client
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install || true
+          aws --version
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+      - name: 🤐 Log in to AWS Lightsail with Secrets
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: 🐳 Create a Docker Container for NGINX
+        run: docker build -t nginx:latest -f ./Infrastructure/nginx/Dockerfile .
+      - name: 📬 Upload NGINX image to AWS container register
+        run: |
+          service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
+          aws lightsail push-container-image \
+            --region ${{ env.AWS_REGION }} \
+            --service-name ${service_name} \
+            --label nginx \
+            --image nginx:latest
+      - name: =========== All done. Cleaning up ♻️  ===========
+        run: ls
+
+  builddjango:
+      name: 🤠 Django container...
+      runs-on: ubuntu-latest
+      steps:
+        - name: 🗂  Getting code from Github
+          uses: actions/checkout@v2
+        - name: 🤐 Make envfile
+          uses: SpicyPizza/create-envfile@v1.3
+          with:
+            envkey_DATABASEHOST: ${{ secrets.ENVKEY_DATABASEHOST }}
+            envkey_DATABASENAME: ${{ secrets.ENVKEY_DATABASENAME }}
+            envkey_DATABASEPASSWORD: ${{ secrets.ENVKEY_DATABASEPASSWORD }}
+            envkey_DATABASEUSER: ${{ secrets.ENVKEY_DATABASEUSER }}
+            envkey_SECRETKEY: ${{ secrets.ENVKEY_DJANGO_SECRET }}
+            envkey_DEBUG: "False"
+            file_name: .env
+            fail_on_empty: false
+        - name: ⚙️  Updating to the latest versions
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y jq unzip
+        - name: 🏢 Install Amazon Client
+          run: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install || true
+            aws --version
+            curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+            sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+            sudo chmod +x /usr/local/bin/lightsailctl
+        - name: 🤐 Log in to AWS Lightsail with Secrets
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-region: ${{ env.AWS_REGION }}
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        - name: 🐳 Create a Docker Container for DJANGO
+          run: docker build -t csnl:latest .
+        - name: 📬 Upload Backend image to AWS container register
+          run: |
+            service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
+            aws lightsail push-container-image \
+              --region ${{ env.AWS_REGION }} \
+              --service-name ${service_name} \
+              --label csnl \
+              --image csnl:latest
+        - name: =========== All done. Cleaning up ♻️  ===========
+          run: ls
+
+
+  deployimages:
+    name: 🚀 Deploying the containers to the Amazon datacenter
+    needs: [builddjango, buildnginx]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🗂  Getting config files from Github
+        uses: actions/checkout@v2
+      - name: 🏢 Install Amazon Client
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install || true
+          aws --version
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+      - name: 🤐 Log in to AWS Lightsail with Secrets
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: 🚀 Launching the Containers
+        run: |
+          aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
+          --containers file://Infrastructure/deploymentconfig.json \
+          --public-endpoint file://Infrastructure/publicendpoint.json
+      - name: =========== All done. Cleaning up ♻️  ===========
+        run: ls

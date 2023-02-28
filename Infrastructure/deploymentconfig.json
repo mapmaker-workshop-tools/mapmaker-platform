@@ -1,0 +1,9 @@
+{"citizen-science-nl-django": {
+    "image": ":citizen-science-nl.csnl.latest",
+    "ports": {"8000": "HTTP"}
+  },
+  "citizen-science-nl-nginx": {
+    "image": ":citizen-science-nl.nginx.latest",
+    "ports": {"80": "HTTP"}
+  }
+  }

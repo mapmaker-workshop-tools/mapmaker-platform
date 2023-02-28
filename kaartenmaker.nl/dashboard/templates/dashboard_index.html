@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="pt-24">
+    <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+      <!--Left Col-->
+      <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
+    
+        <h1 class="my-4 text-5xl font-bold leading-tight">
+          Dashboard
+        </h1>
+      </div>
+      <!--Right Col-->
+    </div>
+  </div>
+
+  <main>
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 mb-8">
+      <div class="overflow-hidden bg-white shadow sm:rounded-lg mb-8">
+        {% include 'stats_section.html' %}
+      </div>
+    </div>
+    
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg mb-8">
+      <div class="px-4 py-6 sm:px-0">
+        <!--Because the network graph is quite a big section of code it has it's own file-->
+        {% include 'honeycomb_graph.html' with honeycombdata=honeycombdata|safe%}
+      </div>
+    </div>
+
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg mb-8">
+      <div class="px-4 py-6 sm:px-0">
+        <!--Because the network graph is quite a big section of code it has it's own file-->
+        {% include 'network_graph.html' with networkdata=networkdata|safe %}
+      </div>
+    </div>
+    
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg mb-8">
+      <div class="px-4 py-5 sm:px-6">
+        {% include 'table_section.html' %}
+      </div>
+    </div>
+
+    {% include 'participants_section.html' with participants=participants %}
+  </main>
+</div>
+{% endblock %}
