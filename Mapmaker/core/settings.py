@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%4)0s(84s!p3tb=@%8g7%u&am@yhod3)z%w-iu3)j#xzgwc@$q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', '127.0.0.1', 'mapmaker.nl']
 
 
 # Application definition
