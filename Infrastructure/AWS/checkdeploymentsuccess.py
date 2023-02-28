@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import requests
 
 status = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
 status = json.loads(status)
@@ -28,9 +29,18 @@ while True:
     print("   Looking for a status: ACTIVE")
     print("   Current status: "+ str(new_state))
     if new_version >= initial_version and new_state == 'ACTIVE':
-        print("\n###   DONE   ###")
+        print("\n###   New Version found   ###")
         print("New version live and active. ")
-        exit(0)
+        print("Validating if Django is running...")
+        url = 'https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com/api/v1/'
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("Django server confirmed running")
+            print("DONE")
+            exit(0)
+        else:
+            print("New version deployed but there's an error with Django")
+            exit(0)
     else:
         attempts = attempts - 1
         print("\nResult:")
