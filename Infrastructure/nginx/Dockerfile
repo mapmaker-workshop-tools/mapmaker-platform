@@ -4,7 +4,10 @@
 
 FROM nginx:1.19.0-alpine
 
-COPY Mapmaker .
+
+#Adding Django Static files into nginx so they dont have to be answered by Django
+COPY Mapmaker/static/ ./static 
+#Specific settings so nginx works as a reverse proxy
 COPY Infrastructure/nginx/default.conf ./etc/nginx/conf.d/default.conf
 
 EXPOSE 80
