@@ -143,7 +143,7 @@ jobs:
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
   validatedeployment:
-    name: 👀 Verifying everything is up and running
+    name: 🤨 Server up?
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github
