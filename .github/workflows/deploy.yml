@@ -89,6 +89,10 @@ jobs:
             aws-region: ${{ env.AWS_REGION }}
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        - name: Installing dependancies
+          run: |
+            sudo pip3 install --upgrade pip
+            sudo pip3 install -r requirements.txt
         - name: Collecting all static files
           run: |
             ls
