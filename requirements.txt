@@ -7,6 +7,6 @@ setuptools==65.5.1
 requests==2.28.2
 django-ckeditor==6.5.1
 django-tailwind==3.5.0
-fontawesome-free==5.15.4
+fontawesomefree==5.15.4
 djangorestframework==3.14.0
 django_extensions==3.2.1
