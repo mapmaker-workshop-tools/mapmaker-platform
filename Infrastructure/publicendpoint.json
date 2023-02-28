@@ -1,5 +1,5 @@
 {
-    "containerName": "citizen-science-nl-nginx",
+    "containerName": "mapmaker-nginx",
     "containerPort": 80,
     "healthCheck": {
       "healthyThreshold": 2,

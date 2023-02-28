@@ -4,7 +4,7 @@
 
 FROM nginx:1.19.0-alpine
 
-COPY static .Mapmaker/static
+COPY .Mapmaker/static .Mapmaker/static
 COPY Makmaker ./Mapmaker
 COPY Mapmaker/static ./static
 COPY Infrastructure/nginx/default.conf ./etc/nginx/conf.d/default.conf
