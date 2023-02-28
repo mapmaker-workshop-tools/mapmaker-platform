@@ -163,6 +163,8 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: 🙋🏻‍♂️ Checking current version
+        run: aws lightsail get-container-service-deployments --service-name mapmaker --output json
       - name: ⏱ Checking if the container went live
         run: python Infrastructure/AWS/checkdeploymentsuccess.py
       - name: =========== All done. Cleaning up ♻️  ===========
