@@ -7,34 +7,34 @@ status = json.loads(status)
 initial_version = status['deployments'][0]['version']
 initial_state = status['deployments'][0]['state']
 print("\n###   Start   ###")
-print("Current version detected:")
+print("Current version:")
 print(initial_version)
 print(initial_state)
 
 attempts = 100
-print("\nStarting in 60 seconds")
+print("\nStarting in 60 seconds - to give the CI time to send the container to AWS")
 time.sleep(60)
 
 print("\n###   Starting   ###")
 while True:
-    print("\nNew attempt: #" + str(100 - attempts))
+    print("\nAttempt: #" + str(100 - attempts))
     x = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
     x = json.loads(x)
     
-    print("\nIn this attempt we checked detecte: \n")
     new_version = x['deployments'][0]['version']
     new_state = x['deployments'][0]['state']
-    print(new_version)
-    print(new_state)
+    print("   Looking for a version higher than: " + str(initial_version -1))
+    print("   Current version: " +str(new_version))
+    print("   Looking for a status: ACTIVE")
+    print("   Current status: "+ str(new_state))
     if new_version >= initial_version and new_state == 'ACTIVE':
         print("\n###   DONE   ###")
         print("New version live and active. ")
         exit(0)
     else:
         attempts = attempts - 1
-        print("\nNo new version detected or not yet active")
-        print("Trying again in 10 seconds.")
-        print("remaining attempts: " + str(attempts))
+        print("\nResult -- Not yet ready")
+        print("Trying again in 10 seconds." + "remaining attempts: " + str(attempts))
         
     if attempts == 0:
         print("\n###   ERROR   ###")
