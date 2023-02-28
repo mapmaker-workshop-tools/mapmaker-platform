@@ -11,7 +11,7 @@ env:
   AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
 jobs:
   startnotification:
-    name: 🤯 Starting deployment
+    name: 💬 Starting deployment
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -27,7 +27,7 @@ jobs:
             See code changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
   
   sendnotification:
-    name: 💬 Notify success
+    name: ✅ Notify success
     needs: [deployimages, validatedeployment]
     runs-on: ubuntu-latest
     steps:
