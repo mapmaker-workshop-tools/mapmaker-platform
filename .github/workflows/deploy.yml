@@ -29,7 +29,7 @@ jobs:
             Check https://mapmaker.nl to verify your changes
 
   buildnginx:
-    name: 🌎 nginx webserver container...
+    name: 🌎 building nginx webserver
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
@@ -67,7 +67,7 @@ jobs:
         run: ls
 
   builddjango:
-      name: 🤠 Django container...
+      name: 🤠 building Django
       runs-on: ubuntu-latest
       steps:
         - name: 🗂  Getting code from Github
@@ -114,7 +114,7 @@ jobs:
 
 
   deployimages:
-    name: 🚀 Deploying the containers to the Amazon datacenter
+    name: 🚀 Deploying the containers to AWS Lightsail
     needs: [builddjango, buildnginx]
     runs-on: ubuntu-latest
     steps:
@@ -143,7 +143,7 @@ jobs:
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
   validatedeployment:
-    name: 👀 Verifying the deployment actually went live
+    name: 👀 Verifying everything is up and running
     needs: [builddjango, buildnginx]
     runs-on: ubuntu-latest
     steps:
