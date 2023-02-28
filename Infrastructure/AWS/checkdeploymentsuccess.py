@@ -12,7 +12,7 @@ print(initial_version)
 print(initial_state)
 
 old_version_detected = True
-attempts = 100
+attempts = 1000
 
 while old_version_detected:
     print("\nChecking again in 10 seconds")
@@ -20,7 +20,7 @@ while old_version_detected:
     x = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
     x = json.loads(x)
     
-    print("\nChecking for status. Detected:")
+    print("\nChecking for status. \nDetected:")
     new_version = x['deployments'][0]['version']
     new_state = status['deployments'][0]['state']
     print(new_version)

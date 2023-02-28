@@ -12,7 +12,7 @@ env:
 jobs:
   sendnotification:
     name: 💬 Notify success
-    needs: [deployimages]
+    needs: [deployimages, validatedeployment]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -140,5 +140,30 @@ jobs:
           aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
           --containers file://Infrastructure/deploymentconfig.json \
           --public-endpoint file://Infrastructure/publicendpoint.json
+      - name: =========== All done. Cleaning up ♻️  ===========
+        run: ls
+  validatedeployment:
+    name: 👀 Verifying the deployment actually went live
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🗂  Getting config files from Github
+        uses: actions/checkout@v2
+      - name: 🏢 Install Amazon Client
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install || true
+          aws --version
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+      - name: 🤐 Log in to AWS Lightsail with Secrets
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: ⏱ Checking if the container went live
+        run: python Infrastructure/AWS/checkdeploymentsuccess.py
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
