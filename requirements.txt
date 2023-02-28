@@ -9,3 +9,4 @@ django-ckeditor==6.5.1
 django-tailwind
 fontawesome-free
 djangorestframework
+django_extensions
