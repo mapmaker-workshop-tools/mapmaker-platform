@@ -15,7 +15,7 @@ old_version_detected = True
 attempts = 1000
 
 while old_version_detected:
-    print("\nChecking again in 10 seconds")
+    print("\nChecking again in 10 seconds -- attempt: " + str(attempts))
     time.sleep(10)
     x = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
     x = json.loads(x)
