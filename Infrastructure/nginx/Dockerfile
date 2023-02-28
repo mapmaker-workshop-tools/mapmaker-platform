@@ -4,9 +4,9 @@
 
 FROM nginx:1.19.0-alpine
 
-COPY static .kaartenmaker.nl/static
-COPY kaartenmaker.nl ./kaartenmaker.nl
-COPY kaartenmaker.nl/static ./static
+COPY static .Mapmaker/static
+COPY Makmaker ./Mapmaker
+COPY Mapmaker/static ./static
 COPY Infrastructure/nginx/default.conf ./etc/nginx/conf.d/default.conf
 
 EXPOSE 80
