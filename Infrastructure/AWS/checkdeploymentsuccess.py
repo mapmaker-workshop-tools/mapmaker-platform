@@ -6,36 +6,39 @@ status = os.popen("aws lightsail get-container-service-deployments --service-nam
 status = json.loads(status)
 initial_version = status['deployments'][0]['version']
 initial_state = status['deployments'][0]['state']
-
+print("\n###   Start   ###")
 print("Current version detected:")
 print(initial_version)
 print(initial_state)
 
-old_version_detected = True
 attempts = 100
+print("\nStarting in 60 seconds")
 time.sleep(60)
 
-while old_version_detected:
-    print("\nChecking again in 10 seconds -- attempt: " + str(100 - attempts))
-    time.sleep(10)
+print("\n###   Starting   ###")
+while True:
+    print("\nNew attempt: #" + str(100 - attempts))
     x = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
     x = json.loads(x)
     
-    print("\nChecking for status. \nDetected:")
+    print("\nIn this attempt we checked detecte: \n")
     new_version = x['deployments'][0]['version']
-    new_state = status['deployments'][0]['state']
+    new_state = x['deployments'][0]['state']
     print(new_version)
     print(new_state)
     if new_version >= initial_version and new_state == 'ACTIVE':
-        print("New version live and active. Exiting. ")
+        print("\n###   DONE   ###")
+        print("New version live and active. ")
         exit(0)
     else:
         attempts = attempts - 1
-        print("No new version found, trying again.")
+        print("\nNo new version detected or not yet active")
+        print("Trying again in 10 seconds.")
         print("remaining attempts: " + str(attempts))
         
     if attempts == 0:
-        print("No new version found -- stop trying")
+        print("\n###   ERROR   ###")
+        print("No new version found -- No more attempts")
         exit(1)
-    
+    time.sleep(10)
         
