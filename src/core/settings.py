@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-%4)0s(84s!p3tb=@%8g7%u&am@yhod3)z%w-iu3)j#xzgwc@$q
 DEBUG = True
 
 ALLOWED_HOSTS = ['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', '127.0.0.1', 'mapmaker.nl']
+CSRF_TRUSTED_ORIGINS =['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', '127.0.0.1', 'mapmaker.nl']
 
 
 # Application definition

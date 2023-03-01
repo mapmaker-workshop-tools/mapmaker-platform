@@ -19,12 +19,12 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          disable_notification: true
           message: |
-            🚨 Deploying code to production 🚨
-            This changed: ${{ github.event.commits[0].message }}
-            Changes made by: ${{ github.actor }} 
-            
-            See code changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            🏗️ *New deployment started*
+            ${{ github.actor }} changed: *${{ github.event.commits[0].message }}*
+
+            These lines of code changed: https://github.com/${{ github.repository }}/commit/${{github.sha}}
   
   sendnotification:
     name: ✅ Notify success
@@ -37,9 +37,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ Deployment succeeded
-            We verified the server is up! 🚀
-            Check https://mapmaker.nl to verify 
+            ✅ *Deployment succeeded*
+            🌎 server is up - we checked!
+            Check https://mapmaker.nl to see the site 
 
   buildnginx:
     name: 🌎 building nginx webserver
