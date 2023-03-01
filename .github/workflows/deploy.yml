@@ -21,14 +21,16 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           disable_notification: true
           message: |
-            🏗️ *New deployment started*
-            ${{ github.actor }} changed: *${{ github.event.commits[0].message }}*
+            🏗️ New deployment started
+            Details:
+            - By: ${{ github.actor }} 
+            - Description: ${{ github.event.commits[0].message }}
+            - Reference: ${{github.ref}
+            - Code: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
-            These lines of code changed: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-  
   sendnotification:
     name: ✅ Notify success
-    needs: [deployimages, validatedeployment]
+    needs: [deployimages, validatedeployment, startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -37,9 +39,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ *Deployment succeeded*
+            ✅ Deployment succesful
             🌎 server is up - we checked!
-            Check https://mapmaker.nl to see the site 
+            https://mapmaker.nl 
 
   buildnginx:
     name: 🌎 building nginx webserver
