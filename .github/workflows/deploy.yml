@@ -25,7 +25,6 @@ jobs:
             Details:
             - By: ${{ github.actor }} 
             - Description: ${{ github.event.commits[0].message }}
-            - Reference: ${{github.ref}
             - Code: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
   sendnotification:
