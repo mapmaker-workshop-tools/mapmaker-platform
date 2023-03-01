@@ -17,7 +17,7 @@ attempts = 250
 
 print("\n###   Starting   ###")
 while True:
-    print("\nAttempt: #" + str(100 - attempts))
+    print("\nAttempt: #" + str(251 - attempts))
     x = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
     x = json.loads(x)
     
