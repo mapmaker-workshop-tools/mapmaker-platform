@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import CustomUser
 from django.utils import timezone
+from random import randrange
 
 
 # Create your models here.
@@ -18,7 +19,7 @@ class Workshop(models.Model):
 
 class Card(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
-    cardtypechoice = models.TextChoices('cardtype', 'ambition challenge idea pro con')
+    cardtypechoice = models.TextChoices('cardtype', 'ambition challenge idea pro con add remove')
     cardtype = models.CharField(blank=False, choices=cardtypechoice.choices, max_length=20)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False,related_name = 'card_author')
@@ -27,6 +28,8 @@ class Card(models.Model):
     description = models.TextField(blank=True,)
     parentnode = models.CharField(max_length=30, unique=False, blank=True)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
+    x_location = models.CharField(max_length=5, unique=False, default=str(randrange(20)))
+    y_location = models.CharField(max_length=5, unique=False, default=str(randrange(20)))
     
     def __str__(self):
         return self.title

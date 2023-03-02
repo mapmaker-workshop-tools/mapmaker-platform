@@ -9,17 +9,34 @@ from django.db import models
 import json
 from random import randrange
 
-grid = [[0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0]]
+def find_location(x,y, cardtype):
+    position = cardtype
+    if position == 0:
+        return x-1, y+1
+    elif position == 1:
+        return x, y+1
+    elif position == 2:
+        return x+1, y+1
+    elif position == 3:
+        return x-1, y
+    elif position == 4:
+        return x+1, y
+    elif position == 5:
+        return x-1, y-1
+    elif position == 6:
+        return x, y-1
+    elif position == 7:
+        return x+1, y-1
+    
 
-card_type_options = ['ambition', 'challenge', 'idea', 'pro', 'con']
+##PSEUDOCODE: 
+# Loop over all cards to find parent
+# parent is where the id of the node == as parent.id (It's pointing at itself)
+# loop over all children for that node and place them alongside
+# If it does not fit try again
+
+
+card_type_options = ['ambition', 'challenge', 'idea', 'pro', 'con', 'add', 'remove']
 
 def calculate_network(workshop_id):
     workshop = Workshop.objects.get(pk=workshop_id)
@@ -34,31 +51,25 @@ def calculate_honeycomb(workshop_id):
     workshop = Workshop.objects.get(pk=workshop_id)
     cardsinworkshop = Card.objects.filter(workshop=workshop)
     honeycombdata = []
-    print(grid)
     for card in cardsinworkshop:
-        offset = 1
         parent = Card.objects.get(pk=card.parentnode)
-        print(parent)
-        x = randrange(9)
-        y = randrange(9)
-        """
-        if any(parent in y for x in grid):
-            print('Found in grid')
-            print(parent)"""
+        parent_x = int(parent.x_location)
+        parent_y = int(parent.y_location)
+        if card.id == parent.id:
+            x = parent_x
+            y = parent_y
+        else:
+            x,y = find_location(parent_x,parent_y, card_type_options.index(card.cardtype))
         new_node = {
-            "hc-a2": str(card.id),
-            "name": card.title +' Name',
-            "region": card.title +' Name',
+            "hc-a2": str(card.title),
+            "name": card.title,
+            "region": card.title,
             "x": x,
             "y": y,
             "value":card_type_options.index(card.cardtype)
             }
-        grid[x][y] = card.id
         honeycombdata.append(new_node)
-    print(grid)
     return json.dumps(honeycombdata)
-
-
 
 #@login_required
 def index(request):
