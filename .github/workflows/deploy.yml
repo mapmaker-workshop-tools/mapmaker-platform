@@ -134,7 +134,6 @@ jobs:
     needs: [builddjango, buildnginx]
     runs-on: ubuntu-latest
     steps:
-    steps:
       - name: 🗂  Getting config files from Github
         uses: actions/checkout@v2
       - name: 🏢 Install Amazon Client
