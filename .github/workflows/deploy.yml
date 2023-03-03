@@ -75,7 +75,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: 🐳 Create a Docker Container for NGINX
-        run: docker --ddkk build -t nginx:latest -f ./Infrastructure/nginx/Dockerfile .
+        run: docker build -t nginx:latest -f ./Infrastructure/nginx/Dockerfile .
       - name: 📬 Upload NGINX image to AWS container register
         run: |
           service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
