@@ -11,7 +11,7 @@ env:
   AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
 jobs:
   startnotification:
-    name: 💬 Starting deployment
+    name: 💬 Starting deployment - run ${{ github.run_id }}
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -26,10 +26,11 @@ jobs:
             - By: ${{ github.actor }} 
             - Description: ${{ github.event.commits[0].message }}
             - Code: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            - Build: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   sendnotification:
     name: ✅ Notify success
-    needs: [deployimages, validatedeployment, startnotification]
+    needs: [deployimages, validatedeployment, buildnginx, builddjango, startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -38,7 +39,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ Deployment succesful
+            ✅ Deployment succesful - run ${{ github.run_id }}
             🌎 server is up - we checked!
             Site: https://mapmaker.nl 
             Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -168,6 +169,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             🚨 Deployment failed 🚨
+            Build ${{ github.run_id }} failed
             Something went wrong while deploying. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
