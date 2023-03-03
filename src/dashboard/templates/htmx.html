@@ -1,0 +1,71 @@
+<script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+
+<script>
+htmx.onLoad(function(content) {
+    var sortables = content.querySelectorAll(".sortable");
+    for (var i = 0; i < sortables.length; i++) {
+      var sortable = sortables[i];
+      new Sortable(sortable, {
+        animation: 150,
+        ghostClass: 'blue-background-class',
+        multiDrag: true, // Enable multi-drag
+        selectedClass: 'selected', // The class applied to the selected items
+        fallbackTolerance: 3, // So that we can select items on mobile
+        swap: true, // Enable swap plugin
+	    swapClass: 'highlight',
+      });
+    }
+})
+</script>
+
+<style>
+.hexagon {
+  background: blue;
+  -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
+
+hdiv {
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  align-items: center;
+}
+
+</style>
+
+    <div class="htmx-indicator">Updating...</div>
+<form class="flex justify-center align-content: space-evenly; sortable grid grid-cols-4" hx-post="/items" hx-trigger="end">
+    <div><input type='hidden' name='item' value='1'/>
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+            1
+          </button>
+    </div>
+    <div><input type='hidden' name='item' value='2'/>
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+            2
+          </button>
+    </div>
+    <div><input type='hidden' name='item' value='3'/>
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+            3
+          </button>
+    </div>
+    <div><input type='hidden' name='item' value='4'/>
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+            4
+          </button>
+    </div>
+    <div><input type='hidden' name='item' value='5'/>
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+            5
+          </button>
+    </div>
+    <div><input type='hidden' name='item' value='6'/>
+        <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+            6
+          </button>
+    </div>
+  </form>

@@ -21,18 +21,11 @@
         {% include 'stats_section.html' %}
       </div>
     </div>
-    
-    <div class="overflow-hidden bg-white shadow sm:rounded-lg mb-8">
-      <div class="px-4 py-6 sm:px-0">
-        <!--Because the network graph is quite a big section of code it has it's own file-->
-        {% include 'honeycomb_graph.html' with honeycombdata=honeycombdata|safe%}
-      </div>
-    </div>
 
-    <div class="overflow-hidden bg-white shadow sm:rounded-lg mb-8">
+    <div class="overflow-hidden bg-white text-gray-900 shadow shadow sm:rounded-lg mb-8">
       <div class="px-4 py-6 sm:px-0">
         <!--Because the network graph is quite a big section of code it has it's own file-->
-        {% include 'network_graph.html' with networkdata=networkdata|safe %}
+        {% include 'htmx.html' %}
       </div>
     </div>
     
