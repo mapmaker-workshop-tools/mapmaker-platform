@@ -86,7 +86,7 @@ jobs:
             --image nginx:latest
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
-      - name: 🚨 Error Notifications
+      - name: Build Alerts
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:
@@ -96,7 +96,7 @@ jobs:
             🚨 Deployment failed 🚨
             Build ${{ github.run_id }} failed
 
-            Something went wrong while building the NGINX container
+            Something went wrong while building the NGINX container the containers to AWS. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjango:
@@ -134,7 +134,7 @@ jobs:
             ls
             python3 src/manage.py collectstatic --noinput
         - name: 🐳 Create a Docker Container for DJANGO
-          run: docker --ddkk build -t mapmaker:latest .
+          run: docker build -t mapmaker:latest .
         - name: 📬 Upload Backend image to AWS container register
           run: |
             service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
@@ -145,7 +145,7 @@ jobs:
               --image mapmaker:latest
         - name: =========== All done. Cleaning up ♻️  ===========
           run: ls
-        - name: 🚨 Error Notifications
+        - name: Build Alerts
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:
@@ -184,12 +184,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: 🚀 Launching the Containers
         run: |
-          aws lightsail create-container-service-deployment--ddkk --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
+          aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
           --containers file://Infrastructure/deploymentconfig.json \
           --public-endpoint file://Infrastructure/publicendpoint.json
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
-      - name: 🚨 Error Notifications
+      - name: Build Alerts
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:
@@ -230,7 +230,7 @@ jobs:
         run: python Infrastructure/AWS/checkdeploymentsuccess.py
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
-      - name: 🚨 Error Notifications
+      - name: Build Alerts
         if: ${{ failure() }}
         uses: appleboy/telegram-action@master
         with:
