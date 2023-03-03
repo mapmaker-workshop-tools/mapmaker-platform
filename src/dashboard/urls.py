@@ -19,5 +19,6 @@ from dashboard import views
 
 
 urlpatterns = [
-    path('', views.index, name='dashboard')
+    path('', views.index, name='dashboard'),
+    path('update', views.handle_network_update, name='handle_network_update')
 ]

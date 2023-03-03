@@ -24,8 +24,10 @@
 
     <div class="overflow-hidden bg-white text-gray-900 shadow shadow sm:rounded-lg mb-8">
       <div class="px-4 py-6 sm:px-0">
-        <!--Because the network graph is quite a big section of code it has it's own file-->
-        {% include 'htmx.html' %}
+        <div class="htmx-indicator">Updating...</div>
+        <form class="flex justify-center align-content: space-evenly; sortable grid grid-cols-4" hx-post="/dashboard/update" hx-trigger="end">
+        {% include 'network.html' with cards=cards %}
+        </form>
       </div>
     </div>
     

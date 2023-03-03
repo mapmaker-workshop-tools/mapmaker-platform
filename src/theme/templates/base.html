@@ -28,7 +28,7 @@
 		<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
 		<link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet">
 	</head>
-	<body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
+	<body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;" >
 		<!--Nav-->
 		<nav id="header" class="fixed w-full z-30 top-0 text-white">
 		<div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
@@ -226,5 +226,31 @@
 		return false;
 		}
 	</script>
+	<script>
+		document.body.addEventListener('htmx:configRequest', (event) => {
+		  event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+		})
+	  </script>
+	  <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	  
+	  
+	  <script>
+	  htmx.onLoad(function(content) {
+		  var sortables = content.querySelectorAll(".sortable");
+		  for (var i = 0; i < sortables.length; i++) {
+			var sortable = sortables[i];
+			new Sortable(sortable, {
+			  animation: 150,
+			  ghostClass: 'blue-background-class',
+			  multiDrag: true, // Enable multi-drag
+			  selectedClass: 'selected', // The class applied to the selected items
+			  fallbackTolerance: 3, // So that we can select items on mobile
+			  swap: true, // Enable swap plugin
+			  swapClass: 'highlight',
+			});
+		  }
+	  })
+	  </script>
 </body>
 </html>

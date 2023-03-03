@@ -1,11 +1,13 @@
 
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card
 from users.models import CustomUser
 from card_interactions.models import Like, Comment
 from django.db import models
+import re
 
 
 
@@ -15,7 +17,8 @@ def index(request):
         current_user = request.user #Getting currentuser
         current_workshop = current_user.active_workshop   #Setting the workshop to a known value from the usersettings. If the user has more workshops they can toggle. 
         #Get some workshop data for dashboard
-        cardcount = Card.objects.filter(workshop=current_workshop).count()
+        cards = Card.objects.filter(workshop=current_workshop)
+        cardcount = cards.count()
         ambitioncount = Card.objects.filter(workshop=current_workshop).filter(cardtype='ambition').count()
         challengecount = Card.objects.filter(workshop=current_workshop).filter(cardtype='challenge').count()
         ideacount = Card.objects.filter(workshop=current_workshop).filter(cardtype='idea').count()
@@ -27,7 +30,13 @@ def index(request):
         for i in participants:
             userIDlist.append(i.customuser_id)
         participants = CustomUser.objects.filter(pk__in=userIDlist)
-        context = {"firstname": current_username, "participants":participants, "workshop": current_workshop,"ambitioncount":ambitioncount,"ideacount":ideacount, "challengecount":challengecount,  "cardscount":cardcount, "participantcount":participantcount}
+        context = {"firstname": current_username, 'cards':cards, "participants":participants, "workshop": current_workshop,"ambitioncount":ambitioncount,"ideacount":ideacount, "challengecount":challengecount,  "cardscount":cardcount, "participantcount":participantcount}
         return render(request, 'dashboard_index.html', context)
     else:
         return redirect('/admin/')
+    
+def handle_network_update(request):
+    response = request.body.decode("utf-8")
+    list_of_nodes_ordered = re.findall(r'\d+', response)
+    print(list_of_nodes_ordered)
+    return HttpResponse(status=204)
