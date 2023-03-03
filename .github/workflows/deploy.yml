@@ -146,18 +146,18 @@ jobs:
         - name: =========== All done. Cleaning up ♻️  ===========
           run: ls
         - name: Build Alerts
-        if: ${{ failure() }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🚨 Deployment failed 🚨
-            Build ${{ github.run_id }} failed
-            Something went wrong while building the Django container
-            
-            See the details here:
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          if: ${{ failure() }}
+          uses: appleboy/telegram-action@master
+          with:
+            to: ${{ secrets.TELEGRAM_CHAT }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            message: |
+              🚨 Deployment failed 🚨
+              Build ${{ github.run_id }} failed
+              Something went wrong while building the Django container
+              
+              See the details here:
+              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
 
   deployimages:
