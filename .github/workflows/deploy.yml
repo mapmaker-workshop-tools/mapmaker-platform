@@ -158,6 +158,16 @@ jobs:
           --public-endpoint file://Infrastructure/publicendpoint.json
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
+      - name: Build Alerts
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🚨 Deployment failed 🚨
+            Something went wrong while deploying check it out here:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   validatedeployment:
     name: 🤨 Server up?
     runs-on: ubuntu-latest
@@ -185,3 +195,4 @@ jobs:
         run: python Infrastructure/AWS/checkdeploymentsuccess.py
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
+  
