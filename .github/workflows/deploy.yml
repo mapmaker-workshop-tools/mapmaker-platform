@@ -40,7 +40,9 @@ jobs:
           message: |
             ✅ Deployment succesful
             🌎 server is up - we checked!
-            https://mapmaker.nl 
+            Site: https://mapmaker.nl 
+            Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
 
   buildnginx:
     name: 🌎 building nginx webserver
@@ -168,6 +170,7 @@ jobs:
             🚨 Deployment failed 🚨
             Something went wrong while deploying. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
   validatedeployment:
     name: 🤨 Server up?
     runs-on: ubuntu-latest
