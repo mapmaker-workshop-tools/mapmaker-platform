@@ -134,6 +134,7 @@ jobs:
     needs: [builddjango, buildnginx]
     runs-on: ubuntu-latest
     steps:
+    steps:
       - name: 🗂  Getting config files from Github
         uses: actions/checkout@v2
       - name: 🏢 Install Amazon Client
@@ -156,6 +157,17 @@ jobs:
           aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
           --containers file://Infrastructure/deploymentconfig.json \
           --public-endpoint file://Infrastructure/publicendpoint.json
+      - name: The job has failed
+        if: ${{ failure() }}
+        - name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ⛔️ Deployment Failed
+            Something was wrong with a step of the deployment. 
+            Check the workflow run here: https://github.com/two-trick-pony-NL/mapmaker/actions 
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
   validatedeployment:
