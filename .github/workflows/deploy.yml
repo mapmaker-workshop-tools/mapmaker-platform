@@ -166,7 +166,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             🚨 Deployment failed 🚨
-            Something went wrong while deploying check it out here:
+            Something went wrong while deploying. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   validatedeployment:
     name: 🤨 Server up?
