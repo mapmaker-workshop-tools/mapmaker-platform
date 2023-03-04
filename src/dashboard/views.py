@@ -7,6 +7,9 @@ from workshop.models import Workshop, Card
 from users.models import CustomUser
 from card_interactions.models import Like, Comment
 from django.db import models
+from django.db.models import Case, When
+import json
+import ast
 import re
 
 
@@ -14,29 +17,45 @@ import re
 #@login_required
 def index(request):
     if request.user.is_authenticated:
-        current_user = request.user #Getting currentuser
-        current_workshop = current_user.active_workshop   #Setting the workshop to a known value from the usersettings. If the user has more workshops they can toggle. 
-        #Get some workshop data for dashboard
+        # Getting the user, active workshop cards and participants
+        current_user = request.user
+        current_workshop = current_user.active_workshop
         cards = Card.objects.filter(workshop=current_workshop)
-        cardcount = cards.count()
-        ambitioncount = Card.objects.filter(workshop=current_workshop).filter(cardtype='ambition').count()
-        challengecount = Card.objects.filter(workshop=current_workshop).filter(cardtype='challenge').count()
-        ideacount = Card.objects.filter(workshop=current_workshop).filter(cardtype='idea').count()
-        #Getting all participants for this workshop
         participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
-        participantcount = participants.count()
+        # Here we fetch and order the cards in this workshop 
+        get_card_order_list = ast.literal_eval(current_workshop.card_order)
+        order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
+        ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
+        # Doing a lookup of all participants in this workshop
         userIDlist = []
-        current_username = current_user.first_name
         for i in participants:
             userIDlist.append(i.customuser_id)
+        #Get all the participants to this session --> This ensures we can query their details in templates
         participants = CustomUser.objects.filter(pk__in=userIDlist)
-        context = {"firstname": current_username, 'cards':cards, "participants":participants, "workshop": current_workshop,"ambitioncount":ambitioncount,"ideacount":ideacount, "challengecount":challengecount,  "cardscount":cardcount, "participantcount":participantcount}
+        context = {
+                "firstname": current_user.first_name,
+                'cards': ordered_cards, 
+                "participants": participants, 
+                "workshop": current_workshop,
+                "ambitioncount": cards.filter(cardtype='ambition').count(),
+                "ideacount": cards.filter(workshop=current_workshop).filter(cardtype='idea').count(), 
+                "challengecount": cards.filter(workshop=current_workshop).filter(cardtype='challenge').count(),  
+                "cardscount": cards.count(), 
+                "participantcount": participants.count()}
         return render(request, 'dashboard_index.html', context)
     else:
         return redirect('/admin/')
     
 def handle_network_update(request):
-    response = request.body.decode("utf-8")
-    list_of_nodes_ordered = re.findall(r'\d+', response)
-    print(list_of_nodes_ordered)
-    return HttpResponse(status=204)
+    if request.method == "POST":
+        current_user = request.user
+        current_workshop = current_user.active_workshop
+        response = request.body.decode("utf-8")
+        list_of_nodes_ordered = re.findall(r'\d+', response)
+        jsonStr = json.dumps(list_of_nodes_ordered)
+        t = Workshop.objects.get(id=current_workshop.id)
+        t.card_order = jsonStr
+        t.save() 
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=403)

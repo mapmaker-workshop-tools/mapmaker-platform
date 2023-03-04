@@ -10,3 +10,4 @@ django-tailwind==3.5.0
 fontawesomefree==5.15.4
 djangorestframework==3.14.0
 django_extensions==3.2.1
+django-jsonfield==1.4.1

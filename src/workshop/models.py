@@ -13,6 +13,7 @@ class Workshop(models.Model):
     workshop_date = models.DateTimeField()
     participants = models.ManyToManyField(CustomUser, related_name = 'workshop_participants')
     workshop_owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'workshop_owners')
+    card_order = models.TextField(null=True, blank=True)
         
     def __str__(self):
         return self.workshop_name
@@ -28,9 +29,6 @@ class Card(models.Model):
     description = models.TextField(blank=True,)
     parentnode = models.CharField(max_length=30, unique=False, blank=True)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
-    x_location = models.CharField(max_length=5, unique=False, default=str(randrange(20)))
-    y_location = models.CharField(max_length=5, unique=False, default=str(randrange(20)))
-    
     def __str__(self):
         return self.title
 
