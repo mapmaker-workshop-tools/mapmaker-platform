@@ -23,9 +23,12 @@ def index(request):
         cards = Card.objects.filter(workshop=current_workshop)
         participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
         # Here we fetch and order the cards in this workshop 
-        get_card_order_list = ast.literal_eval(current_workshop.card_order)
-        order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
-        ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
+        if not current_workshop.card_order:
+            ordered_cards = cards
+        else:
+            get_card_order_list = ast.literal_eval(current_workshop.card_order)
+            order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
+            ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
         # Doing a lookup of all participants in this workshop
         userIDlist = []
         for i in participants:
