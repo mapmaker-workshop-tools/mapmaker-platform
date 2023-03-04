@@ -1,7 +1,57 @@
-{% for card in cards %}
-    <div><input type='hidden' name='item' value='{{ card.id}}'/>
-        <div class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
-            {{ card.title}}
-        </div>
+<style type="text/css">
+    .gridmain {
+      display:flex;
+      --s: 200px;  /* size  */
+      --m: 4px;    /* margin */
+      --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
+      padding-bottom: 50px;
+    }
+
+    .gridcontainer {
+      font-size: 0; /*disable white space between inline block element */
+    }
+
+    .gridcontainer div {
+      width: var(--s);
+      margin: var(--m);
+      height: calc(var(--s)*1.1547); 
+      display: inline-block;
+      font-size:initial;
+      clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+      background: red;
+      margin-bottom: calc(var(--m) - var(--s)*0.2885); 
+    }
+    /*
+    .gridcontainer div:nth-child(odd) {
+      background:green;
+    }
+    */
+    .gridcontainer::before {
+      content: "";
+      width: calc(var(--s)/2 + var(--m));
+      float: left;
+      height: 120%;
+      shape-outside: repeating-linear-gradient(     
+                       #0000 0 calc(var(--f) - 3px),      
+                       #000  0 var(--f));
+    }
+    .hexagon {
+        padding-top: 10%;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 20px;
+    }
+
+</style>
+
+
+<div class="gridmain">
+        <form class="gridcontainer sortable" hx-post="/dashboard/update" hx-trigger="end">
+        {% for card in cards %}
+            <div class="hexagon"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                {{ card.title}}
+            </div>
+        {% endfor %}
+        </form>
     </div>
-{% endfor %}
+</div>

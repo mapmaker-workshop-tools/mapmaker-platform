@@ -27,7 +27,6 @@ class Card(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, related_name = 'workshop')
     title = models.CharField(max_length=30, unique=True, blank=False)
     description = models.TextField(blank=True,)
-    parentnode = models.CharField(max_length=30, unique=False, blank=True)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
     def __str__(self):
         return self.title
