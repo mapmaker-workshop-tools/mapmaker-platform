@@ -2,7 +2,7 @@
     .gridmain {
       display:flex;
       --s: 100px;  /* size  */
-      --m: 4px;    /* margin */
+      --m: 1px;    /* margin */
       --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
       padding-bottom: 50px;
     }
@@ -38,15 +38,18 @@
         padding-top: 10px;
         text-align: center;
         vertical-align: middle;
-        background: white;
+    }
+    .hexagonhidden:hover{
+        background-color:#78E7BF;
+        opacity: 0.5;
+        padding-top: 45px;
     }
     .hexagon {
         padding-top: 10px;
         text-align: center;
         vertical-align: middle;
-        background: green;
+        color: #000000;
     }
-
 </style>
 
 
@@ -54,32 +57,34 @@
         <form class="gridcontainer sortable" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
-            <div class="hexagonhidden"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagonhidden"><input type='hidden' name='item' value='{{ card.id}}'/>   
+                <i class="fa-regular fa-2xl fa-plus"></i><br>         
             </div>
         {% elif card.cardtype == 'ambition' %}
-            <div class="hexagon" style="background: green;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <i class="fa-solid fa-xl fa-eye"></i><br>
                 {{ card.title}}
-                {{ card.cardtype }}
-                ambition
             </div>
-        {% elif card.cardtype == 'challenge' %}
-        <div class="hexagon" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-            {{ card.title}}
-            {{ card.cardtype }}
-            challenge
-        </div>
-        {% elif card.cardtype == 'idea' %}
-            <div class="hexagon" style="background: blue;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+        {% elif card.cardtype == 'challenge' %}E6799D
+            <div class="hexagon" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <i class="fa-regular fa-xl fa-mountain"></i><br>
                 {{ card.title}}
-                {{ card.cardtype }}
-                idea
+            </div>
+        {% elif card.cardtype == 'idea' %}
+            <div class="hexagon" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <i class="fa-regular fa-lightbulb fa-xl"></i><br>
+                {{ card.title}}
             </div>
         {% elif card.cardtype == 'pro' %}
-        <div class="hexagon" style="background: yellow;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-            {{ card.title}}
-            {{ card.cardtype }}
-            pro
-        </div>
+            <div class="hexagon" style="background: green;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <i class="fa-regular fa-lightbulb fa-xl"></i><br>
+                {{ card.title}}
+            </div>
+            {% elif card.cardtype == 'con' %}
+            <div class="hexagon" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <i class="fa-regular fa-lightbulb fa-xl"></i><br>
+                {{ card.title}}
+            </div>
         {% endif %}
         {% endfor %}
         </form>

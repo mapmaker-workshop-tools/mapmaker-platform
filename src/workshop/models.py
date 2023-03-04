@@ -37,7 +37,7 @@ class Workshop(models.Model):
 
 class Card(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
-    cardtypechoice = models.TextChoices('cardtype', 'ambition challenge idea pro con add remove empty')
+    cardtypechoice = models.TextChoices('cardtype', 'ambition challenge idea pro con empty')
     cardtype = models.CharField(blank=False, choices=cardtypechoice.choices, max_length=20)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False,related_name = 'card_author')
