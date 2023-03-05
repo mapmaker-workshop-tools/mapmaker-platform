@@ -1,33 +1,51 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>
-			{% block title %}{% endblock %}
-		</title>
-		<meta name="description" content="Mapmaker Homepage" />
-		<meta name="keywords" content="Mapmaker workshop online tool netwerk" />
-		<meta name="author" content="Peter van Doorn" />
-		<!--Replace with your tailwind.css once created-->
-		{% tailwind_preload_css %}
-    	{% tailwind_css %}
-		<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-		<!-- Define your gradient here - use online tools to find a gradient matching your branding-->
-		<!--Fontawesome-->
-		<link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-		<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-		<link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>
+		{% block title %}{% endblock %}
+	</title>
+	<meta name="description" content="Mapmaker Homepage" />
+	<meta name="keywords" content="Mapmaker workshop online tool netwerk" />
+	<meta name="author" content="Peter van Doorn" />
+	<!--Replace with your tailwind.css once created-->
+	{% tailwind_preload_css %}
+	{% tailwind_css %}
+	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+	<!--Fontawesome-->
+	<link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet">
+	<!--Favicons-->
+	<link rel="apple-touch-icon" sizes="57x57" href="{% static '/images/favicons/apple-icon-57x57.png' %}">
+	<link rel="apple-touch-icon" sizes="60x60" href="{% static '/images/favicons/apple-icon-60x60.png' %}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static '/images/favicons/apple-icon-72x72.png' %}">
+	<link rel="apple-touch-icon" sizes="76x76" href="{% static '/images/favicons/apple-icon-76x76.png' %}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static '/images/favicons/apple-icon-114x114.png' %}">
+	<link rel="apple-touch-icon" sizes="120x120" href="{% static '/images/favicons/apple-icon-120x120.png' %}">
+	<link rel="apple-touch-icon" sizes="144x144" href="{% static '/images/favicons/apple-icon-144x144.png' %}">
+	<link rel="apple-touch-icon" sizes="152x152" href="{% static '/images/favicons/apple-icon-152x152.png' %}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static '/images/favicons/apple-icon-180x180.png' %}">
+	<link rel="icon" type="image/png" sizes="192x192"  href="{% static '/images/favicons/android-icon-192x192.png' %}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static '/images/favicons/favicon-32x32.png' %}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{% static '/images/favicons/favicon-96x96.png' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static '/images/favicons/favicon-16x16.png' %}">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="{% static '/images/favicons/ms-icon-144x144.png' %}">
+	<meta name="theme-color" content="#ffffff">
+	<!--Flowbite CSS Components-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 
-	</head>
-	<body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;" >
-		<!--Nav-->
+</head>
+<body class="leading-normal tracking-normal text-grey-800 gradient" style="font-family: 'Source Sans Pro', sans-serif;" >
 
-	
+
+<!--Nav-->	
 <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
 <div class="container flex flex-wrap items-center justify-between mx-auto">
 	<a href="/" class="flex items-center">
