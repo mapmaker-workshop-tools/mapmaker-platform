@@ -138,7 +138,13 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
+STATIC_ROOT = 'staticfiles'
+
+# this is directory paths where you have to put your project level static files
+# you can put multiple folders here
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 
 # Default primary key field type
