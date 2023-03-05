@@ -1,14 +1,17 @@
 <style type="text/css">
     .gridmain {
-      display:flex;
-      --s: 100px;  /* size  */
-      --m: 1px;    /* margin */
-      --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
-      padding-bottom: 50px;
+        display:flex;
+        flex-wrap: nowrap;
+        --s: 100px;  /* size  */
+        --m: 1px;    /* margin */
+        --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
+        padding-bottom: 50px;
     }
 
     .gridcontainer {
       font-size: 0; /*disable white space between inline block element */
+      width: 1530px; /* We need a fixed size so we know that the divs won't overflow*/
+      height: 1530px; /* We need a fixed size so we know that the divs won't overflow*/
     }
 
     .gridcontainer div {
@@ -19,6 +22,7 @@
       font-size:initial;
       clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
       margin-bottom: calc(var(--m) - var(--s)*0.2885); 
+      overflow: hidden;
     }
     /*
     .gridcontainer div:nth-child(odd) {
