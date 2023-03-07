@@ -9,7 +9,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h1 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add new card</h1>
-                <form action="/dashboard/createcard/{{cardid}}/" method="post">
+                <form action="/dashboard/card/{{cardid}}/create/" method="post">
                     {% csrf_token %}
                     {{ form }}
                     <!--<input type="submit" value="Submit"> -->

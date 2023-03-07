@@ -24,4 +24,7 @@ class CardForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea(attrs={'class': tailwind_class}))
     
 class CardTitle(forms.Form):
-    title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
+    title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class, 'placeholder': 'Write a new title'}))
+    
+class CardDescription(forms.Form):
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': tailwind_class, 'placeholder': 'Write a new description'}))

@@ -8,7 +8,7 @@ from django.utils import timezone
 from users.models import CustomUser
 from django.db import models
 from django.db.models import Case, When
-from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle
+from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription
 import json
 import ast
 import re
@@ -108,12 +108,10 @@ def create_card(request, id):
             return redirect('/dashboard')
     else: 
         form = CardForm()
-    return render(request, 'edit_card.html', {'form': form, "cardid": id})
+    return render(request, 'create_card.html', {'form': form, "cardid": id})
 
-def edit_card(request, id):
+def edit_card_title(request, id):
     if request.method == 'POST':
-        current_user = request.user
-        current_workshop = current_user.active_workshop
         form = CardTitle(request.POST)
         if form.is_valid():
             card = Card.objects.get(id=id)
@@ -123,6 +121,19 @@ def edit_card(request, id):
     else: 
         form = CardTitle()
     return render(request, 'edit_title.html', {'form': form, "cardid": id})
+
+
+def edit_card_description(request, id):
+    if request.method == 'POST':
+        form = CardDescription(request.POST)
+        if form.is_valid():
+            card = Card.objects.get(id=id)
+            card.description = form.cleaned_data['description']
+            card.save()
+            return redirect('/dashboard')
+    else: 
+        form = CardDescription()
+    return render(request, 'edit_description.html', {'form': form, "cardid": id})
 
 def close(request):
     print("Cliecked")
