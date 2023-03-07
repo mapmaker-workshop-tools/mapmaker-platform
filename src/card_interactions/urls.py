@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from dashboard import views
+from card_interactions import views
 
 
 urlpatterns = [
-    path('', views.index, name='dashboard'),
-    path('update', views.handle_grid_update, name='handle_network_update'),
-    path('close/', views.close, name='get_card_info'),
+    path('<int:id>/open', views.get_card_details, name='get_card_info'),
+    path('<int:id>/create/' ,views.create_card, name='Create Card'),
+    path('<int:id>/edit/title/', views.edit_card_title, name='Edit Card'),
+    path('<int:id>/edit/description/', views.edit_card_description, name='Edit Card'),
+    path('<int:id>/like/', views.register_like, name='Register like'),
 ]

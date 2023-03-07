@@ -5,17 +5,13 @@ from django.db import models
 from django.utils import timezone
 from users.models import CustomUser
 from workshop.models import Card
-
-
 # Create your models here.
 class Follower(models.Model):
-    date_modified = models.DateTimeField(auto_now=True)
-    date_created = models.DateTimeField(default=timezone.now, editable=False)
     user_like = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, related_name = 'user_like')
     card_liked = models.ForeignKey(Card, on_delete=models.CASCADE, null=True, related_name = 'liked_card')
     
     def __str__(self):
-        return str(self.id) +" - "+ self.card_liked.title +" From user " + self.user_like.first_name
+        return str(self.id) +" - card: "+ self.card_liked.title +" liked by user " + self.user_like.first_name
 
 class Comment(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
