@@ -60,5 +60,17 @@ def handle_network_update(request):
         t.card_order = jsonStr
         t.save() 
         return HttpResponse(status=204)
+    elif request.method == "GET":
+        current_user = request.user
+        current_workshop = current_user.active_workshop
+        cards = Card.objects.filter(workshop=current_workshop)
+        if not current_workshop.card_order:
+            ordered_cards = cards
+        else:
+            get_card_order_list = ast.literal_eval(current_workshop.card_order)
+            order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
+            ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
+        context = {'cards': ordered_cards }
+        return render(request, 'grid.html', context)
     else:
         return HttpResponse(status=403)

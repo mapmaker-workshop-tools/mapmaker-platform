@@ -59,8 +59,9 @@
     }
 </style>
 
+<div hx-get="/dashboard/update" hx-target="#grid" hx-trigger="every 2s" hx-swap="morphdom"></div>
 
-<div class="gridmain">
+<div id="grid" class="gridmain">
         <form class="gridcontainer sortable" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
