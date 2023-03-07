@@ -1,0 +1,9 @@
+<!-- Main modal -->
+
+                   
+                    <form action="/dashboard/editcard/{{ cardid }}/" method="post" hx-target="this" hx-swap="outerHTML">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button class="btn">Submit</button>
+                        <button class="btn" hx-get="/contact/1">Cancel</button>
+                      </form> 

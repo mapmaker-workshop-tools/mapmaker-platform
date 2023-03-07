@@ -22,3 +22,6 @@ class CardForm(forms.Form):
     cardtype = forms.ChoiceField(choices = CARD_TYPE_CHOICES, widget=forms.Select(attrs={'class': tailwind_class}))
     title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': tailwind_class}))
+    
+class CardTitle(forms.Form):
+    title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))

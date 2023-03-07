@@ -23,5 +23,6 @@ urlpatterns = [
     path('update', views.handle_grid_update, name='handle_network_update'),
     path('opencard/<int:id>/', views.get_card_details, name='get_card_info'),
     path('close/', views.close, name='get_card_info'),
+    path('createcard/<int:id>/',views.create_card, name='Create Card' ),
     path('editcard/<int:id>/',views.edit_card, name='Edit Card' )
 ]

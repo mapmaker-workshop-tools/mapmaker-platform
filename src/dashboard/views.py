@@ -8,7 +8,7 @@ from django.utils import timezone
 from users.models import CustomUser
 from django.db import models
 from django.db.models import Case, When
-from .forms import CardForm, CARD_TYPE_CHOICES
+from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle
 import json
 import ast
 import re
@@ -62,7 +62,8 @@ def get_card_details(request, id):
         'author': card.author,
         'title': card.title,
         'description': card.description,
-        'followers': followers,        
+        'followers': followers,
+        'id': card.id        
     }
     return render(request, 'drawer.html', context)
     
@@ -92,10 +93,9 @@ def handle_grid_update(request):
     else:
         return HttpResponse(status=403)
 
-def edit_card(request, id):
+def create_card(request, id):
     if request.method == 'POST':
         current_user = request.user
-        current_workshop = current_user.active_workshop
         form = CardForm(request.POST)
         if form.is_valid():
             card = Card.objects.get(id=id)
@@ -109,6 +109,20 @@ def edit_card(request, id):
     else: 
         form = CardForm()
     return render(request, 'edit_card.html', {'form': form, "cardid": id})
+
+def edit_card(request, id):
+    if request.method == 'POST':
+        current_user = request.user
+        current_workshop = current_user.active_workshop
+        form = CardTitle(request.POST)
+        if form.is_valid():
+            card = Card.objects.get(id=id)
+            card.title = form.cleaned_data['title']
+            card.save()
+            return redirect('/dashboard')
+    else: 
+        form = CardTitle()
+    return render(request, 'edit_title.html', {'form': form, "cardid": id})
 
 def close(request):
     print("Cliecked")

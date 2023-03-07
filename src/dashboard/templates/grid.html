@@ -66,7 +66,7 @@
         <form class="gridcontainer sortable" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
-            <div class="hexagonhidden" hx-get="/dashboard/editcard/{{ card.id }}" hx-trigger="dblclick" hx-target="#modal"><input type='hidden' name='item' value='{{ card.id}}'/>   
+            <div class="hexagonhidden" hx-get="/dashboard/createcard/{{ card.id }}" hx-trigger="dblclick" hx-target="#modal"><input type='hidden' name='item' value='{{ card.id}}'/>   
                 <i class="fa-regular fa-2xl fa-plus"></i><br>         
             </div>
         {% elif card.cardtype == 'ambition' %}
