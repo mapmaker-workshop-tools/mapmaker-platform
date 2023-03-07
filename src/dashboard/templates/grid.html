@@ -71,27 +71,27 @@
         {% elif card.cardtype == 'ambition' %}
             <div class="hexagon" hx-target="#drawer" hx-get="/dashboard/opencard/{{ card.id }}" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-xl fa-eye"></i><br>
-                {{ card.title}}
+                {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'challenge' %}E6799D
             <div class="hexagon" hx-target="#drawer" hx-get="/dashboard/opencard/{{ card.id }}" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-xl fa-mountain"></i><br>
-                {{ card.title}}
+                {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'idea' %}
             <div class="hexagon"  hx-target="#drawer" hx-get="/dashboard/opencard/{{ card.id }}" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-lightbulb fa-xl"></i><br>
-                {{ card.title}}
+                {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'pro' %}
             <div class="hexagon"  hx-target="#drawer" hx-get="/dashboard/opencard/{{ card.id }}" style="background: #ffeb39;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-lightbulb fa-xl"></i><br>
-                {{ card.title}}
+                {{ card.title|truncatechars:20}}
             </div>
             {% elif card.cardtype == 'con' %}
             <div class="hexagon" hx-target="#drawer" hx-get="/dashboard/opencard/{{ card.id }}" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-lightbulb fa-xl"></i><br>
-                {{ card.title}}
+                {{ card.title|truncatechars:20}}
             </div>
         {% endif %}
         {% endfor %}
