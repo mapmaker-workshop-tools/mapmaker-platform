@@ -1,6 +1,5 @@
 from django import forms
-from django.forms import ModelForm, TextInput, EmailInput
-from workshop.models import Card
+
 
 CARD_TYPE_CHOICES =(
     ("1", "ambition"),
