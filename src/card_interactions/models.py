@@ -8,7 +8,7 @@ from workshop.models import Card
 
 
 # Create your models here.
-class Like(models.Model):
+class Follower(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     user_like = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, related_name = 'user_like')
@@ -27,7 +27,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment_text +" - "+ self.card.title
     
-class Document(models.Model):
+class Resource(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     documenttypechoices = models.TextChoices('documenttype', 'link document')

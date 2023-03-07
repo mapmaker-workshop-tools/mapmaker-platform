@@ -21,7 +21,7 @@ class Workshop(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             super().save(*args, **kwargs)
-            for _ in range(100):
+            for _ in range(500):
                 print("Creating card")
                 card = Card(cardtype='empty',
                         author=CustomUser(pk=5),
@@ -42,11 +42,11 @@ class Card(models.Model):
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False,related_name = 'card_author')
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, related_name = 'workshop')
-    title = models.CharField(max_length=30, unique=True, blank=False)
+    title = models.CharField(max_length=30, unique=False, blank=False)
     description = models.TextField(blank=True,)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
     def __str__(self):
-        return self.title
+        return self.title + self.workshop.workshop_name
 
     
     

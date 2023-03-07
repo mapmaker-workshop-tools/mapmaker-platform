@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block title %}Dashboard {{workshop}} {% endblock %}
-
 {% block content %}
 <main class="grid full place-items-center lg:px-8">
   <div class="htmx-indicator">
@@ -17,4 +16,6 @@
   {% include 'grid.html' with cards=cards %}
 </div>
 </main>
+
+
 {% endblock %}

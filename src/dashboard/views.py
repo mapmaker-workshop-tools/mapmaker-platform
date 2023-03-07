@@ -5,7 +5,6 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card
 from users.models import CustomUser
-from card_interactions.models import Like, Comment
 from django.db import models
 from django.db.models import Case, When
 import json
@@ -49,7 +48,23 @@ def index(request):
     else:
         return redirect('/admin/')
     
-def handle_network_update(request):
+def get_card_details(request, id):
+    card = Card.objects.get(id=id)
+    followers = Card.followers.through.objects.filter(card=card)
+    followerIDlist = []
+    for i in followers:
+        followerIDlist.append(i.customuser_id)
+    followers = CustomUser.objects.filter(pk__in=followerIDlist)
+    context = {
+        'cardtype': card.cardtype,
+        'author': card.author,
+        'title': card.title,
+        'description': card.description,
+        'followers': followers,        
+    }
+    return render(request, 'drawer.html', context)
+    
+def handle_grid_update(request):
     if request.method == "POST":
         current_user = request.user
         current_workshop = current_user.active_workshop
@@ -74,3 +89,8 @@ def handle_network_update(request):
         return render(request, 'grid.html', context)
     else:
         return HttpResponse(status=403)
+
+
+def close(request):
+    print("Cliecked")
+    return render(request, 'empty.html')
