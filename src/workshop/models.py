@@ -46,7 +46,7 @@ class Card(models.Model):
     description = models.TextField(blank=True,)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
     def __str__(self):
-        return self.title + self.workshop.workshop_name
+        return self.workshop.workshop_name + ' - ' + self.title
 
     
     
