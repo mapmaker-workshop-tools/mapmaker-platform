@@ -4,9 +4,11 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card
+from django.utils import timezone
 from users.models import CustomUser
 from django.db import models
 from django.db.models import Case, When
+from .forms import CardForm, CARD_TYPE_CHOICES
 import json
 import ast
 import re
@@ -90,6 +92,23 @@ def handle_grid_update(request):
     else:
         return HttpResponse(status=403)
 
+def edit_card(request, id):
+    if request.method == 'POST':
+        current_user = request.user
+        current_workshop = current_user.active_workshop
+        form = CardForm(request.POST)
+        if form.is_valid():
+            card = Card.objects.get(id=id)
+            card.description = form.cleaned_data['description']
+            card.title = form.cleaned_data['title']
+            card.date_modified = timezone.now
+            card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
+            card.author = current_user
+            card.save()
+            return redirect('/dashboard')
+    else: 
+        form = CardForm()
+    return render(request, 'edit_card.html', {'form': form, "cardid": id})
 
 def close(request):
     print("Cliecked")
