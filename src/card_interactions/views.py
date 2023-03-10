@@ -7,6 +7,7 @@ from django.utils import timezone
 from users.models import CustomUser
 from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription
 from .models import Follower
+from django.contrib import messages
 
 
     
@@ -39,6 +40,7 @@ def create_card(request, id):
             card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
             card.author = current_user
             card.save()
+            messages.add_message(request, messages.INFO, 'Card Created')
             return redirect('/dashboard')
     else: 
         form = CardForm()
@@ -51,6 +53,7 @@ def edit_card_title(request, id):
             card = Card.objects.get(id=id)
             card.title = form.cleaned_data['title']
             card.save()
+            messages.add_message(request, messages.INFO, 'Card title updated')
             return redirect('/dashboard')
     else: 
         form = CardTitle()
@@ -64,6 +67,7 @@ def edit_card_description(request, id):
             card = Card.objects.get(id=id)
             card.description = form.cleaned_data['description']
             card.save()
+            messages.add_message(request, messages.INFO, 'Card description updated')
             return redirect('/dashboard')
     else: 
         form = CardDescription()
@@ -91,9 +95,11 @@ def register_like(request, id):
         if like.exists(): 
             like.delete()
             print("like deleted")
+            messages.add_message(request, messages.INFO, 'Unfollowed this card')
         else:
             card = Card.objects.get(id=id)
             new_like = Follower(user_like=current_user, card_liked=card)
             new_like.save()
+            messages.add_message(request, messages.INFO, 'You followed card' +card.title)
             print("New like registered")
         return HttpResponse(status=204)
