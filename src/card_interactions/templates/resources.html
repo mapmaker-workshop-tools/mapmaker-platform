@@ -1,52 +1,36 @@
-<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Resources</h5>
+<h5 class="m-4  text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Resources</h5>
 
-<div id="resources" hx-target="this"  hx-swap="afterend" class="flow-root">
-     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-         <li class="py-3 sm:py-4">
-             <div class="flex items-center space-x-4">
-                 <div class="flex-shrink-0">
-                     <img class="w-8 h-8 rounded-full" src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://youtube.com/&size=64" alt="Lana image">
-                 </div>
-                 <div class="flex-1 min-w-0">
-                     <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                         Tesla Battery Production
-                     </p>
-                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                         https://youtube.com/somelink
-                     </p>
-                 </div>
-                 <div class="inline-flex items-center text-base text-gray-900 dark:text-white">
-                     {{ author }} 
-                     <div class="flex-shrink-0">
-                         <img class="w-8 h-8 rounded-full" src="https://gravatar.com/avatar/fd7bf2008ccec89b1578988fe50d09bc?s=400&d=robohash&r=x" alt="Lana image">
-                     </div>
- 
-                 </div>
-             </div>
-         </li>
-         <li class="py-3 sm:py-4">
-             <div class="flex items-center space-x-4">
-                 <div class="flex-shrink-0">
-                     <img class="w-8 h-8 rounded-full" src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://wikipedia.com/&size=64" alt="Lana image">
-                 </div>
-                 <div class="flex-1 min-w-0">
-                     <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                         Lithium Ion batteries
-                     </p>
-                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                         https://en.wikipedia.org/wiki/Lithium-ion_battery
-                     </p>
-                 </div>
-                 <div class="inline-flex items-center text-base text-gray-900 dark:text-white">
-                     {{ author }} 
-                     <div class="flex-shrink-0">
-                         <img class="w-8 h-8 rounded-full" src="https://gravatar.com/avatar/fd7bf2008ccec89b1578988fe50d09bc?s=400&d=robohash&r=x" alt="Lana image">
-                     </div>
- 
-                 </div>
-             </div>
-         </li>
-         
-     </ul>
-     <button hx-get="/card/{{ id }}/resource/create" class="px-3 py-2 my-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">add  resource</button>
+<div id="resources" hx-target="this"  hx-swap="afterend" class="p-4 flow-root">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+        {% for resource in resources %}
+        <a href="{{resource.document_url}}" target="popup">
+            <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <img class="w-8 h-8 rounded-full" src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={{resource.document_url}}/&size=64" alt="Resource Logo">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                            {{resource.document_description|truncatechars:70}}
+
+                        </p>
+                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                             {{resource.document_url|truncatechars:50 }}
+                        </p>
+                    </div>
+                    <div class=" p-2 inline-flex items-center text-base text-gray-900 dark:text-white">
+                        {{resource.owner.first_name}} {{resource.owner.last_name}}
+                        <div class="flex-shrink-0 p-2">
+                            <img class="w-8 h-8 rounded-full" src="{{resource.owner.avatar_url}}" alt="Lana image">
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </a>
+                {% empty %}
+                <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">No resources, add one!</p>
+        {% endfor %}        
+    </ul>
+    <button hx-get="/card/{{ id }}/resource/create" hx-trigger="click" hx-target="#modal" class="px-3 py-2 my-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">add  resource</button>
 </div>

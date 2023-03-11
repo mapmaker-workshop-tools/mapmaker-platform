@@ -6,7 +6,7 @@ from workshop.models import Card
 from django.utils import timezone
 from users.models import CustomUser
 from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource
-from .models import Follower, Resource
+from .models import Follower, Resource, Comment
 from django.contrib import messages
 
 
@@ -14,6 +14,9 @@ from django.contrib import messages
 def get_card_details(request, id):
     card = Card.objects.get(id=id)
     current_user = request.user
+    resources = Resource.objects.filter(card=card)
+    comments = Comment.objects.filter(card=card)
+    print(resources)
     followers = Follower.objects.filter(card_liked=id)
     followerIDlist = []
     for i in followers:
@@ -28,7 +31,9 @@ def get_card_details(request, id):
         'description': card.description,
         'followers': followers,
         'id': card.id,        
-        'user_follows_card':user_follows_card
+        'user_follows_card': user_follows_card,
+        'resources': resources,
+        'comments': comments
     }
     return render(request, 'drawer.html', context)
     
@@ -130,7 +135,13 @@ def create_resource(request, id):
                 date_modified = timezone.now
             )
             resource.save()
-            return render(request, 'resources.html', {"cardid": id})
+            comment = Comment(
+                card = card,
+                comment_text = 'Added resource ' + str(resource.document_description),
+                author = request.user,
+            )
+            comment.save()
+            return redirect('/dashboard')
         else:
             print("error")
             return HttpResponse(status=404)

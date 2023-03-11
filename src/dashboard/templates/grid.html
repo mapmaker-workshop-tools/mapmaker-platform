@@ -61,7 +61,7 @@
 
 <div hx-get="/dashboard/update" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom"></div>
 <div id="drawer"></div>
-<div id="modal"></div>
+<div style="z-index: 999;" id="modal"></div>
 <div id="grid" class="gridmain">
         <form class="gridcontainer sortable" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
