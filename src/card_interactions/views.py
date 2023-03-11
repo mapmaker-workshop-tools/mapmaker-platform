@@ -24,6 +24,7 @@ def get_card_details(request, id):
         'cardtype': card.cardtype,
         'author': card.author,
         'title': card.title,
+        'type': card.cardtype,
         'description': card.description,
         'followers': followers,
         'id': card.id,        
@@ -50,17 +51,17 @@ def create_card(request, id):
     return render(request, 'create_card.html', {'form': form, "cardid": id})
 
 def edit_card_title(request, id):
+    card = Card.objects.get(id=id)
     if request.method == 'POST':
         form = CardTitle(request.POST)
         if form.is_valid():
-            card = Card.objects.get(id=id)
             card.title = form.cleaned_data['title']
             card.save()
             messages.add_message(request, messages.INFO, 'Card title updated')
-            return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id})
+            return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype})
     else: 
         form = CardTitle()
-    return render(request, 'edit_title.html', {'form': form, "cardid": id})
+    return render(request, 'edit_title.html', {'form': form, "cardid": id ,"title":card.title, "type":card.cardtype})
 
 
 def edit_card_description(request, id):

@@ -1,7 +1,48 @@
-<!-- Main modal -->
-                    <form hx-post="/card/{{ cardid }}/edit/title/" hx-target="this"  hx-swap="outerHTML">
-                        {% csrf_token %}
-                        {{ form }}
-                        <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                        <button class="btn" hx-get="/contact/1">Cancel</button>
-                      </form> 
+<form hx-post="/card/{{ cardid }}/edit/title/" hx-target="this"  hx-swap="outerHTML">
+
+{% if type == 'ambition' %}
+        <div style="background: #000000; color: #fff" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex flex-col align-text-top items-center m-8">
+            <i class="fa-solid fa-xl fa-eye"></i><br>
+            <h1  class="mb-2 text-4xl font-bold tracking-tight text-white dark:text-white">{{ title }}</h1>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ type}}</span>
+        </div>
+        </div>
+    {% elif type == 'challenge' %}E6799D
+            <div style="background: #E6799D;"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex flex-col align-text-top items-center m-8">
+                    <i class="fa-solid fa-xl fa-eye"></i><br>
+                    <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                    <span class="text-sm text-gray-900 dark:text-gray-400">{{ type}}</span>
+                </div>
+                </div>
+    {% elif type == 'idea' %}
+            <div style="background: #51c1ff;"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex flex-col align-text-top items-center m-8">
+                    <i class="fa-solid fa-xl fa-eye"></i><br>
+                    <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                    <span class="text-sm text-gray-900 dark:text-gray-400">{{ type}}</span>
+                </div>
+                </div>
+    {% elif type == 'pro' %}
+            <div style="background: #ffeb39; " class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex flex-col align-text-top items-center m-8">
+                    <i class="fa-solid fa-xl fa-eye"></i><br>
+                    <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                    <span class="text-sm text-gray-900 dark:text-gray-400">{{ type}}</span>
+                </div>
+                </div>
+    {% elif type == 'con' %}          
+            <div style="background: red;" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex flex-col align-text-top items-center m-8">
+                    <i class="fa-solid fa-xl fa-eye"></i><br>
+                    <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                    <span class="text-sm text-gray-900 dark:text-gray-400">{{ type}}</span>
+                </div>
+                </div>
+    {% endif %}
+    {% csrf_token %}
+    {{ form }}
+    <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <button class="btn" hx-get="/contact/1">Cancel</button>
+  </form> 
