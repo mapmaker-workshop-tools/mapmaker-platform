@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-
 {% block title %}Dashboard {{workshop}} {% endblock %}
-{% block content %}
 
+{% block content %}
 <main class="grid full place-items-center lg:px-8">
   <div class="htmx-indicator">
     <div role="status">
@@ -13,10 +12,8 @@
       <span class="sr-only">Loading...</span>
   </div>
   </div>
-<div class="h-[600px]" style="display: inline-block"></div>
+<div class="h-[600px]" style="display: inline-block "></div>
   {% include 'grid.html' with cards=cards %}
 </div>
 </main>
-
-
 {% endblock %}

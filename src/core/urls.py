@@ -26,7 +26,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('', include('homepage.urls')), 
     path('auth/', include('users.urls')),    
-    path('card/', include('card_interactions.urls')),  
     path("__reload__/", include("django_browser_reload.urls")),
     path('api/', include('api.urls')),  
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

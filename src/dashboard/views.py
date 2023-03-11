@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card
-from django.utils import timezone
 from users.models import CustomUser
+from card_interactions.models import Like, Comment
 from django.db import models
 from django.db.models import Case, When
 import json
@@ -49,8 +49,7 @@ def index(request):
     else:
         return redirect('/admin/')
     
-
-def handle_grid_update(request):
+def handle_network_update(request):
     if request.method == "POST":
         current_user = request.user
         current_workshop = current_user.active_workshop
@@ -61,21 +60,5 @@ def handle_grid_update(request):
         t.card_order = jsonStr
         t.save() 
         return HttpResponse(status=204)
-    elif request.method == "GET":
-        current_user = request.user
-        current_workshop = current_user.active_workshop
-        cards = Card.objects.filter(workshop=current_workshop)
-        if not current_workshop.card_order:
-            ordered_cards = cards
-        else:
-            get_card_order_list = ast.literal_eval(current_workshop.card_order)
-            order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
-            ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
-        context = {'cards': ordered_cards }
-        return render(request, 'grid.html', context)
     else:
         return HttpResponse(status=403)
-
-def close(request):
-    print("Card Closed")
-    return render(request, 'empty.html')

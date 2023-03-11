@@ -27,17 +27,17 @@ SECRET_KEY = 'django-insecure-%4)0s(84s!p3tb=@%8g7%u&am@yhod3)z%w-iu3)j#xzgwc@$q
 DEBUG = True
 
 ALLOWED_HOSTS = ['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', 
-                    'localhost', 
-                    '127.0.0.1', 
-                    'mapmaker.nl', 
-                    'www.mapmaker.nl',
-                    '0.0.0.0'
-                    ]
+                 'localhost', 
+                 '127.0.0.1', 
+                 'mapmaker.nl', 
+                 'www.mapmaker.nl',
+                 '0.0.0.0'
+                 ]
 CSRF_TRUSTED_ORIGINS =['https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', 
-                        'http://127.0.0.1', 
-                        'https://mapmaker.nl', 
-                        'https://www.mapmaker.nl',
-                        'https://0.0.0.0']
+                       'http://127.0.0.1', 
+                       'https://mapmaker.nl', 
+                       'https://www.mapmaker.nl',
+                       'https://0.0.0.0']
 
 
 # Application definition
@@ -147,13 +147,11 @@ INTERNAL_IPS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-# this defines the url for static files
-# eg: base-url.com/static/your-js-file.js
 STATIC_URL = '/static/'
-
-# this is directory name where collectstatic files command will put your app level static files
-STATIC_ROOT = 'staticfiles'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 
 # Default primary key field type
