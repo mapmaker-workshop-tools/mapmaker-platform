@@ -1,9 +1,7 @@
 <!-- Main modal -->
-
-                   
-                    <form action="/card/{{ cardid }}/edit/title/" method="post" hx-target="this" hx-swap="outerHTML">
+                    <form hx-post="/card/{{ cardid }}/edit/title/" hx-target="this"  hx-swap="outerHTML">
                         {% csrf_token %}
                         {{ form }}
-                        <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"">Submit</button>
+                        <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                         <button class="btn" hx-get="/contact/1">Cancel</button>
                       </form> 

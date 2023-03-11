@@ -54,7 +54,7 @@ def edit_card_title(request, id):
             card.title = form.cleaned_data['title']
             card.save()
             messages.add_message(request, messages.INFO, 'Card title updated')
-            return redirect('/dashboard')
+            return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id})
     else: 
         form = CardTitle()
     return render(request, 'edit_title.html', {'form': form, "cardid": id})
@@ -68,22 +68,16 @@ def edit_card_description(request, id):
             card.description = form.cleaned_data['description']
             card.save()
             messages.add_message(request, messages.INFO, 'Card description updated')
-            return redirect('/dashboard')
+            return render(request, 'new_description.html', {"description" : form.cleaned_data['description'], "id" : id})
     else: 
         form = CardDescription()
         card = Card.objects.get(id=id)
         description = card.description
     return render(request, 'edit_description.html', {'form': form, "cardid": id, "description":description})
 
-def close(request):
-    print("Cliecked")
-    return render(request, 'empty.html')
-
 def register_like(request, id):
     current_user = request.user
-    print(current_user)
     cardid = id
-    print(cardid)
     ## If this card exists
     if not Card.objects.filter(pk=id).exists():
         return HttpResponse(status=404)
@@ -95,11 +89,26 @@ def register_like(request, id):
         if like.exists(): 
             like.delete()
             print("like deleted")
-            messages.add_message(request, messages.INFO, 'Unfollowed this card')
+            return render(request, 'notliked.html', {"id":id})
         else:
             card = Card.objects.get(id=id)
             new_like = Follower(user_like=current_user, card_liked=card)
             new_like.save()
             messages.add_message(request, messages.INFO, 'You followed card' +card.title)
-            print("New like registered")
+            return render(request, 'liked.html', {"id":id})
+    
+def delete_card(request, id):
+    ## If this card exists
+    if not Card.objects.filter(pk=id).exists():
+        return HttpResponse(status=404)
+    else:
+        #We don't actually delete the card but set it to "empty and blank"""
+        card = Card.objects.get(id=id)
+        card.title = 'empty'
+        card.description = 'empty'
+        card.cardtype = 'empty'
+        card.author = CustomUser(pk=5)
+        card.save()
+        messages.add_message(request, messages.INFO, 'Card deleted')
         return HttpResponse(status=204)
+    

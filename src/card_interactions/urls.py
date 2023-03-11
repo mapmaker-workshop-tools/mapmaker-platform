@@ -24,4 +24,5 @@ urlpatterns = [
     path('<int:id>/edit/title/', views.edit_card_title, name='Edit Card'),
     path('<int:id>/edit/description/', views.edit_card_description, name='Edit Card'),
     path('<int:id>/like/', views.register_like, name='Register like'),
+    path('<int:id>/delete/', views.delete_card, name='Delete card'),
 ]

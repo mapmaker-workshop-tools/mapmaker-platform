@@ -21,5 +21,5 @@ from dashboard import views
 urlpatterns = [
     path('', views.index, name='dashboard'),
     path('update', views.handle_grid_update, name='handle_network_update'),
-    path('close/', views.close, name='get_card_info'),
+    path('close', views.close, name='close card'),
 ]

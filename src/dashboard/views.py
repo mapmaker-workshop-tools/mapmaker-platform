@@ -77,5 +77,5 @@ def handle_grid_update(request):
         return HttpResponse(status=403)
 
 def close(request):
-    print("Cliecked")
+    print("Card Closed")
     return render(request, 'empty.html')
