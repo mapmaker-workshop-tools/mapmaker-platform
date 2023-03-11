@@ -113,5 +113,5 @@ def delete_card(request, id):
         card.author = CustomUser(pk=5)
         card.save()
         messages.add_message(request, messages.INFO, 'Card deleted')
-        return HttpResponse(status=204)
+        return render(request, 'empty.html')
     
