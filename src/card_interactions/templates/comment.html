@@ -1,0 +1,26 @@
+{% for comment in comments %}
+
+<div id="comments" class="flow-root p-4">
+    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+        <li class="py-3 sm:py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src=" {{comment.author.avatar_url}}" alt="Neil image">
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold  text-gray-900 truncate dark:text-white">
+                        {{comment.author.first_name}} {{comment.author.last_name}} -- {{comment.id}}
+                    </p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {{comment.date_created}}
+                    </p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {{comment.comment_text}}                    </p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% empty %}
+                <p class="p-4 ml-auto text-xs text-gray-500 dark:text-gray-400">No updates yet, add one!</p>
+{% endfor %}

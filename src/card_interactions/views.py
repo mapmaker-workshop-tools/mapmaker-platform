@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from workshop.models import Card
 from django.utils import timezone
 from users.models import CustomUser
-from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource
+from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment
 from .models import Follower, Resource, Comment
 from django.contrib import messages
 
@@ -16,13 +16,13 @@ def get_card_details(request, id):
     current_user = request.user
     resources = Resource.objects.filter(card=card)
     comments = Comment.objects.filter(card=card)
-    print(resources)
     followers = Follower.objects.filter(card_liked=id)
     followerIDlist = []
     for i in followers:
         followerIDlist.append(i.user_like)
     followers = CustomUser.objects.filter(email__in=followerIDlist)
     user_follows_card = current_user in followerIDlist
+    form = CardComment()
     context = {
         'cardtype': card.cardtype,
         'author': card.author,
@@ -33,7 +33,8 @@ def get_card_details(request, id):
         'id': card.id,        
         'user_follows_card': user_follows_card,
         'resources': resources,
-        'comments': comments
+        'comments': comments,
+        'form': form
     }
     return render(request, 'drawer.html', context)
     
@@ -149,3 +150,28 @@ def create_resource(request, id):
         form = CardResource()
         return render(request, 'create_resource.html', {'form': form, "cardid": id})
     
+def send_email(notify):
+    if notify == 'yes':
+        print("Sending emails")
+    else: 
+        print("Not sending emails")
+    
+
+def create_comment(request, id, notify):
+    if request.method == 'POST':
+        card = Card.objects.get(id=id)
+        form = CardComment(request.POST)
+        if form.data['comment_text'] == '':
+            return HttpResponse(status=204)
+        else:
+            new_comment = Comment(
+                    card = card,
+                    comment_text = form.data['comment_text'],
+                    author = request.user,
+                    )
+            new_comment.save()
+            comments = Comment.objects.filter(card=card).order_by('date_created').values()
+            send_email(notify)
+            return render(request, 'comment.html', {'comments': comments})
+    else:
+        return HttpResponse(status=404)

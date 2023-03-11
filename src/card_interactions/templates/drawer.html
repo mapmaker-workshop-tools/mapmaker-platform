@@ -2,8 +2,10 @@
 <!--  left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-label"> -->
 
 <div id='drawer' class="overflow-y-auto h-screen m-4 p-4 fixed top-0 right-0 z-40 max-w-xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <button type="button" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Close</button>
-
+    <div class="flex justify-between">
+        <button type="button" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 m-4 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Close</button>
+        <button type="button" hx-get="/card/{{id}}/delete"  hx-target="#drawer" class="m-4 py-2.5  text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete Card</button>
+    </div>
     
     <div class="p-5">
         {% include "new_title.html" %}
@@ -30,8 +32,7 @@
 
    <h5 class="mb-2 p-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Updates</h5>
 
-   {% include 'commentsection.html' with comments=comments %}
-   <button type="button" hx-get="/card/{{id}}/delete"  hx-target="#drawer" class=" my-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete Card</button>
+   {% include 'typecomment.html' with comments=comments %}
 
     </div>
     
