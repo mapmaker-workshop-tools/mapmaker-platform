@@ -175,3 +175,23 @@ def create_comment(request, id, notify):
             return render(request, 'comment.html', {'comments': comments})
     else:
         return HttpResponse(status=404)
+
+def delete_comment(request, id, comment_id):
+    if request.method == 'DELETE':
+        card = Card.objects.get(id=id)
+        comment_delete = Comment.objects.get(id=comment_id)
+        comments = Comment.objects.filter(card=card)
+        comments = comments.order_by('date_created')
+        comment_delete.delete()
+        print(comment_delete)
+        print(comments)
+        return render(request, 'comment.html', {'comments': comments, 'id':id})
+
+
+def delete_resource(request, id, resource_id):
+    if request.method == 'DELETE':
+        card = Card.objects.get(id=id)
+        resource_delete = Resource.objects.get(id=resource_id)
+        resource_delete.delete()
+        resources = Resource.objects.filter(card=card)
+        return render(request, 'resources.html', {'resources': resources, 'id':id})

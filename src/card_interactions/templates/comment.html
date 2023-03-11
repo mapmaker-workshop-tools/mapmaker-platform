@@ -1,26 +1,32 @@
-{% for comment in comments %}
+
 
 <div id="comments" class="flow-root p-4">
+    {% for comment in comments %}
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
         <li class="py-3 sm:py-4">
             <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
-                    <img class="w-8 h-8 rounded-full" src=" {{comment.author.avatar_url}}" alt="Neil image">
+                    <img class="w-8 h-8 rounded-full" src=" {{comment.author.avatar_url}}" alt="Author profile image">
                 </div>
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold  text-gray-900 truncate dark:text-white">
-                        {{comment.author.first_name}} {{comment.author.last_name}} -- {{comment.id}}
+                        {{comment.author.first_name}} {{comment.author.last_name}}
                     </p>
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         {{comment.date_created}}
                     </p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                    <p class="text-sm text-gray-900 font-medium dark:text-gray-400">
                         {{comment.comment_text}}                    </p>
                 </div>
+                {% if comment.author == request.user %}
+                <button type="button" hx-confirm="Are you sure you wish to delete your comment?" hx-target="#comments" hx-swap="outerHTML" hx-DELETE="/card/{{ id }}/comment/{{comment.id}}/delete/" class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    <i class="fa-regular fa-trash"></i><br> 
+                </button>
+                {% endif %}
             </div>
         </li>
     </ul>
-</div>
 {% empty %}
                 <p class="p-4 ml-auto text-xs text-gray-500 dark:text-gray-400">No updates yet, add one!</p>
 {% endfor %}
+</div>

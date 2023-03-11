@@ -26,5 +26,7 @@ urlpatterns = [
     path('<int:id>/like/', views.register_like, name='Register like'),
     path('<int:id>/delete/', views.delete_card, name='Delete card'),
     path('<int:id>/resource/create/', views.create_resource, name='Create Resource'),
-    path('<int:id>/comment/create/<str:notify>/', views.create_comment, name='Create comment')
+    path('<int:id>/comment/create/<str:notify>/', views.create_comment, name='Create comment'),
+    path('<int:id>/comment/<int:comment_id>/delete/', views.delete_comment, name='Delete comment'),
+    path('<int:id>/resource/<int:resource_id>/delete/', views.delete_resource, name='Delete comment'),
 ]

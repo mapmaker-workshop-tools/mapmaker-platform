@@ -1,9 +1,7 @@
-<h5 class="m-4  text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Resources</h5>
 
-<div id="resources" hx-target="this"  hx-swap="afterend" class="p-4 flow-root">
+<div id="resources" class="p-4 flow-root">
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
         {% for resource in resources %}
-        <a href="{{resource.document_url}}" target="popup">
             <li class="py-3 sm:py-4">
                 <div class="flex items-center space-x-4">
                     <div class="flex-shrink-0">
@@ -11,23 +9,31 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                            {{resource.document_description|truncatechars:70}}
+                            <a href="{{resource.document_url}}" target="popup">  {{resource.document_description|truncatechars:70}}</a>
 
                         </p>
                         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                             {{resource.document_url|truncatechars:50 }}
+                            <a href="{{resource.document_url}}" target="popup"> {{resource.document_url|truncatechars:50 }} </a>
                         </p>
                     </div>
+                </a>
+                    {% if resource.owner == request.user %}
+                    by you
+                            <button type="button" hx-confirm="Are you sure you wish to delete this resource?" hx-target="#resources" hx-swap="outerHTML" hx-DELETE="/card/{{ id }}/resource/{{resource.id}}/delete/" class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                <i class="fa-regular fa-trash"></i><br> 
+                            </button>
+                    {% else %}
                     <div class=" p-2 inline-flex items-center text-base text-gray-900 dark:text-white">
                         {{resource.owner.first_name}} {{resource.owner.last_name}}
                         <div class="flex-shrink-0 p-2">
                             <img class="w-8 h-8 rounded-full" src="{{resource.owner.avatar_url}}" alt="Lana image">
                         </div>
-
                     </div>
+
+                    {% endif %}
+                    
                 </div>
             </li>
-        </a>
                 {% empty %}
                 <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">No resources, add one!</p>
         {% endfor %}        
