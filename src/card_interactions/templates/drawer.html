@@ -19,8 +19,11 @@
             {% endfor %}
         </div> 
         <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">Following a card ensures you'll receive a notification when a comment or resource is added.</p>
-
-        {% include "notliked.html" with id=id %}
+        {% if user_follows_card %}
+            {% include "liked.html" with id=id %}
+        {% else %}
+            {% include "notliked.html" with id=id %}
+        {% endif %}
         
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Description</h5>
             {% include "new_description.html" %}

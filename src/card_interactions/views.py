@@ -13,18 +13,21 @@ from django.contrib import messages
     
 def get_card_details(request, id):
     card = Card.objects.get(id=id)
+    current_user = request.user
     followers = Follower.objects.filter(card_liked=id)
     followerIDlist = []
     for i in followers:
         followerIDlist.append(i.user_like)
     followers = CustomUser.objects.filter(email__in=followerIDlist)
+    user_follows_card = current_user in followerIDlist
     context = {
         'cardtype': card.cardtype,
         'author': card.author,
         'title': card.title,
         'description': card.description,
         'followers': followers,
-        'id': card.id        
+        'id': card.id,        
+        'user_follows_card':user_follows_card
     }
     return render(request, 'drawer.html', context)
     
