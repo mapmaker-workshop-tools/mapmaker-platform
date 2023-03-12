@@ -10,11 +10,14 @@
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
                             <a href="{{resource.document_url}}" target="popup">  {{resource.document_description|truncatechars:70}}</a>
-
+                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                            {{resource.date_created}}
                         </p>
                         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                             <a href="{{resource.document_url}}" target="popup"> {{resource.document_url|truncatechars:50 }} </a>
                         </p>
+                       
                     </div>
                 </a>
                     {% if resource.owner == request.user %}

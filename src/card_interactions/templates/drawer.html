@@ -1,5 +1,7 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 
 <!--  left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-label"> -->
+
 
 <div id='drawer' class="overflow-y-auto h-screen m-4 p-4 fixed top-0 right-0 z-40 max-w-xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="flex justify-between">
@@ -7,18 +9,46 @@
         <button type="button" hx-get="/card/{{id}}/delete" hx-confirm="Are you sure you wish to delete this card?"  hx-target="#drawer" class="m-4 py-2.5  text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete Card</button>
     </div>
     
-    <div class="p-5">
-        {% include "new_title.html" %}
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Followers</h5>
+        {% include "new_title.html" with author=author %}
+        <div class="p-5">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Author</h5>
+            
+            <div class="p-3">
+            <div class="flex items-center justify-between mb-2">
+                <a href="#">
+                    <img class="w-10 h-10 rounded-full" src="{{author.avatar_url}}" alt="{{author.firstname}} {{author.last_name}}">
+                </a>
+            </div>
+            <p class="text-base font-semibold leading-none text-gray-900 dark:text-white">
+                {{author.first_name}} {{author.last_name}}
+            </p>
+            <p class="mb-3 text-sm font-normal">
+                <a href="#" class="hover:underline">{{author.organisation}} </a>
+            </p>
+            <ul class="flex text-sm font-light">
+                <li class="mr-2">
+                    <a href="{{author.linkedin}}" class="hover:underline">
+                        <span class="font-semibold text-gray-900 dark:text-white"><i class="fa-brands fa-linkedin"></i></span>
+                        <span>{{author.linkedin}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:{{author.email}}" class="hover:underline">
+                        <span class="font-semibold text-gray-900 dark:text-white"> <i class="fa-solid fa-envelope"></i></span>
+                        <span>{{author.email}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Following</h5>
         <div class="flex -space-x-1 overflow-hidden p-4">
             {% for follower in followers %}
                 <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="{{follower.avatar_url}}" alt="">
                 {% empty %}
+                <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">No followers yet, be the first!</p>
             {% endfor %}
         </div> 
-        <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">Following a card ensures you'll receive a notification when a comment or resource is added.</p>
         {% if user_follows_card %}
             {% include "liked.html" with id=id %}
         {% else %}

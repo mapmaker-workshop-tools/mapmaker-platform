@@ -36,6 +36,7 @@ def get_card_details(request, id):
         'comments': comments,
         'form': form
     }
+    print(comments)
     return render(request, 'drawer.html', context)
     
 def create_card(request, id):
@@ -170,8 +171,9 @@ def create_comment(request, id, notify):
                     author = request.user,
                     )
             new_comment.save()
-            comments = Comment.objects.filter(card=card).order_by('date_created').values()
+            comments = Comment.objects.filter(card=card)
             send_email(notify)
+            print(comments)
             return render(request, 'comment.html', {'comments': comments})
     else:
         return HttpResponse(status=404)
