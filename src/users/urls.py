@@ -22,7 +22,8 @@ from users import views
 
 
 urlpatterns = [
-    path('login', views.login, name='login'),
+    path('login', views.login_user, name='login'),
+    path('logout', views.logout_view, name='logout'),
     path('register', views.register, name='register'),
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_email.html'), name="password_reset_done"),
