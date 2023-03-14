@@ -36,7 +36,6 @@ def get_card_details(request, id):
         'comments': comments,
         'form': form
     }
-    print(comments)
     return render(request, 'drawer.html', context)
     
 def create_card(request, id):
@@ -99,7 +98,6 @@ def register_like(request, id):
     # Delete the like 
         if like.exists(): 
             like.delete()
-            print("like deleted")
             return render(request, 'notliked.html', {"id":id})
         else:
             card = Card.objects.get(id=id)
@@ -145,7 +143,6 @@ def create_resource(request, id):
             comment.save()
             return redirect('/dashboard')
         else:
-            print("error")
             return HttpResponse(status=404)
     else:
         form = CardResource()
@@ -173,7 +170,6 @@ def create_comment(request, id, notify):
             new_comment.save()
             comments = Comment.objects.filter(card=card)
             send_email(notify)
-            print(comments)
             return render(request, 'comment.html', {'comments': comments})
     else:
         return HttpResponse(status=404)
@@ -185,8 +181,6 @@ def delete_comment(request, id, comment_id):
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by('date_created')
         comment_delete.delete()
-        print(comment_delete)
-        print(comments)
         return render(request, 'comment.html', {'comments': comments, 'id':id})
 
 
