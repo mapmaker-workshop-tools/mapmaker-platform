@@ -44,7 +44,13 @@ def profile_edit(request, id):
             organisation = request.POST['organisation']
             linkedin = request.POST['linkedin']
             messages.add_message(request, messages.INFO, 'Updated profile')
-            print(request.user)
+            t = CustomUser.objects.get(id=id)
+            t.first_name = firstname
+            t.last_name = lastname
+            t.email = email
+            t.linkedin = linkedin
+            t.save()
+            #return redirect('/user/profile')
             return render(request, 'user_profile_table.html')
 
         elif request.method == 'GET':

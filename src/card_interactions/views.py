@@ -17,7 +17,6 @@ def validate_user_access_to_card(id, request):
     else:
         print(False)
 
-@condition(validate_user_access_to_card)
 def get_card_details(request, id):
     card = Card.objects.get(id=id)
     current_user = request.user
