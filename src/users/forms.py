@@ -31,3 +31,13 @@ class CustomUserLoginForm(AuthenticationForm):
     class Meta:
             model = CustomUser
             fields = ("email","password")
+
+
+class CustomUserProfile(UserChangeForm):
+    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': tailwind_class}))
+    
+    class Meta:
+            model = CustomUser
+            fields = ("username","password")
+    

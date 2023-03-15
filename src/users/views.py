@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import CustomUserLoginForm
+from .forms import CustomUserLoginForm, CustomUserProfile
+from users.models import CustomUser
 
 
 # Create your views here.
@@ -28,3 +29,25 @@ def logout_view(request):
 
 def register(request):
     return render(request, 'register.html')
+
+def profile(request):
+    current_user = request.user
+    form = CustomUserLoginForm()
+    return render(request, 'userprofile.html', {'user': current_user, 'form':CustomUserProfile})
+
+def profile_edit(request, id):
+    if request.user.id == id:    
+        if request.method == 'POST':
+            firstname = request.POST['firstName']
+            lastname = request.POST['lastname']
+            email = request.POST['email']
+            organisation = request.POST['organisation']
+            linkedin = request.POST['linkedin']
+            messages.add_message(request, messages.INFO, 'Updated profile')
+            print(request.user)
+            return render(request, 'user_profile_table.html')
+
+        elif request.method == 'GET':
+            return render(request, 'user_profile_table_edit.html')
+    else: 
+        return HttpResponse(status=403)

@@ -2,6 +2,7 @@
 # Create your views here.
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import condition
 from workshop.models import Card
 from django.utils import timezone
 from users.models import CustomUser
@@ -9,8 +10,14 @@ from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, Card
 from .models import Follower, Resource, Comment
 from django.contrib import messages
 
+def validate_user_access_to_card(id, request):
+    card = Card.objects.get(id=id)
+    if request.user in card.workshop.participants.all():
+        print(True)
+    else:
+        print(False)
 
-    
+@condition(validate_user_access_to_card)
 def get_card_details(request, id):
     card = Card.objects.get(id=id)
     current_user = request.user
