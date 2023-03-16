@@ -1,52 +1,93 @@
 {%  extends 'base.html' %}
 
 {% block content %}
+<div class="flex flex-row justify-center">
+    
+    <div class=" basis-1/4 overflow-hidden bg-white shadow sm:rounded-lg mb-8 m-3 p-5">
+        <div class="bg-white py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="max-w-2xl mb-4">
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Profile</h1>
+                <p class="mt-6 text-lg leading-8 text-gray-600">This is your profile. Here you find your key information, you can change the workshop you're following and view your key statistics</p>
+              </div>
+            <div class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8">
+                <div class="flex flex-col items-center pb-10">
+                    {% if not user.avatar_url%}
+                    <div class="flex items-center mt-4 space-x-3">
+                        <svg class="text-gray-200 w-14 h-14 dark:text-gray-700" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    {% else %}
+                    <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{user.avatar_url}}" alt="{{user.firstname}} profile picture"/>
+                    {% endif %}
+                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{user.first_name}} {{user.last_name}}</h5>
+                    <span class="text-m text-gray-500 dark:text-gray-400">{{user.organisation}}</span>
+                    <ul class="flex text-sm font-light">
+                        <li class="mr-2">
+                            <a href="{{user.linkedin}}" class="hover:underline">
+                                <span class="font-semibold text-gray-900 dark:text-white"><i class="fa-brands fa-linkedin"></i></span>
+                                <span>{{user.linkedin}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:{{user.email}}" class="hover:underline">
+                                <span class="font-semibold text-gray-900 dark:text-white"> <i class="fa-solid fa-envelope"></i></span>
+                                <span>{{user.email}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="flex mt-4 space-x-3 md:mt-6">
+                        <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Upload picture</a>
+                    </div>
+                
+                    </div>
+            </div>
+        </div>
+        </div>
+    </div>
 
-  <main>
-    <div class="flex flex-col items-center pb-10">
-    {% if not user.avatar_url%}
-    <div class="flex items-center mt-4 space-x-3">
-        <svg class="text-gray-200 w-14 h-14 dark:text-gray-700" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
+<div class=" basis-/4 overflow-hidden bg-white shadow sm:rounded-lg mb-8 m-3 p-5">
+    <div class="bg-white py-24 sm:py-32">
+        <div class="max-w-2xl mb-4 ">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact details</h2>
+        </div>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div hx-target="this" hx-swap="outerHTML" class="border-t border-gray-200 ">
+            {% include 'user_profile_table.html' with user=user%}
+            <button hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
+                Click To Edit
+            </button>
+        </div>
     </div>
-    {% else %}
-    <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{user.avatar_url}}" alt="{{user.firstname}} profile picture"/>
-    {% endif %}
-    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{user.first_name}} {{user.last_name}}</h5>
-    <span class="text-m text-gray-500 dark:text-gray-400">{{user.organisation}}</span>
-    <ul class="flex text-sm font-light">
-        <li class="mr-2">
-            <a href="{{user.linkedin}}" class="hover:underline">
-                <span class="font-semibold text-gray-900 dark:text-white"><i class="fa-brands fa-linkedin"></i></span>
-                <span>{{user.linkedin}}</span>
-            </a>
-        </li>
-        <li>
-            <a href="mailto:{{user.email}}" class="hover:underline">
-                <span class="font-semibold text-gray-900 dark:text-white"> <i class="fa-solid fa-envelope"></i></span>
-                <span>{{user.email}}</span>
-            </a>
-        </li>
-    </ul>
-    <div class="flex mt-4 space-x-3 md:mt-6">
-        <a hx-get="profile/{{user.id}}/edit" target="table" hx-swap="innerHTML" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update details</a>
-        <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Upload picture</a>
     </div>
+</div>
+<div class=" basis-2/4 overflow-hidden bg-white shadow sm:rounded-lg mb-8 m-3 p-5">
+    <div class="bg-white py-24 sm:py-32">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8">Key stats</h1>
 
-    </div>
-    <div class="mx-auto max-w-8m py-6 sm:px-6 lg:px-8">
-        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-            <div class="px-4 py-5 sm:px-6">
-              <h3 class="text-base font-semibold leading-6 text-gray-900">Your details</h3>
-              <p class="mt-1 max-w-2xl text-sm text-gray-500">Update your settings</p>
-            </div>
-            <div hx-target="this" hx-swap="outerHTML" class="border-t border-gray-200">
-                {% include 'user_profile_table.html' with user=user%}
-                <button hx-get="profile/{{user.id}}/edit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
-                    Click To Edit
-                </button>
-            </div>
-            </div>
-          </div>
-    </div>
-  </main>
+  <div class="mx-auto max-w-7xl px-6 lg:px-8 ">
+    <dl class="grid grid-cols-1 gap-y-16 gap-x-8 text-center lg:grid-cols-3">
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Cards Created</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{cardcount}}</dd>
+      </div>
+
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Comments Posted</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{commentcount}}</dd>
+      </div>
+
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Resources Added</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{resourcecount}}</dd>
+      </div>
+
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Cards Liked</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{likecount}}</dd>
+      </div>
+    </dl>
+  </div>
+</div>
+</div>
+
 {% endblock %}

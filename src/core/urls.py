@@ -24,6 +24,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
+    path('workshop/', include('workshop.urls')),
     path('', include('homepage.urls')), 
     path('auth/', include('users.urls')),    
     path('user/', include('users.urls')),   

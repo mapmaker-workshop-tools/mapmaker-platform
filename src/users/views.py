@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import CustomUserLoginForm, CustomUserProfile
 from users.models import CustomUser
+from card_interactions.models import Card, Follower, Comment, Resource
+from datetime import datetime
 
 
 # Create your views here.
@@ -13,6 +15,8 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            user.last_login = datetime.now()
+            user.save() 
             messages.add_message(request, messages.INFO, 'welcome back ' + user.first_name)
             return redirect('/dashboard')
         else:
@@ -31,9 +35,15 @@ def register(request):
     return render(request, 'register.html')
 
 def profile(request):
-    current_user = request.user
+    user = request.user
+    workshop = user.active_workshop
+    cardcount = Card.objects.filter(author=user).count()
+    commentcount = Comment.objects.filter(author=user).count()
+    resourcecount = Resource.objects.filter(owner=user).count()
+    likecount = Follower.objects.filter(user_like=user).count()
+    print(likecount)
     form = CustomUserLoginForm()
-    return render(request, 'userprofile.html', {'user': current_user, 'form':CustomUserProfile})
+    return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})
 
 def profile_edit(request, id):
     if request.user.id == id:    

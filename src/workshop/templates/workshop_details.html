@@ -1,0 +1,38 @@
+<dl id="table">
+    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class="text-sm font-medium text-gray-500">Workshop is active</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{workshop.is_active}}</dd>
+    </div>
+    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class="text-sm font-medium text-gray-500">Workshop name</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{workshop.workshop_name}}</dd>
+    </div>
+    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class="text-sm font-medium text-gray-500">Workshop Owner</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{workshop.workshop_owner.first_name}} {{workshop.workshop_owner.last_name}}</dd>
+    </div>
+    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class="text-sm font-medium text-gray-500">Workshop owner contact details</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{workshop.workshop_owner}}</dd>
+    </div>
+    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class="text-sm font-medium text-gray-500">Linkedin</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.linkedin}}</dd>
+    </div>
+    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Workshop date</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{workshop.workshop_date}}</dd>
+    </div>
+    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Participant email list date</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <ul>
+                {% for participant in participants %}
+                <li> {{ participant }} </li> 
+                {% endfor %}
+            </ul>
+        </dd>
+    </div>
+    
+  </dd>
+</dl>

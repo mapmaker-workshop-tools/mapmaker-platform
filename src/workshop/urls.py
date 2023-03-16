@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from dashboard import views
+from workshop import views
 
 
 urlpatterns = [
-    path('', views.index, name='dashboard'),
-    path('update', views.handle_grid_update, name='handle_network_update'),
-    path('close', views.close, name='close card')
+    path('settings', views.workshop_settings, name='workshop settings'),
 ]

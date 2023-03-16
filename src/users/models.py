@@ -13,6 +13,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     date_modified = models.DateTimeField(auto_now=True)
+    last_login = models.DateTimeField(default=timezone.now, editable=True)
     linkedin = models.CharField(max_length=100, unique=False, blank=True)
     organisation = models.CharField(max_length=100, unique=False, blank=True)
     first_name = models.CharField(max_length=100)
