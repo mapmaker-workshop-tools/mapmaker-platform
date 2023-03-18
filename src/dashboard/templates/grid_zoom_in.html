@@ -2,27 +2,30 @@
     .gridmain {
         display:flex;
         flex-wrap: nowrap;
-        --s: 50px;  /* size  */
+        --s: 200px;  /* size  */
         --m: 1px;    /* margin */
         --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
         padding-bottom: 50px;
+
     }
 
     .gridcontainer {
-      font-size: 0; /*disable white space between inline block element */
-      width: 900px; /* We need a fixed size so we know that the divs won't overflow*/
-      height: 1200px; /* We need a fixed size so we know that the divs won't overflow*/
+        font-size: 0; /*disable white space between inline block element */
+        width: 2990px; /* We need a fixed size so we know that the divs won't overflow*/
+        height: 4000px; /* We need a fixed size so we know that the divs won't overflow*/
+        background-color: aliceblue;
+
     }
 
     .gridcontainer div {
-      width: var(--s);
-      margin: var(--m);
-      height: calc(var(--s)*1.1547); 
-      display: inline-block;
-      font-size:initial;
-      clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
-      margin-bottom: calc(var(--m) - var(--s)*0.2885); 
-      overflow: hidden;
+        width: var(--s);
+        margin: var(--m);
+        height: calc(var(--s)*1.1547); 
+        display: inline-block;
+        font-size:initial;
+        clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+        margin-bottom: calc(var(--m) - var(--s)*0.2885); 
+        overflow: hidden;
     }
     /*
     .gridcontainer div:nth-child(odd) {
@@ -33,7 +36,16 @@
         content: "";
         width: calc(var(--s)/2 + var(--m));
         float: left;
-        height: 120%;
+        height: 100%;
+        shape-outside: repeating-linear-gradient(     
+                        #0000 0 calc(var(--f) - 3px),      
+                        #000  0 var(--f));
+    }
+    .gridcontainer::after {
+        content: "";
+        width: calc(var(--s)/2 + var(--m));
+        float: right;
+        height: 100%;
         shape-outside: repeating-linear-gradient(     
                         #0000 0 calc(var(--f) - 3px),      
                         #000  0 var(--f));

@@ -2,27 +2,30 @@
     .gridmain {
         display:flex;
         flex-wrap: nowrap;
-        --s: 100px;  /* size  */
+        --s: 50px;  /* size  */
         --m: 1px;    /* margin */
         --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
         padding-bottom: 50px;
+
     }
 
     .gridcontainer {
-      font-size: 0; /*disable white space between inline block element */
-      width: 1800px; /* We need a fixed size so we know that the divs won't overflow*/
-      height: 1200px; /* We need a fixed size so we know that the divs won't overflow*/
+        font-size: 0; /*disable white space between inline block element */
+        width: 728px; /* We need a fixed size so we know that the divs won't overflow*/
+        height: 1000px; /* We need a fixed size so we know that the divs won't overflow*/
+        background-color: aliceblue;
+
     }
 
     .gridcontainer div {
-      width: var(--s);
-      margin: var(--m);
-      height: calc(var(--s)*1.1547); 
-      display: inline-block;
-      font-size:initial;
-      clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
-      margin-bottom: calc(var(--m) - var(--s)*0.2885); 
-      overflow: hidden;
+        width: var(--s);
+        margin: var(--m);
+        height: calc(var(--s)*1.1547); 
+        display: inline-block;
+        font-size:initial;
+        clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+        margin-bottom: calc(var(--m) - var(--s)*0.2885); 
+        overflow: hidden;
     }
     /*
     .gridcontainer div:nth-child(odd) {
@@ -33,13 +36,22 @@
         content: "";
         width: calc(var(--s)/2 + var(--m));
         float: left;
-        height: 120%;
+        height: 100%;
+        shape-outside: repeating-linear-gradient(     
+                        #0000 0 calc(var(--f) - 3px),      
+                        #000  0 var(--f));
+    }
+    .gridcontainer::after {
+        content: "";
+        width: calc(var(--s)/2 + var(--m));
+        float: right;
+        height: 100%;
         shape-outside: repeating-linear-gradient(     
                         #0000 0 calc(var(--f) - 3px),      
                         #000  0 var(--f));
     }
     .hexagonhidden {
-        padding-top: 50px;
+        padding-top: 9px;
         text-align: center;
         vertical-align: middle;
         color: #fff;
@@ -50,10 +62,11 @@
     .hexagonhidden:hover{
         background-color:#78E7BF;
         opacity: 0.5;
-        padding-top: 45px;
+        padding-top: 20px;
+
     }
     .hexagon {
-        padding-top: 10px;
+        padding-top: 0px;
         text-align: center;
         vertical-align: middle;
         color: #000000;
@@ -69,31 +82,31 @@
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
             <div class="hexagonhidden" hx-get="/card/{{ card.id }}/create" hx-trigger="click" hx-target="#modal"><input type='hidden' name='item' value='{{ card.id}}'/>   
-                <i class="fa-regular fa-2xl fa-plus"></i><br>         
+                <i class="fa-regular fa-plus"></i><br>         
             </div>
         {% elif card.cardtype == 'ambition' %}
             <div class="hexagon" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-solid fa-xl fa-eye"></i><br>
+                <i class="fa-solid fa-eye"></i><br>
                 {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'challenge' %}E6799D
             <div class="hexagon" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-regular fa-xl fa-mountain"></i><br>
+                <i class="fa-regular fa-mountain"></i><br>
                 {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'idea' %}
             <div class="hexagon"  hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-regular fa-lightbulb fa-xl"></i><br>
+                <i class="fa-regular fa-lightbulb "></i><br>
                 {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'pro' %}
             <div class="hexagon"  hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #ffeb39;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-solid fa-circle-up fa-xl"></i><br>
+                <i class="fa-solid fa-circle-up "></i><br>
                 {{ card.title|truncatechars:20}}
             </div>
             {% elif card.cardtype == 'con' %}
             <div class="hexagon" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-solid fa-circle-down fa-xl"></i><br>
+                <i class="fa-solid fa-circle-down"></i><br>
                 {{ card.title|truncatechars:20}}
             </div>
         {% endif %}

@@ -86,7 +86,7 @@ def edit_card_description(request, id):
             messages.add_message(request, messages.INFO, 'Card description updated')
             return render(request, 'new_description.html', {"description" : form.cleaned_data['description'], "id" : id})
     else: 
-        form = CardDescription()
+        form = CardDescription(id)
         card = Card.objects.get(id=id)
         description = card.description
     return render(request, 'edit_description.html', {'form': form, "cardid": id, "description":description})

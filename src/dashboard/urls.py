@@ -21,5 +21,7 @@ from dashboard import views
 urlpatterns = [
     path('', views.index, name='dashboard'),
     path('update', views.handle_grid_update, name='handle_network_update'),
-    path('close', views.close, name='close card')
+    path('close', views.close, name='close card'),
+    path('zoom_in', views.zoom_in),
+    path('zoom_out', views.zoom_out),
 ]

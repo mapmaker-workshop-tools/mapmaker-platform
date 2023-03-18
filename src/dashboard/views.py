@@ -44,7 +44,9 @@ def index(request):
                 "ideacount": cards.filter(workshop=current_workshop).filter(cardtype='idea').count(), 
                 "challengecount": cards.filter(workshop=current_workshop).filter(cardtype='challenge').count(),  
                 "cardscount": cards.count(), 
+                "zoomlevel": str(current_user.zoom_level),
                 "participantcount": participants.count()}
+        print(current_user.zoom_level)
         return render(request, 'dashboard_index.html', context)
     else:
         return redirect('/user/login')
@@ -72,10 +74,46 @@ def handle_grid_update(request):
             order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
             ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
         context = {'cards': ordered_cards }
-        return render(request, 'grid.html', context)
+        if current_user.zoom_level == '0':
+            return render(request, 'grid_zoom_standard.html', context)
+        elif current_user.zoom_level == '1':
+            return render(request, 'grid_zoom_out.html', context)
+        elif current_user.zoom_level == '2':
+            return render(request, 'grid_zoom_in.html', context)
     else:
         return HttpResponse(status=403)
 
 def close(request):
     print("Card Closed")
     return render(request, 'empty.html')
+
+
+def zoom_in(request):
+    print("Zoom in hit")
+    user = request.user
+    t = CustomUser.objects.get(id=user.id)
+    zoom_level = user.zoom_level
+    if zoom_level == '0':
+        t.zoom_level = '2'
+        t.save() 
+    elif zoom_level == '1':
+        t.zoom_level = '0'
+        t.save() 
+    else:
+        pass
+    return HttpResponse(status=204)
+
+def zoom_out(request):
+    print("Zoom out hit")
+    user = request.user
+    t = CustomUser.objects.get(id=user.id)
+    zoom_level = user.zoom_level
+    if zoom_level == '0':
+        t.zoom_level = '1'
+        t.save() 
+    elif zoom_level == '1':
+        pass
+    else:
+        t.zoom_level = '0'
+        t.save() 
+    return HttpResponse(status=204)

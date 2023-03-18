@@ -21,7 +21,7 @@ class Workshop(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             super().save(*args, **kwargs)
-            for _ in range(500):
+            for _ in range(308):
                 print("Creating card")
                 card = Card(cardtype='empty',
                         author=CustomUser(pk=5),
