@@ -42,7 +42,11 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                'Lexend': ['"Press Start 2P"', 'cursive'],
+              },
+        },
     },
     plugins: [
         /**

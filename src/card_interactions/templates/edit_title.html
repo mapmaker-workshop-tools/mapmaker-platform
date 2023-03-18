@@ -5,15 +5,19 @@
     <div class="flex flex-col align-text-top items-center m-8">
         <i class="fa-solid fa-2xl fa-eye"></i><br>
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white dark:text-white">{{type}}</h5>
-        <h1  class="mb-2 text-4xl font-bold tracking-tight text-white dark:text-white">{{ title }}</h1>
+        {% csrf_token %}
+        {{ form }}
+        <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </div>
     </div>
-{% elif type == 'challenge' %}E6799D
+{% elif type == 'challenge' %}
         <div style="background: #E6799D;"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="flex flex-col align-text-top items-center m-8">
                 <i class="fa-solid fa-2xl fa-mountain"></i><br>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{type}}</h5>
-                <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                {% csrf_token %}
+                {{ form }}
+                <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </div>
             </div>
 {% elif type == 'idea' %}
@@ -21,7 +25,9 @@
             <div class="flex flex-col align-text-top items-center m-8">
                 <i class="fa-solid fa-2xl fa-eye"></i><br>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{type}}</h5>
-                <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                {% csrf_token %}
+                {{ form }}
+                <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </div>
             </div>
 {% elif type == 'pro' %}
@@ -29,7 +35,10 @@
             <div class="flex flex-col align-text-top items-center m-8">
                 <i class="fa-solid fa-circle-up fa-2xl"></i><br>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{type}}</h5>
-                <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                {% csrf_token %}
+                {{ form }}
+                <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+
             </div>
             </div>
 {% elif type == 'con' %}          
@@ -37,12 +46,11 @@
             <div class="flex flex-col align-text-top items-center m-8">
                 <i class="fa-solid fa-circle-down fa-2xl"></i><br>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{type}}</h5>
-                <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
+                {% csrf_token %}
+                {{ form }}
+                <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </div>
             </div>
 {% endif %}
-    {% csrf_token %}
-    {{ form }}
-    <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-    <button class="btn" hx-get="/contact/1">Cancel</button>
+
   </form> 

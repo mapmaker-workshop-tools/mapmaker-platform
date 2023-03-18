@@ -47,7 +47,7 @@ def index(request):
                 "participantcount": participants.count()}
         return render(request, 'dashboard_index.html', context)
     else:
-        return redirect('/admin/')
+        return redirect('/user/login')
     
 
 def handle_grid_update(request):
@@ -72,7 +72,7 @@ def handle_grid_update(request):
             order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
             ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
         context = {'cards': ordered_cards }
-        return render(request, 'grid.html', context)
+        return render(request, 'grid1.html', context)
     else:
         return HttpResponse(status=403)
 

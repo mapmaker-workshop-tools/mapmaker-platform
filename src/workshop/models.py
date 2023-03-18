@@ -48,8 +48,8 @@ class Card(models.Model):
     def __str__(self):
         return self.workshop.workshop_name + ' - ' + self.title
 
-    
-    
-
-
-    
+class Legenda(models.Model):
+    legend_label = models.CharField(blank=False, max_length=40)
+    legend_color = models.CharField(blank=False, max_length=40)
+    legend_icon = models.CharField(blank=False, max_length=40)
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, related_name = 'workshoplegenda')
