@@ -9,7 +9,7 @@ import uuid
 # Create your models here.
 class Workshop(models.Model):
     is_active = models.BooleanField(default=True)
-    workshop_name = models.CharField(max_length=30, unique=True, blank=False)
+    workshop_name = models.CharField(max_length=30, blank=False)
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     date_modified = models.DateTimeField(auto_now=True)
     workshop_date = models.DateTimeField()

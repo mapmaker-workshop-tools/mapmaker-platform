@@ -1,3 +1,5 @@
+{% load static tailwind_tags %}
+{% load static %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
 
 <!--  left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-label"> -->
@@ -40,11 +42,13 @@
                 </li>
             </ul>
         </div>
-
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Following</h5>
+    <div class="flex">
+        <img src="{% static '/icons/participants.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Following </h5> 
+    </div>
         <div class="flex -space-x-1 overflow-hidden p-4">
             {% for follower in followers %}
-                <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="{{follower.avatar_url}}" alt="">
+                <img class="inline-block h-4 w-4 rounded-full ring-2 ring-white" src="{{follower.avatar_url}}" alt="">
                 {% empty %}
                 <p class="ml-auto text-xs text-gray-500 dark:text-gray-400">No followers yet, be the first!</p>
             {% endfor %}
@@ -55,13 +59,22 @@
             {% include "notliked.html" with id=id %}
         {% endif %}
         
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Description</h5>
+        <div class="flex">
+            <img src="{% static '/icons/Notes.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Notes </h5> 
+        </div>
             {% include "new_description.html" %}
         </div>
-    <h5 class="m-4  text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Resources</h5>
+    <div class="flex m-4">
+        <img src="{% static '/icons/resources.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">resources </h5> 
+    </div>
     {% include 'resources.html' with resources=resources id=id %}       
 
-   <h5 class="mb-2 p-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Updates</h5>
+    <div class="flex ml-4">
+        <img src="{% static '/icons/Update.svg' %}" class="pb-1 h-4 w-4 mr-3 sm:h-9" alt="mapmaker Logo" />
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Updates </h5> 
+    </div>
 
    {% include 'typecomment.html' with comments=comments %}
 
