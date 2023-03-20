@@ -15,7 +15,6 @@ import re
 
 # Create your views here.
 def workshop_settings(request):
-    print('dashboard settings')
     current_user = request.user
     current_workshop = current_user.active_workshop
     cards = Card.objects.filter(workshop=current_workshop)

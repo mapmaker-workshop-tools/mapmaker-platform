@@ -1,0 +1,9 @@
+<div id="zoom">
+    {% if zoomlevel == '0' %}
+        {% include 'grid_zoom_standard.html' with cards=cards %}
+    {% elif zoomlevel == '1' %}
+        {% include 'grid_zoom_out.html' with cards=cards %}
+    {% elif zoomlevel == '2' %}
+        {% include 'grid_zoom_in.html' with cards=cards %}
+    {% endif %}
+</div>

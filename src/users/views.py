@@ -41,7 +41,6 @@ def profile(request):
     commentcount = Comment.objects.filter(author=user).count()
     resourcecount = Resource.objects.filter(owner=user).count()
     likecount = Follower.objects.filter(user_like=user).count()
-    print(likecount)
     form = CustomUserLoginForm()
     return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})
 

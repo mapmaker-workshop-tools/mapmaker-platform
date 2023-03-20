@@ -22,7 +22,6 @@ class Workshop(models.Model):
         if not self.pk:
             super().save(*args, **kwargs)
             for _ in range(308):
-                print("Creating card")
                 card = Card(cardtype='empty',
                         author=CustomUser(pk=5),
                         workshop=Workshop.objects.latest('date_created'),

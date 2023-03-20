@@ -16,6 +16,5 @@ def getnetwork(request, workshop_id):
     for card in cardsinworkshop:
         parent = Card.objects.get(pk=card.parentnode)
         networkdata.append([card.title, parent.title])
-    print(networkdata)
     return HttpResponse(networkdata)
 

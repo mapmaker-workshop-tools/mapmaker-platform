@@ -89,7 +89,7 @@
                 <i class="fa-solid fa-eye"></i><br>
                 {{ card.title|truncatechars:20}}
             </div>
-        {% elif card.cardtype == 'challenge' %}E6799D
+        {% elif card.cardtype == 'challenge' %}
             <div class="hexagon" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-mountain"></i><br>
                 {{ card.title|truncatechars:20}}

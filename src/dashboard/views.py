@@ -46,7 +46,6 @@ def index(request):
                 "cardscount": cards.count(), 
                 "zoomlevel": str(current_user.zoom_level),
                 "participantcount": participants.count()}
-        print(current_user.zoom_level)
         return render(request, 'dashboard_index.html', context)
     else:
         return redirect('/user/login')
@@ -84,7 +83,6 @@ def handle_grid_update(request):
         return HttpResponse(status=403)
 
 def close(request):
-    print("Card Closed")
     return render(request, 'empty.html')
 
 
@@ -99,9 +97,16 @@ def zoom_in(request):
     elif zoom_level == '1':
         t.zoom_level = '0'
         t.save() 
+    current_workshop = user.active_workshop
+    cards = Card.objects.filter(workshop=current_workshop)
+    if not current_workshop.card_order:
+        ordered_cards = cards
     else:
-        pass
-    return HttpResponse(status=204)
+        get_card_order_list = ast.literal_eval(current_workshop.card_order)
+        order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
+        ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
+    context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
+    return render(request, 'adjust_zoom.html', context)
 
 def zoom_out(request):
     print("Zoom out hit")
@@ -116,4 +121,13 @@ def zoom_out(request):
     else:
         t.zoom_level = '0'
         t.save() 
-    return HttpResponse(status=204)
+    current_workshop = user.active_workshop
+    cards = Card.objects.filter(workshop=current_workshop)
+    if not current_workshop.card_order:
+        ordered_cards = cards
+    else:
+        get_card_order_list = ast.literal_eval(current_workshop.card_order)
+        order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
+        ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
+    context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
+    return render(request, 'adjust_zoom.html', context)
