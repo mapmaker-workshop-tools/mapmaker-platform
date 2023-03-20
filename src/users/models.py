@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from random import randrange
 
 from .managers import CustomUserManager
 # Created using: https://testdriven.io/blog/django-custom-user-model/
@@ -18,7 +19,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     organisation = models.CharField(max_length=100, unique=False, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    avatar_url = models.CharField(max_length=100, blank=True, default="https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg")
+    avatar_url = models.CharField(max_length=300, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
     organisation = models.CharField(max_length=100, blank=True)
     active_workshop = models.ForeignKey('workshop.Workshop', on_delete=models.SET('none'), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
