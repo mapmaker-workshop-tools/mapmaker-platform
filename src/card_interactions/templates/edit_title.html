@@ -1,4 +1,4 @@
-<form hx-post="/card/{{ cardid }}/edit/title/" hx-target="this"  hx-swap="outerHTML">
+<form hx-post="/card/{{ cardid }}/edit/title/" hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML">
 
     {% if type == 'ambition' %}
     <div style="background: #000000; color: #fff" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

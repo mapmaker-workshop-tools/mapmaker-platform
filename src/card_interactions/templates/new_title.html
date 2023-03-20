@@ -3,7 +3,7 @@
             cursor: pointer;
     }       
     </style>
-<div hx-target="this"  hx-swap="innerHTML" class="justify-between">
+<div hx-target="this" hx-indicator="#spinner"  hx-swap="innerHTML" class="justify-between">
 <div hx-get="/card/{{ id }}/edit/title">
     {% if type == 'ambition' %}
     <div style="background: #000000; cursor: pointer; color: #fff" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -48,7 +48,7 @@
             </div>
 {% endif %}
 </div>
-    <button hx-get="/card/{{ id }}/edit/title" class="px-3 py-2 my-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">edit title</button>
+    <button hx-indicator="#spinner" hx-get="/card/{{ id }}/edit/title" class="px-3 py-2 my-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">edit title</button>
 </div>
 
 
