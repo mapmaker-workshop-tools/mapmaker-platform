@@ -160,7 +160,7 @@ INTERNAL_IPS = [
 STATIC_URL = '/static/'
 
 # this is directory name where collectstatic files command will put your app level static files
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = 'src/staticfiles'
 
 
 
