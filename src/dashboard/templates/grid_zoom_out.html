@@ -66,11 +66,12 @@
 
     }
     .hexagon {
-        padding-top: 0px;
+        padding-top: 18px;
         text-align: center;
         vertical-align: middle;
         color: #000000;
         cursor: pointer;
+        font-size: 26px;
     }
 </style>
 
@@ -87,27 +88,27 @@
         {% elif card.cardtype == 'ambition' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-eye"></i><br>
-                {{ card.title|truncatechars:20}}
+                {{ card.title|truncatechars:1}}
             </div>
         {% elif card.cardtype == 'challenge' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-mountain"></i><br>
-                {{ card.title|truncatechars:20}}
+                {{ card.title|truncatechars:1}}
             </div>
         {% elif card.cardtype == 'idea' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-lightbulb "></i><br>
-                {{ card.title|truncatechars:20}}
+                {{ card.title|truncatechars:1}}
             </div>
         {% elif card.cardtype == 'pro' %}
             <div class="hexagon" hx-indicator="#spinner"  hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #ffeb39;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-circle-up "></i><br>
-                {{ card.title|truncatechars:20}}
+                {{ card.title|truncatechars:1}}
             </div>
             {% elif card.cardtype == 'con' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-circle-down"></i><br>
-                {{ card.title|truncatechars:20}}
+                {{ card.title|truncatechars:1}}
             </div>
         {% endif %}
         {% endfor %}

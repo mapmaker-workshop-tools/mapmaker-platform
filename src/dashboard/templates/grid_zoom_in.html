@@ -67,9 +67,19 @@
     .hexagon {
         padding-top: 10px;
         text-align: center;
+        align-content: center;
+        align-items: center;
         vertical-align: middle;
         color: #000000;
         cursor: pointer;
+    }
+    .avatar {
+        display: block;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 4px;
+        margin-bottom: 4px;
     }
 </style>
 
@@ -84,39 +94,51 @@
                 <i class="fa-regular fa-2xl fa-plus"></i><br>         
             </div>
         {% elif card.cardtype == 'ambition' %}
-            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon flex items-center" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-xl fa-eye"></i><br>
-                {{ card.title|truncatechars:20}}
-                <img class="w-10 h-10 rounded-full" src="{{card.author.avatar_url}}">
-                {{ card.author.first_name|truncatechars:20}}
+                {{card.cardtype}}<br>
+                <b>{{ card.title|truncatechars:20}}</b>
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
+                <br> {{card.author.organisation}}
             </div>
-        {% elif card.cardtype == 'challenge' %}E6799D
-            <div class="hexagon"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+        {% elif card.cardtype == 'challenge' %}
+            <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-xl fa-mountain"></i><br>
-                {{ card.title|truncatechars:20}}
-                <img class="w-10 h-10 rounded-full" src="{{card.author.avatar_url}}">
-                {{ card.author.first_name|truncatechars:20}}
+                {{card.cardtype}}<br>
+                <b>{{ card.title|truncatechars:20}}</b>
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
+                <br> {{card.author.organisation}}
             </div>
         {% elif card.cardtype == 'idea' %}
-            <div class="hexagon"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-lightbulb fa-xl"></i><br>
-                {{ card.title|truncatechars:20}}
-                <img class="w-10 h-10 rounded-full" src="{{card.author.avatar_url}}">
-                {{ card.author.first_name|truncatechars:20}}
+                {{card.cardtype}}<br>
+                <b>{{ card.title|truncatechars:20}}</b>
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
+                <br> {{card.author.organisation}}
             </div>
         {% elif card.cardtype == 'pro' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #ffeb39;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-circle-up fa-xl"></i><br>
-                {{ card.title|truncatechars:20}}
-                <img class="w-10 h-10 rounded-full" src="{{card.author.avatar_url}}">
-                {{ card.author.first_name|truncatechars:20}}
+                {{card.cardtype}}<br>
+                <b>{{ card.title|truncatechars:20}}</b>
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
+                <br> {{card.author.organisation}}
             </div>
             {% elif card.cardtype == 'con' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-solid fa-circle-down fa-xl"></i><br>
-                {{ card.title|truncatechars:20}}
-                <img class="w-10 h-10 rounded-full" src="{{card.author.avatar_url}}">
-                {{ card.author.first_name|truncatechars:20}}
+                {{card.cardtype}}<br>
+                <b>{{ card.title|truncatechars:20}}</b>
+                <div class="flex">
+                <img class="w-10 h-10 rounded-full avatar" style="position: center;" src="{{card.author.avatar_url}}">
+                <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
+                <br>{{card.author.organisation}}
+                </div>
             </div>
         {% endif %}
         {% endfor %}
