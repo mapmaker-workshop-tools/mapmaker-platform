@@ -9,6 +9,7 @@ from users.models import CustomUser
 from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment
 from .models import Follower, Resource, Comment
 from django.contrib import messages
+from emailhandler.standard_emails import send_simple_email, notify_followers_new_post
 
 def validate_user_access_to_card(id, request):
     card = Card.objects.get(id=id)
@@ -165,13 +166,6 @@ def create_resource(request, id):
     else:
         form = CardResource()
         return render(request, 'create_resource.html', {'form': form, "cardid": id})
-    
-def send_email(notify):
-    if notify == 'yes':
-        print("Sending emails")
-    else: 
-        print("Not sending emails")
-    
 
 def create_comment(request, id, notify):
     if request.method == 'POST':
@@ -187,7 +181,8 @@ def create_comment(request, id, notify):
                     )
             new_comment.save()
             comments = Comment.objects.filter(card=card)
-            send_email(notify)
+            if notify == 'yes':
+                notify_followers_new_post(id)
             return render(request, 'comment.html', {'comments': comments})
     else:
         return HttpResponse(status=404)

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_browser_reload',
+    'storages',
     'rest_framework',
     'workshop',
     'users',  # customusers so we have more fields on usertable
@@ -177,6 +178,8 @@ GRAPH_MODELS = {
   'group_models': True,
 }
 
+# Email settings
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'

@@ -5,6 +5,7 @@ from .forms import CustomUserLoginForm, CustomUserProfile
 from users.models import CustomUser
 from card_interactions.models import Card, Follower, Comment, Resource
 from datetime import datetime
+from workshop.models import Workshop
 
 
 # Create your views here.
@@ -52,17 +53,22 @@ def profile_edit(request, id):
             email = request.POST['email']
             organisation = request.POST['organisation']
             linkedin = request.POST['linkedin']
+            active_workshop = request.POST['default-radio']
             messages.add_message(request, messages.INFO, 'Updated profile')
+            workshop = Workshop.objects.get(id=int(request.POST['default-radio']))
             t = CustomUser.objects.get(id=id)
             t.first_name = firstname
+            t.active_workshop = workshop
             t.last_name = lastname
             t.email = email
             t.linkedin = linkedin
             t.save()
             #return redirect('/user/profile')
             return render(request, 'user_profile_table.html')
-
         elif request.method == 'GET':
-            return render(request, 'user_profile_table_edit.html')
+            user = request.user
+            workshops = Workshop.objects.filter(participants__email=user.email)
+            context = {'workshops': workshops}
+            return render(request, 'user_profile_table_edit.html', context)
     else: 
         return HttpResponse(status=403)
