@@ -62,7 +62,7 @@
     .hexagonhidden:hover{
         background-color:#78E7BF;
         opacity: 0.5;
-        padding-top: 45px;
+        padding-top: 100px;
     }
     .hexagon {
         padding-top: 10px;
@@ -90,8 +90,9 @@
         <form class="gridcontainer sortable" hx-indicator="#spinner" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
-            <div class="hexagonhidden" hx-indicator="#spinner" hx-get="/card/{{ card.id }}/create" hx-trigger="click" hx-target="#modal"><input type='hidden' name='item' value='{{ card.id}}'/>   
-                <i class="fa-regular fa-2xl fa-plus"></i><br>         
+            <div class="hexagonhidden flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/create"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <i class="fa-regular fa-2xl fa-plus"></i><br>
+                <b>Create new card</b>       
             </div>
         {% elif card.cardtype == 'ambition' %}
             <div class="hexagon flex items-center" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            

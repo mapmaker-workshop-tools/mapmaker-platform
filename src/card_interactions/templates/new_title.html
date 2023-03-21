@@ -46,7 +46,16 @@
                 <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h1>
             </div>
             </div>
+{% elif type == 'empty' %}          
+        <div style="background:#78E7BF; cursor: pointer;" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col align-text-top items-center m-8">
+                <i class="fa-solid fa-edit fa-2xl"></i><br>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Start editing</h5>
+                <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">New card</h1>
+            </div>
+            </div>            
 {% endif %}
+
 </div>
     <button hx-indicator="#spinner" hx-get="/card/{{ id }}/edit/title" class="px-3 ml-4 py-2 my-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">edit title</button>
 </div>

@@ -45,22 +45,31 @@ def get_card_details(request, id):
     return render(request, 'drawer.html', context)
     
 def create_card(request, id):
-    if request.method == 'POST':
-        current_user = request.user
-        form = CardForm(request.POST)
-        if form.is_valid():
-            card = Card.objects.get(id=id)
-            card.description = form.cleaned_data['description']
-            card.title = form.cleaned_data['title']
-            card.date_modified = timezone.now
-            card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
-            card.author = current_user
-            card.save()
-            messages.add_message(request, messages.INFO, 'Card Created')
-            return redirect('/dashboard')
-    else: 
-        form = CardForm()
-    return render(request, 'create_card.html', {'form': form, "cardid": id})
+    card = Card.objects.get(id=id)
+    current_user = request.user
+    resources = Resource.objects.filter(card=card)
+    comments = Comment.objects.filter(card=card)
+    followers = Follower.objects.filter(card_liked=id)
+    followerIDlist = []
+    for i in followers:
+        followerIDlist.append(i.user_like)
+    followers = CustomUser.objects.filter(email__in=followerIDlist)
+    user_follows_card = current_user in followerIDlist
+    form = CardComment()
+    context = {
+        'cardtype': card.cardtype,
+        'author': request.user,
+        'title': 'New Card',
+        'type': card.cardtype,
+        'description': "Add a new description",
+        'followers': followers,
+        'id': card.id,        
+        'user_follows_card': user_follows_card,
+        'resources': resources,
+        'comments': comments,
+        'form': form
+    }
+    return render(request, 'drawer.html', context)
 
 def edit_card_title(request, id):
     card = Card.objects.get(id=id)
@@ -68,6 +77,8 @@ def edit_card_title(request, id):
         form = CardTitle(request.POST)
         if form.is_valid():
             card.title = form.cleaned_data['title']
+            card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
+            card.author = request.user
             card.save()
             messages.add_message(request, messages.INFO, 'Card title updated')
             return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype})
