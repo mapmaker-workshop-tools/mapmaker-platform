@@ -136,6 +136,7 @@ def delete_card(request, id):
         card.author = CustomUser(pk=5)
         card.save()
         messages.add_message(request, messages.INFO, 'Card deleted')
+        clear_card(id)
         return render(request, 'empty.html')
 
 def create_resource(request, id):
@@ -208,3 +209,13 @@ def delete_resource(request, id, resource_id):
         resource_delete.delete()
         resources = Resource.objects.filter(card=card)
         return render(request, 'resources.html', {'resources': resources, 'id':id})
+
+def clear_card(id):
+    card = Card.objects.get(id=id)
+    followers = Follower.objects.filter(card_liked=card)
+    comments = Comment.objects.filter(card=card)
+    resources = Resource.objects.filter(card=card)
+    followers.delete()
+    comments.delete()
+    resources.delete()
+    

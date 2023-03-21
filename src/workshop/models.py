@@ -5,7 +5,6 @@ from random import randrange
 import uuid
 
 
-
 # Create your models here.
 class Workshop(models.Model):
     is_active = models.BooleanField(default=True)
@@ -44,6 +43,7 @@ class Card(models.Model):
     title = models.CharField(max_length=30, unique=False, blank=False)
     description = models.TextField(blank=True,)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
+    
     def __str__(self):
         return self.workshop.workshop_name + ' - ' + self.title
 
