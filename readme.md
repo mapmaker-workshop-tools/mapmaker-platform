@@ -4,6 +4,3 @@
 # Mapmaker
 Mapmaker saves your workshop when the physical session is over
 ![demo](https://user-images.githubusercontent.com/71013416/223648277-8662e657-6e8e-42ae-b34f-c9070de68917.jpeg)
-
-
-ffrfff
