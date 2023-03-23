@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from random import randrange
+from core.utils import mp
 
 from .managers import CustomUserManager
 # Created using: https://testdriven.io/blog/django-custom-user-model/
@@ -24,8 +25,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     active_workshop = models.ForeignKey('workshop.Workshop', on_delete=models.SET('none'), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
     
-
-
+     
+    def save(self, *args, **kwargs):
+        super(CustomUser, self).save(*args, **kwargs)
+        mp.people_set(self.email, {
+            '$first_name'    : self.first_name,
+            '$last_name'     : self.last_name,
+            '$email'         : self.email,
+            '$organisation'  : self.organisation,
+            '$created'       : self.date_created,
+            '$activeworkshop': self.active_workshop.workshop_name
+            }, meta = {'$ignore_time' : True, '$ip' : 0})
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
