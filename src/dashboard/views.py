@@ -11,6 +11,9 @@ from django.db.models import Case, When
 import json
 import ast
 import re
+from django.http import HttpResponse
+from .utils import create_image
+from workshop.models import Card
 
 
 
@@ -131,3 +134,11 @@ def zoom_out(request):
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
     context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
     return render(request, 'adjust_zoom.html', context)
+
+
+def download_image(request):
+    #Putting a template together with the information of the usersession
+    template = index(request)
+    data = {'html': template, 'render_when_ready':True, 'ms_delay':1000}
+    image_url = create_image(data)
+    return redirect(image_url)

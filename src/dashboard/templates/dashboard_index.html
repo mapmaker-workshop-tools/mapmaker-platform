@@ -3,7 +3,6 @@
 {% block title %}Dashboard {{workshop}} {% endblock %}
 {% block content %}
 
-
 <main class="grid full place-items-center lg:px-8">
   <div id="spinner" class="htmx-indicator p-5">
     <div role="status">
@@ -30,6 +29,9 @@
     </div>
   </div>
 </main>
+<script>
+  setTimeout(function(){ ScreenshotReady() }, 2000);
+</script>
 
 {% include 'legend.html' %}
 {% endblock %}

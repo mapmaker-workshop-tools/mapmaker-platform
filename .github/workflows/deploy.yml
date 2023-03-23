@@ -115,6 +115,8 @@ jobs:
             envkey_DATABASE_USER: ${{ secrets.DATABASE_USER }}
             envkey_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
             envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+            envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
+            envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
             envkey_DEBUG: "True"
             directory: src/core
             file_name: .env
