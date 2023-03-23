@@ -20,8 +20,7 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save() 
             messages.add_message(request, messages.INFO, 'welcome back ' + user.first_name)
-            mp.track(user.email, 'Logged in' , {'session': request.COOKIES['sessionid'],
-    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
+            mp.track(user.email, 'Logged in' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
             return redirect('/dashboard')
         else:
             messages.add_message(request, messages.INFO, 'Invalid username or password')
