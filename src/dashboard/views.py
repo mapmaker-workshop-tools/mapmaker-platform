@@ -66,7 +66,7 @@ def handle_grid_update(request):
         t = Workshop.objects.get(id=current_workshop.id)
         t.card_order = jsonStr
         t.save() 
-        mp.track(request.user.email, 'Moved Tile', {'workshop': current_workshop.workshop_name})
+        mp.track(request.user.email, 'Moved card', {'workshop': current_workshop.workshop_name})
         return HttpResponse(status=204)
     elif request.method == "GET":
         current_user = request.user
@@ -142,9 +142,10 @@ def zoom_out(request):
 
 
 def download_image(request):
+    workshop = request.user.active_workshop.workshop_name
     #Putting a template together with the information of the usersession
     template = index(request)
     data = {'html': template, 'render_when_ready':True, 'ms_delay':1000}
     image_url = create_image(data)
-    mp.track(request.user.email, 'Workshop image downloaded')
+    mp.track(request.user.email, 'Workshop image downloaded', {'workshop': workshop})
     return redirect(image_url)

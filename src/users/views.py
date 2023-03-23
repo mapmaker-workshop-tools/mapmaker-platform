@@ -20,7 +20,7 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save() 
             messages.add_message(request, messages.INFO, 'welcome back ' + user.first_name)
-            mp.track(user.email, 'Logged in')
+            mp.track(user.email, 'Logged in' , {} )
             return redirect('/dashboard')
         else:
             messages.add_message(request, messages.INFO, 'Invalid username or password')
@@ -30,7 +30,7 @@ def login_user(request):
         return render(request, 'login.html', {'form':form})
     
 def logout_view(request):
-    mp.track(request.user.email, 'Logged out')
+    mp.track(request.user.email, 'Log out', {})
     logout(request)
     messages.add_message(request, messages.INFO, 'Logged out')
     return redirect('/')
