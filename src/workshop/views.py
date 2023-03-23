@@ -50,7 +50,8 @@ def workshop_settings(request):
             }
     mp.track(request.user.email, 'Workshop settings', {
             'workshop': current_workshop.workshop_name,
-            'request':request
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             })
     return render(request, 'workshop_settings.html', context)
     

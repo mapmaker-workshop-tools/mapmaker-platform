@@ -46,8 +46,11 @@ def get_card_details(request, id):
     }
     mp.track(request.user.email, 'Viewed card', {
     'card title': card.title,
+    'card id': card.id,
+    'card id': card.id,
     'workshop': card.workshop.workshop_name, 
-    'request':request
+    'session': request.COOKIES['sessionid'],
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
     })
     return render(request, 'drawer.html', context)
     
@@ -78,8 +81,11 @@ def create_card(request, id):
     }
     mp.track(request.user.email, 'Card created', {
     'card title': card.title,
+    'card id': card.id,
     'workshop': card.workshop.workshop_name,
-    'request':request
+    'session': request.COOKIES['sessionid'],
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+    
     })
     return render(request, 'drawer.html', context)
 
@@ -95,8 +101,11 @@ def edit_card_title(request, id):
             messages.add_message(request, messages.INFO, 'Card title updated')
             mp.track(request.user.email, 'Card title updated', {
             'card title': card.title,
+            'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            'request':request
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            
             })
             return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype})
     else: 
@@ -113,8 +122,12 @@ def edit_card_description(request, id):
             card.save()
             mp.track(request.user.email, 'Card description updated', {
             'card title': card.title,
+            'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            'request':request
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            
+            
             })
             messages.add_message(request, messages.INFO, 'Card description updated')
             return render(request, 'new_description.html', {"description" : form.cleaned_data['description'], "id" : id})
@@ -144,8 +157,11 @@ def register_like(request, id):
             new_like.save()
             mp.track(request.user.email, 'Card followed', {
             'card title': card.title,
+            'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            'request':request
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+                       
             })
             messages.add_message(request, messages.INFO, 'You followed card' +card.title)
             return render(request, 'liked.html', {"id":id})
@@ -164,8 +180,12 @@ def delete_card(request, id):
         card.save()
         mp.track(request.user.email, 'Card deleted', {
         'card title': card.title,
+        'card id': card.id,
         'workshop': card.workshop.workshop_name,
-        'request':request
+        'session': request.COOKIES['sessionid'],
+        'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+        
+            
         })
         messages.add_message(request, messages.INFO, 'Card deleted')
         clear_card(id)
@@ -186,8 +206,12 @@ def create_resource(request, id):
             )
             mp.track(request.user.email, 'Resource created', {
             'card title': card.title,
+            'card id': card.id,
+            'resource id': resource.id,
             'workshop': card.workshop.workshop_name,
-            'request':request
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            
             })
             resource.save()
             comment = Comment(
@@ -218,17 +242,27 @@ def create_comment(request, id, notify):
             new_comment.save()
             mp.track(request.user.email, 'Comment created', {
             'card title': card.title,
+            'card id': card.id,
+            'comment id': new_comment.id,
             'workshop': card.workshop.workshop_name,
-            'request':request
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            
+            
             })
             comments = Comment.objects.filter(card=card)
             if notify == 'yes':
                 notify_followers_new_post(id)
                 mp.track(request.user.email, 'Comment notification sent', {
                 'card title': card.title,
+                'card id': card.id,
+                'comment id': new_comment.id,
                 'workshop': card.workshop.workshop_name,
                 'comment': new_comment.comment_text,
-                'request':request
+                'session': request.COOKIES['sessionid'],
+                'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+                
+                
                 })
             return render(request, 'comment.html', {'comments': comments})
     else:
@@ -242,7 +276,10 @@ def delete_comment(request, id, comment_id):
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
             'comment': comment_delete.comment_text,
-            'request':request
+            'comment': comment_delete.id,
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            
             })
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by('date_created')
@@ -257,8 +294,11 @@ def delete_resource(request, id, resource_id):
         mp.track(request.user.email, 'Resource deleted', {
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
-            'resource': resource_delete.document_description,
-            'request':request
+            'resource description': resource_delete.document_description,
+            'resource id': resource_delete.id,
+            'session': request.COOKIES['sessionid'],
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            
             })
         resource_delete.delete()
         resources = Resource.objects.filter(card=card)

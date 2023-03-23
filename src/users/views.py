@@ -20,7 +20,8 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save() 
             messages.add_message(request, messages.INFO, 'welcome back ' + user.first_name)
-            mp.track(user.email, 'Logged in' , {'request':request} )
+            mp.track(user.email, 'Logged in' , {'session': request.COOKIES['sessionid'],
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
             return redirect('/dashboard')
         else:
             messages.add_message(request, messages.INFO, 'Invalid username or password')
@@ -30,7 +31,8 @@ def login_user(request):
         return render(request, 'login.html', {'form':form})
     
 def logout_view(request):
-    mp.track(request.user.email, 'Log out', {'request':request})
+    mp.track(request.user.email, 'Log out', {'session': request.COOKIES['sessionid'],
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     logout(request)
     messages.add_message(request, messages.INFO, 'Logged out')
     return redirect('/')
@@ -46,7 +48,8 @@ def profile(request):
     resourcecount = Resource.objects.filter(owner=user).count()
     likecount = Follower.objects.filter(user_like=user).count()
     form = CustomUserLoginForm()
-    mp.track(user.email, 'User profile', {'request':request})
+    mp.track(user.email, 'User profile', {'session': request.COOKIES['sessionid'],
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})
 
 def profile_edit(request, id):
@@ -67,7 +70,8 @@ def profile_edit(request, id):
             t.email = email
             t.linkedin = linkedin
             t.save()
-            mp.track(user.email, 'User profile updated', {'request':request})
+            mp.track(user.email, 'User profile updated', {'session': request.COOKIES['sessionid'],
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
             #return redirect('/user/profile')
             return render(request, 'user_profile_table.html')
         elif request.method == 'GET':
