@@ -10,6 +10,7 @@ from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, Card
 from .models import Follower, Resource, Comment
 from django.contrib import messages
 from emailhandler.standard_emails import send_simple_email, notify_followers_new_post
+from core.utils import mp 
 
 def validate_user_access_to_card(id, request):
     card = Card.objects.get(id=id)
@@ -43,6 +44,10 @@ def get_card_details(request, id):
         'comments': comments,
         'form': form
     }
+    mp.track(request.user.email, 'Viewed card', {
+    'card title': card.title,
+    'workshop': card.workshop.workshop_name,
+    })
     return render(request, 'drawer.html', context)
     
 def create_card(request, id):
@@ -70,6 +75,10 @@ def create_card(request, id):
         'comments': comments,
         'form': form
     }
+    mp.track(request.user.email, 'Card created', {
+    'card title': card.title,
+    'workshop': card.workshop.workshop_name,
+    })
     return render(request, 'drawer.html', context)
 
 def edit_card_title(request, id):
@@ -82,6 +91,10 @@ def edit_card_title(request, id):
             card.author = request.user
             card.save()
             messages.add_message(request, messages.INFO, 'Card title updated')
+            mp.track(request.user.email, 'Card title updated', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            })
             return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype})
     else: 
         form = CardTitle()
@@ -95,6 +108,10 @@ def edit_card_description(request, id):
             card = Card.objects.get(id=id)
             card.description = form.cleaned_data['description']
             card.save()
+            mp.track(request.user.email, 'Card description updated', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            })
             messages.add_message(request, messages.INFO, 'Card description updated')
             return render(request, 'new_description.html', {"description" : form.cleaned_data['description'], "id" : id})
     else: 
@@ -121,6 +138,10 @@ def register_like(request, id):
             card = Card.objects.get(id=id)
             new_like = Follower(user_like=current_user, card_liked=card)
             new_like.save()
+            mp.track(request.user.email, 'Card followed', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            })
             messages.add_message(request, messages.INFO, 'You followed card' +card.title)
             return render(request, 'liked.html', {"id":id})
     
@@ -136,6 +157,10 @@ def delete_card(request, id):
         card.cardtype = 'empty'
         card.author = CustomUser(pk=5)
         card.save()
+        mp.track(request.user.email, 'Card deleted', {
+        'card title': card.title,
+        'workshop': card.workshop.workshop_name,
+        })
         messages.add_message(request, messages.INFO, 'Card deleted')
         clear_card(id)
         return render(request, 'empty.html')
@@ -153,6 +178,10 @@ def create_resource(request, id):
                 document_url = form.cleaned_data['url'],
                 date_modified = timezone.now
             )
+            mp.track(request.user.email, 'Resource created', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            })
             resource.save()
             comment = Comment(
                 card = card,
@@ -180,9 +209,18 @@ def create_comment(request, id, notify):
                     author = request.user,
                     )
             new_comment.save()
+            mp.track(request.user.email, 'Comment created', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            })
             comments = Comment.objects.filter(card=card)
             if notify == 'yes':
                 notify_followers_new_post(id)
+                mp.track(request.user.email, 'Comment notification sent', {
+                'card title': card.title,
+                'workshop': card.workshop.workshop_name,
+                'comment': new_comment.comment_text,
+                })
             return render(request, 'comment.html', {'comments': comments})
     else:
         return HttpResponse(status=404)
@@ -191,6 +229,11 @@ def delete_comment(request, id, comment_id):
     if request.method == 'DELETE':
         card = Card.objects.get(id=id)
         comment_delete = Comment.objects.get(id=comment_id)
+        mp.track(request.user.email, 'Comment deleted', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            'comment': comment_delete.comment_text,
+            })
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by('date_created')
         comment_delete.delete()
@@ -201,6 +244,11 @@ def delete_resource(request, id, resource_id):
     if request.method == 'DELETE':
         card = Card.objects.get(id=id)
         resource_delete = Resource.objects.get(id=resource_id)
+        mp.track(request.user.email, 'Resource deleted', {
+            'card title': card.title,
+            'workshop': card.workshop.workshop_name,
+            'resource': resource_delete.document_description,
+            })
         resource_delete.delete()
         resources = Resource.objects.filter(card=card)
         return render(request, 'resources.html', {'resources': resources, 'id':id})

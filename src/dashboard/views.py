@@ -14,6 +14,7 @@ import re
 from django.http import HttpResponse
 from .utils import create_image
 from workshop.models import Card
+from core.utils import mp
 
 
 
@@ -49,6 +50,7 @@ def index(request):
                 "cardscount": cards.count(), 
                 "zoomlevel": str(current_user.zoom_level),
                 "participantcount": participants.count()}
+        mp.track(request.user.email, 'Dashboard loaded ', {'workshop': current_workshop.workshop_name})
         return render(request, 'dashboard_index.html', context)
     else:
         return redirect('/user/login')
@@ -64,6 +66,7 @@ def handle_grid_update(request):
         t = Workshop.objects.get(id=current_workshop.id)
         t.card_order = jsonStr
         t.save() 
+        mp.track(request.user.email, 'Moved Tile', {'workshop': current_workshop.workshop_name})
         return HttpResponse(status=204)
     elif request.method == "GET":
         current_user = request.user
@@ -109,6 +112,7 @@ def zoom_in(request):
         order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
     context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
+    mp.track(request.user.email, 'Zoom in', {'workshop': current_workshop.workshop_name})
     return render(request, 'adjust_zoom.html', context)
 
 def zoom_out(request):
@@ -133,6 +137,7 @@ def zoom_out(request):
         order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
     context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
+    mp.track(request.user.email, 'Zoom out', {'workshop': current_workshop.workshop_name})
     return render(request, 'adjust_zoom.html', context)
 
 
@@ -141,4 +146,5 @@ def download_image(request):
     template = index(request)
     data = {'html': template, 'render_when_ready':True, 'ms_delay':1000}
     image_url = create_image(data)
+    mp.track(request.user.email, 'Workshop image downloaded')
     return redirect(image_url)

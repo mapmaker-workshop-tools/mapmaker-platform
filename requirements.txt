@@ -14,3 +14,4 @@ django-jsonfield==1.4.1
 django-environ
 boto3
 django-storages
+mixpanel

@@ -10,7 +10,7 @@ from django.db import models
 from django.db.models import Case, When
 import json
 import ast
-import re
+from core.utils import mp
 
 
 # Create your views here.
@@ -48,5 +48,8 @@ def workshop_settings(request):
             "commentcount":commentcount,
             "resourcecount":resourcecount
             }
+    mp.track(request.user.email, 'Workshop settings', {
+            'workshop': current_workshop.workshop_name,
+            })
     return render(request, 'workshop_settings.html', context)
     
