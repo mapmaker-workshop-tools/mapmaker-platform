@@ -46,7 +46,8 @@ def get_card_details(request, id):
     }
     mp.track(request.user.email, 'Viewed card', {
     'card title': card.title,
-    'workshop': card.workshop.workshop_name,
+    'workshop': card.workshop.workshop_name, 
+    'request':request
     })
     return render(request, 'drawer.html', context)
     
@@ -78,6 +79,7 @@ def create_card(request, id):
     mp.track(request.user.email, 'Card created', {
     'card title': card.title,
     'workshop': card.workshop.workshop_name,
+    'request':request
     })
     return render(request, 'drawer.html', context)
 
@@ -94,6 +96,7 @@ def edit_card_title(request, id):
             mp.track(request.user.email, 'Card title updated', {
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
+            'request':request
             })
             return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype})
     else: 
@@ -111,6 +114,7 @@ def edit_card_description(request, id):
             mp.track(request.user.email, 'Card description updated', {
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
+            'request':request
             })
             messages.add_message(request, messages.INFO, 'Card description updated')
             return render(request, 'new_description.html', {"description" : form.cleaned_data['description'], "id" : id})
@@ -141,6 +145,7 @@ def register_like(request, id):
             mp.track(request.user.email, 'Card followed', {
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
+            'request':request
             })
             messages.add_message(request, messages.INFO, 'You followed card' +card.title)
             return render(request, 'liked.html', {"id":id})
@@ -160,6 +165,7 @@ def delete_card(request, id):
         mp.track(request.user.email, 'Card deleted', {
         'card title': card.title,
         'workshop': card.workshop.workshop_name,
+        'request':request
         })
         messages.add_message(request, messages.INFO, 'Card deleted')
         clear_card(id)
@@ -181,6 +187,7 @@ def create_resource(request, id):
             mp.track(request.user.email, 'Resource created', {
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
+            'request':request
             })
             resource.save()
             comment = Comment(
@@ -212,6 +219,7 @@ def create_comment(request, id, notify):
             mp.track(request.user.email, 'Comment created', {
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
+            'request':request
             })
             comments = Comment.objects.filter(card=card)
             if notify == 'yes':
@@ -220,6 +228,7 @@ def create_comment(request, id, notify):
                 'card title': card.title,
                 'workshop': card.workshop.workshop_name,
                 'comment': new_comment.comment_text,
+                'request':request
                 })
             return render(request, 'comment.html', {'comments': comments})
     else:
@@ -233,6 +242,7 @@ def delete_comment(request, id, comment_id):
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
             'comment': comment_delete.comment_text,
+            'request':request
             })
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by('date_created')
@@ -248,6 +258,7 @@ def delete_resource(request, id, resource_id):
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
             'resource': resource_delete.document_description,
+            'request':request
             })
         resource_delete.delete()
         resources = Resource.objects.filter(card=card)
