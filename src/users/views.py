@@ -80,3 +80,18 @@ def profile_edit(request, id):
             return render(request, 'user_profile_table_edit.html', context)
     else: 
         return HttpResponse(status=403)
+    
+def delete_user(request, id):
+    ## If this card exists
+    if not CustomUser.objects.filter(pk=id).exists():
+        return HttpResponse(status=404)
+    else:
+        #We don't actually delete the card but set it to "empty and blank"""
+        user = CustomUser.objects.get(id=id)
+        mp.track(user.email, 'User deleted', {
+        'workshop': user.active_workshop.workshop_name,
+        'session': request.COOKIES['sessionid'],
+        'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+        })
+        user.delete()
+        return redirect('/')
