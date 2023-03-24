@@ -49,7 +49,7 @@ def get_card_details(request, id):
     'card id': card.id,
     'card id': card.id,
     'workshop': card.workshop.workshop_name, 
-    'session': request.COOKIES['sessionid'],
+    
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
     })
     return render(request, 'drawer.html', context)
@@ -83,7 +83,7 @@ def create_card(request, id):
     'card title': card.title,
     'card id': card.id,
     'workshop': card.workshop.workshop_name,
-    'session': request.COOKIES['sessionid'],
+    
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
     
     })
@@ -103,7 +103,7 @@ def edit_card_title(request, id):
             'card title': card.title,
             'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             })
@@ -124,7 +124,7 @@ def edit_card_description(request, id):
             'card title': card.title,
             'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             
@@ -159,7 +159,7 @@ def register_like(request, id):
             'card title': card.title,
             'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
                        
             })
@@ -182,7 +182,7 @@ def delete_card(request, id):
         'card title': card.title,
         'card id': card.id,
         'workshop': card.workshop.workshop_name,
-        'session': request.COOKIES['sessionid'],
+        
         'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
         
             
@@ -209,7 +209,7 @@ def create_resource(request, id):
             'card id': card.id,
             'resource id': resource.id,
             'workshop': card.workshop.workshop_name,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             })
@@ -245,7 +245,7 @@ def create_comment(request, id, notify):
             'card id': card.id,
             'comment id': new_comment.id,
             'workshop': card.workshop.workshop_name,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             
@@ -259,7 +259,7 @@ def create_comment(request, id, notify):
                 'comment id': new_comment.id,
                 'workshop': card.workshop.workshop_name,
                 'comment': new_comment.comment_text,
-                'session': request.COOKIES['sessionid'],
+                
                 'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
                 
                 
@@ -277,7 +277,7 @@ def delete_comment(request, id, comment_id):
             'workshop': card.workshop.workshop_name,
             'comment': comment_delete.comment_text,
             'comment': comment_delete.id,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             })
@@ -296,7 +296,7 @@ def delete_resource(request, id, resource_id):
             'workshop': card.workshop.workshop_name,
             'resource description': resource_delete.document_description,
             'resource id': resource_delete.id,
-            'session': request.COOKIES['sessionid'],
+            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             })

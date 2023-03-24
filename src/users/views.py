@@ -20,7 +20,8 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save() 
             messages.add_message(request, messages.INFO, 'welcome back ' + user.first_name)
-            mp.track(user.email, 'Logged in' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
+            mp.track(user.email, 'Logged in' , {
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
             return redirect('/dashboard')
         else:
             messages.add_message(request, messages.INFO, 'Invalid username or password')
@@ -30,7 +31,7 @@ def login_user(request):
         return render(request, 'login.html', {'form':form})
     
 def logout_view(request):
-    mp.track(request.user.email, 'Log out', {'session': request.COOKIES['sessionid'],
+    mp.track(request.user.email, 'Log out', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     logout(request)
     messages.add_message(request, messages.INFO, 'Logged out')
@@ -47,7 +48,7 @@ def profile(request):
     resourcecount = Resource.objects.filter(owner=user).count()
     likecount = Follower.objects.filter(user_like=user).count()
     form = CustomUserLoginForm()
-    mp.track(user.email, 'User profile', {'session': request.COOKIES['sessionid'],
+    mp.track(user.email, 'User profile', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})
 
@@ -69,7 +70,7 @@ def profile_edit(request, id):
             t.email = email
             t.linkedin = linkedin
             t.save()
-            mp.track(user.email, 'User profile updated', {'session': request.COOKIES['sessionid'],
+            mp.track(user.email, 'User profile updated', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
             #return redirect('/user/profile')
             return render(request, 'user_profile_table.html')
@@ -83,15 +84,19 @@ def profile_edit(request, id):
     
 def delete_user(request, id):
     ## If this card exists
+    print("HLALALA")
     if not CustomUser.objects.filter(pk=id).exists():
         return HttpResponse(status=404)
     else:
         #We don't actually delete the card but set it to "empty and blank"""
+        
         user = CustomUser.objects.get(id=id)
         mp.track(user.email, 'User deleted', {
         'workshop': user.active_workshop.workshop_name,
-        'session': request.COOKIES['sessionid'],
+        
         'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
         })
+        logout(request)
         user.delete()
+        print("BUTTON HIT")
         return redirect('/')
