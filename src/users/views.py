@@ -83,19 +83,16 @@ def profile_edit(request, id):
         return HttpResponse(status=403)
     
 def delete_user(request, id):
-    ## If this card exists
-    print("HLALALA")
+    ## If this user exists
     if not CustomUser.objects.filter(pk=id).exists():
         return HttpResponse(status=404)
-    else:
-        #We don't actually delete the card but set it to "empty and blank"""
-        
+    else:       
         user = CustomUser.objects.get(id=id)
         mp.track(user.email, 'User deleted', {
-        'workshop': user.active_workshop.workshop_name,
-        
+        'user': user.email,
         'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
         })
+        mp.people_delete(user.email, {})
         logout(request)
         user.delete()
         print("BUTTON HIT")

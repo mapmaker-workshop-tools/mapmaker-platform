@@ -34,7 +34,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             '$email'         : self.email,
             '$organisation'  : self.organisation,
             '$created'       : self.date_created,
-            '$activeworkshop': self.active_workshop.workshop_name
             }, meta = {'$ignore_time' : True, '$ip' : 0})
 
     USERNAME_FIELD = "email"
