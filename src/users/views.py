@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import CustomUserLoginForm, CustomUserProfile
+from .forms import CustomUserLoginForm, CustomUserProfile, CustomUserRegisterToWorkshop
 from users.models import CustomUser
 from card_interactions.models import Card, Follower, Comment, Resource
 from datetime import datetime
 from workshop.models import Workshop
 from core.utils import mp
+from django.core.signing import Signer
 
+signer = Signer()
+test = signer.sign_object({'workshopid':1})
+print('http://localhost:8000/user/register/'+test)
 
 # Create your views here.
 def login_user(request):
@@ -38,8 +42,48 @@ def logout_view(request):
     messages.add_message(request, messages.INFO, 'Logged out')
     return redirect('/')
 
-def register(request):
-    return render(request, 'register.html')
+def register(request, workshop_secret):
+    workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
+    workshop = Workshop.objects.get(id=workshopid_unsigned)    
+    if request.method == "POST":
+        form = CustomUserRegisterToWorkshop(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            repeat_password = form.cleaned_data['repeat_password']
+            organisation = form.cleaned_data['organisation']
+            print(email)
+            if password != repeat_password:
+                messages.add_message(request, messages.INFO, 'Passwords do not match')
+                return redirect('/user/register/'+workshop_secret)
+            if CustomUser.objects.filter(email=email).exists():
+                messages.add_message(request, messages.INFO, 'You already have an account, please login or reset your password')
+                mp.track(email, 'User tried to register with existing account' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
+                return redirect('/user/login')
+            new_user = CustomUser(
+                email = email,
+                organisation = organisation,
+                active_workshop = workshop
+            )
+            new_user.set_password(password)
+            new_user.save()
+            new_user = authenticate(request, username=email, password=password)
+            login(request, new_user)
+            mp.track(email, 'New user registered' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
+            mp.people_set(email, {
+            '$last_login'    : datetime.now(),})
+            return redirect('/dashboard')
+        else:
+            messages.add_message(request, messages.INFO, 'Invalid username or password')
+            return redirect('/user/login')
+    else:
+        if request.user.is_authenticated:
+            return redirect('/dashboard')
+        else:
+            form = CustomUserRegisterToWorkshop()
+            return render(request, 'register.html', {'form':form, 'workshop':workshop})
+
+
 
 def profile(request):
     user = request.user

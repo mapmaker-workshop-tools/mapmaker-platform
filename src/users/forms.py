@@ -16,6 +16,16 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ("email",)
 
+class CustomUserRegisterToWorkshop(forms.Form):
+    
+    email = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': tailwind_class}))
+    repeat_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': tailwind_class}))
+    organisation = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
+    class Meta:
+            model = CustomUser
+
+
 
 class CustomUserChangeForm(UserChangeForm):
 

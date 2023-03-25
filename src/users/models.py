@@ -21,7 +21,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     avatar_url = models.CharField(max_length=300, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
-    organisation = models.CharField(max_length=100, blank=True)
     active_workshop = models.ForeignKey('workshop.Workshop', on_delete=models.SET('none'), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
     
