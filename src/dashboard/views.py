@@ -15,6 +15,9 @@ from django.http import HttpResponse
 from .utils import create_image
 from workshop.models import Card
 from core.utils import mp
+from django.core.signing import Signer
+
+signer = Signer()
 
 
 
@@ -24,6 +27,7 @@ def index(request):
         # Getting the user, active workshop cards and participants
         current_user = request.user
         current_workshop = current_user.active_workshop
+        workshop_secret = signer.sign_object({'workshopid':current_workshop.id})
         cards = Card.objects.filter(workshop=current_workshop)
         participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
         # Here we fetch and order the cards in this workshop 
@@ -49,12 +53,51 @@ def index(request):
                 "challengecount": cards.filter(workshop=current_workshop).filter(cardtype='challenge').count(),  
                 "cardscount": cards.count(), 
                 "zoomlevel": str(current_user.zoom_level),
+                "workshop_secret": workshop_secret,
                 "participantcount": participants.count()}
-        mp.track(request.user.email, 'Dashboard loaded ', {'workshop': current_workshop.workshop_name, 
+        mp.track(request.user.email, 'Dashboard loaded ', {'workshop': current_workshop.workshop_name, 'anonymous': False,
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
         return render(request, 'dashboard_index.html', context)
     else:
         return redirect('/user/login')
+    
+    
+def view_only(request, workshop_secret):
+    if request.user.is_authenticated:
+        return redirect('/dashboard')
+    else:
+        # Getting the live workshop from the secret 
+        workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
+        current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
+        cards = Card.objects.filter(workshop=current_workshop)
+        participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
+        if not current_workshop.card_order:
+            ordered_cards = cards
+        else:
+            get_card_order_list = ast.literal_eval(current_workshop.card_order)
+            order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
+            ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
+        # Doing a lookup of all participants in this workshop
+        userIDlist = []
+        for i in participants:
+            userIDlist.append(i.customuser_id)
+        #Get all the participants to this session --> This ensures we can query their details in templates
+        participants = CustomUser.objects.filter(pk__in=userIDlist)
+        context = {
+                "firstname": 'Anonymous',
+                'cards': ordered_cards, 
+                "participants": participants, 
+                "workshop": current_workshop,
+                "ambitioncount": cards.filter(cardtype='ambition').count(),
+                "ideacount": cards.filter(workshop=current_workshop).filter(cardtype='idea').count(), 
+                "challengecount": cards.filter(workshop=current_workshop).filter(cardtype='challenge').count(),  
+                "cardscount": cards.count(), 
+                "zoomlevel": '0',
+                "workshop_secret": workshop_secret,
+                "participantcount": participants.count()}
+        mp.track('Anonymous', 'Dashboard loaded ', {'workshop': current_workshop.workshop_name, 'anonymous': True,
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
+        return render(request, 'dashboard_index.html', context)
     
 
 def handle_grid_update(request):

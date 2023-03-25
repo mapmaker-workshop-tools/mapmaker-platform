@@ -20,6 +20,19 @@ def send_simple_email(recipient):
         headers={'Message-ID': 'foo'},
     )
     email.send()
+    
+    
+def welcome_new_user(recipient, workshop_name):
+    sender = 'mapmaker.server@gmail.com'
+    bcc_recipients = [recipient]
+    email = EmailMessage(
+        'Here is your mapmaker account for '+workshop_name,
+        'Your account with Mapmaker was created succesfully. Now you can view and edit '+workshop_name+'\n\nLog in to https://mapmaker.nl.',
+        sender,
+        bcc_recipients,
+        reply_to=[sender],
+    )
+    email.send()
 
 def notify_followers_new_post(cardid):
     card = Card.objects.get(id=cardid)

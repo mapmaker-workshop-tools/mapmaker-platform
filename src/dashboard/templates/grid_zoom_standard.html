@@ -54,17 +54,26 @@
         cursor: pointer;
     }
 </style>
-
+{% if user.is_authenticated %}
 <div hx-get="/dashboard/update" hx-indicator="#spinner" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom"></div>
+{% endif %}
 <div id="drawer"></div>
 <div id="modal"></div>
 <div id="grid" class="gridmain" >
+        {% if user.is_authenticated %}
         <form class="gridcontainer sortable" hx-indicator="#spinner" hx-post="/dashboard/update" hx-trigger="end">
+        {% else %}
+        <form class="gridcontainer">
+        {% endif %}
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
+            {% if user.is_authenticated %}
             <div class="hexagonhidden flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/create"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <i class="fa-regular fa-2xl fa-plus"></i><br>
                 <b>New</b>       
+            {% else %}
+            <div class="hexagonhidden flex items-center" style="pointer-events: none;" ><input type='hidden' name='item' value='{{ card.id}}'/>   
+            {% endif %}
             </div>
         {% elif card.cardtype == 'ambition' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            

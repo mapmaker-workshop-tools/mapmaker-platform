@@ -8,10 +8,9 @@ from datetime import datetime
 from workshop.models import Workshop
 from core.utils import mp
 from django.core.signing import Signer
+from emailhandler.standard_emails import welcome_new_user
 
 signer = Signer()
-test = signer.sign_object({'workshopid':1})
-print('http://localhost:8000/user/register/'+test)
 
 # Create your views here.
 def login_user(request):
@@ -52,7 +51,6 @@ def register(request, workshop_secret):
             password = form.cleaned_data['password']
             repeat_password = form.cleaned_data['repeat_password']
             organisation = form.cleaned_data['organisation']
-            print(email)
             if password != repeat_password:
                 messages.add_message(request, messages.INFO, 'Passwords do not match')
                 return redirect('/user/register/'+workshop_secret)
@@ -68,6 +66,7 @@ def register(request, workshop_secret):
             new_user.set_password(password)
             new_user.save()
             new_user = authenticate(request, username=email, password=password)
+            welcome_new_user(email, workshop.workshop_name)
             login(request, new_user)
             mp.track(email, 'New user registered' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
             mp.people_set(email, {
@@ -81,7 +80,7 @@ def register(request, workshop_secret):
             return redirect('/dashboard')
         else:
             form = CustomUserRegisterToWorkshop()
-            return render(request, 'register.html', {'form':form, 'workshop':workshop})
+            return render(request, 'register.html', {'form':form, 'workshop':workshop, 'workshop_secret':workshop_secret})
 
 
 

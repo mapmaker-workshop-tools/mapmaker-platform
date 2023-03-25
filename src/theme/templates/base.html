@@ -72,10 +72,27 @@
 	<a href="/dashboard" class="flex items-center">
 		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
+	<a href="/user/register/{{workshop_secret}}">
+		<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
+	</a>
 	{% else %}
+	{% if workshop_secret %}
+	<a href="/dashboard/guest/{{workshop_secret}}" class="flex items-center">
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
+	</a>
+	<a href="/user/register/{{workshop_secret}}">
+		<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
+	</a>
+	{% else%}
 	<a href="/" class="flex items-center">
 		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
+	{% if workshop_secret %}
+	<a href="/user/register/{{workshop_secret}}">
+		<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
+	</a>
+	{% endif %}
+	{% endif %}
 	
 	{% endif %}
 
@@ -102,9 +119,16 @@
 		<a href="/user/logout" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Log out</a>
 		</li>
 		{% else %}
+		{% if workshop_secret %}
+		<li>
+			<a href="/user/register/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Complete registration to edit</a>
+		</li>
+
+		{% else%}
 		<li>
 			<a href="/user/login" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Log in</a>
 		</li>
+		{% endif %}
 		{% endif %}
 	
 		<!--  <li>

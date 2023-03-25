@@ -1,5 +1,5 @@
 {% include 'comment.html' with comments=comments id=id %}
-
+{% if user.is_authenticated %}
 <form class="p-4">
     <div class="p-4 w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
         <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
@@ -17,5 +17,9 @@
     </div>
  </form>
  <p class="px-4 ml-auto text-xs text-gray-500 dark:text-gray-400">Remember, contributions to this topic should follow our <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Community Guidelines</a>.</p>
- 
+ {% else%}
+ <div class="p-4 w-full mb-40 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+ </div>
+
+ {% endif %}
  

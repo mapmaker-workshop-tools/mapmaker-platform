@@ -11,6 +11,8 @@ from django.db.models import Case, When
 import json
 import ast
 from core.utils import mp
+from django.core.signing import Signer
+signer = Signer()
 
 
 # Create your views here.
@@ -55,3 +57,10 @@ def workshop_settings(request):
             })
     return render(request, 'workshop_settings.html', context)
     
+    
+    
+def share_workshop(request, workshop_secret):
+    workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
+    current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
+    context = {"workshop":current_workshop, "workshop_secret":workshop_secret}
+    return render(request, 'workshop_share.html', context)

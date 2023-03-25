@@ -11,6 +11,9 @@ from .models import Follower, Resource, Comment
 from django.contrib import messages
 from emailhandler.standard_emails import send_simple_email, notify_followers_new_post
 from core.utils import mp 
+from django.core.signing import Signer
+
+signer = Signer()
 
 def validate_user_access_to_card(id, request):
     card = Card.objects.get(id=id)
@@ -22,6 +25,8 @@ def validate_user_access_to_card(id, request):
 def get_card_details(request, id):
     card = Card.objects.get(id=id)
     current_user = request.user
+    workshop = card.workshop.id
+    workshop_secret = signer.sign_object({'workshopid':workshop})
     resources = Resource.objects.filter(card=card)
     comments = Comment.objects.filter(card=card)
     followers = Follower.objects.filter(card_liked=id)
@@ -42,16 +47,27 @@ def get_card_details(request, id):
         'user_follows_card': user_follows_card,
         'resources': resources,
         'comments': comments,
-        'form': form
+        'form': form,
+        'workshop_secret': workshop_secret
     }
-    mp.track(request.user.email, 'Viewed card', {
-    'card title': card.title,
-    'card id': card.id,
-    'card id': card.id,
-    'workshop': card.workshop.workshop_name, 
-    
-    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
-    })
+    try:
+        mp.track(request.user.email, 'Viewed card', {
+        'card title': card.title,
+        'card id': card.id,
+        'card id': card.id,
+        'workshop': card.workshop.workshop_name, 
+        'anonymous': False,
+        'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+        })
+    except:
+        mp.track('Anonymous', 'Viewed card', {
+        'card title': card.title,
+        'card id': card.id,
+        'card id': card.id,
+        'workshop': card.workshop.workshop_name, 
+        'anonymous': True,
+        'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+        })
     return render(request, 'drawer.html', context)
     
 def create_card(request, id):
