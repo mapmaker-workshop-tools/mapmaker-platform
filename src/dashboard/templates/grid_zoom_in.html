@@ -12,9 +12,6 @@
     .gridcontainer {
         font-size: 0; /*disable white space between inline block element */
         width: 2990px; /* We need a fixed size so we know that the divs won't overflow*/
-        height: 4000px; /* We need a fixed size so we know that the divs won't overflow*/
-        background-color: aliceblue;
-
     }
 
     .gridcontainer div {
@@ -36,15 +33,6 @@
         content: "";
         width: calc(var(--s)/2 + var(--m));
         float: left;
-        height: 100%;
-        shape-outside: repeating-linear-gradient(     
-                        #0000 0 calc(var(--f) - 3px),      
-                        #000  0 var(--f));
-    }
-    .gridcontainer::after {
-        content: "";
-        width: calc(var(--s)/2 + var(--m));
-        float: right;
         height: 100%;
         shape-outside: repeating-linear-gradient(     
                         #0000 0 calc(var(--f) - 3px),      

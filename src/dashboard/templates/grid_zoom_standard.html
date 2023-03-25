@@ -1,20 +1,14 @@
 <style type="text/css">
     .gridmain {
-        display:flex;
-        flex-wrap: nowrap;
+        display:inline-flex;
         --s: 100px;  /* size  */
         --m: 1px;    /* margin */
         --f: calc(1.732 * var(--s) + 4 * var(--m)  - 1px);
-        padding-bottom: 50px;
-
     }
 
     .gridcontainer {
         font-size: 0; /*disable white space between inline block element */
         width: 1490px; /* We need a fixed size so we know that the divs won't overflow*/
-        height: 2000px; /* We need a fixed size so we know that the divs won't overflow*/
-        background-color: aliceblue;
-
     }
 
     .gridcontainer div {
@@ -27,11 +21,6 @@
         margin-bottom: calc(var(--m) - var(--s)*0.2885); 
         overflow: hidden;
     }
-    /*
-    .gridcontainer div:nth-child(odd) {
-      background:green;
-    }
-    */
     .gridcontainer::before {
         content: "";
         width: calc(var(--s)/2 + var(--m));
@@ -41,15 +30,7 @@
                         #0000 0 calc(var(--f) - 3px),      
                         #000  0 var(--f));
     }
-    .gridcontainer::after {
-        content: "";
-        width: calc(var(--s)/2 + var(--m));
-        float: right;
-        height: 100%;
-        shape-outside: repeating-linear-gradient(     
-                        #0000 0 calc(var(--f) - 3px),      
-                        #000  0 var(--f));
-    }
+
     .hexagonhidden {
         padding-top: 50px;
         text-align: center;
@@ -75,8 +56,8 @@
 
 <div hx-get="/dashboard/update" hx-indicator="#spinner" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom"></div>
 <div id="drawer"></div>
-<div style="z-index: 999;" id="modal"></div>
-<div id="grid" class="gridmain">
+<div id="modal"></div>
+<div id="grid" class="gridmain" >
         <form class="gridcontainer sortable" hx-indicator="#spinner" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
