@@ -6,11 +6,8 @@ from users.models import CustomUser
 from card_interactions.models import Card, Follower, Comment, Resource
 from datetime import datetime
 from workshop.models import Workshop
-from core.utils import mp
-from django.core.signing import Signer
+from core.utils import mp, signer
 from emailhandler.standard_emails import welcome_new_user
-
-signer = Signer()
 
 # Create your views here.
 def login_user(request):
@@ -65,6 +62,7 @@ def register(request, workshop_secret):
             )
             new_user.set_password(password)
             new_user.save()
+            workshop.participants.add(new_user)
             new_user = authenticate(request, username=email, password=password)
             welcome_new_user(email, workshop.workshop_name)
             login(request, new_user)
