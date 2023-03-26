@@ -3,27 +3,30 @@
 {% block content %}
 
 <div style="height: 100px;"></div>
-<div class="p-8 w-8/12 mx-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop settings: {{workshop}}</h1>
+<div class="p-8 w-12/12 mx-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop settings: {{workshop}}</h1>
 <p class="mt-6 text-lg leading-8 text-gray-600">View and edit your workshop, view participants and invite new participants to join! </p>
+<button type="button" onclick="location.href = '/dashboard/download';" hx-indicator="#spinner" hx-confirm="Do you want to download a image of your session?"   class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+    Download image of session
+</button>
 
     <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select tab</label>
         <select id="tabs" class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option>Metrics</option>
+            <option>Participant overview</option>
             <option>Share</option>
             <option>Details</option>
         </select>
     </div>
     <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
         <li class="w-full">
-            <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Metrics</button>
+            <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Participant overview</button>
         </li>
         <li class="w-full">
             <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Share</button>
         </li>
         <li class="w-full">
-            <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false" class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Details</button>
+            <button id="faq-tab" data-tabs-target="#stats1" type="button" role="tab" aria-controls="stats1" aria-selected="false" class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Details</button>
         </li>
     </ul>
     <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
@@ -31,7 +34,7 @@
             <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{cardscount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Cards created</dd>
+                    <dd class="text-gray-500 dark:text-gray-400">Cards  </dd>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{commentcount}}</dt>
@@ -43,14 +46,21 @@
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{likecount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Cards Liked</dd>
+                    <dd class="text-gray-500 dark:text-gray-400">Followers</dd>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{participantcount}}</dt>
                     <dd class="text-gray-500 dark:text-gray-400">Participants</dd>
                 </div>
             </dl>
+            {% include 'workshop_participants.html' with workshop=workshop participants=participants %}
+
         </div>
+
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats1" role="tabpanel" aria-labelledby="stats-tab">
+            {% include 'workshop_details.html' with workshop=workshop participants=participants %}
+        </div>
+        
         <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel" aria-labelledby="about-tab">
             <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Share </h2>
             <!-- List -->
@@ -58,7 +68,7 @@
             <div>
                 <br>
                 <input type="text" readonly value="https://mapmaker.nl/dashboard/guest/{{workshop_secret}}" id="myInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                
                 <button  onclick="copyurltoclipboard()" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-700 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 Copy link to {{workshop}} to your clipboard
                 </button>
@@ -68,148 +78,9 @@
 
         </div>
         <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="faq" role="tabpanel" aria-labelledby="faq-tab">
-                  <div class="max-w-2xl mb-4 ">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop details</h2>
-        </div>
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 ">
-            {% include 'workshop_details.html' with workshop=workshop participants=participants %}
-            <button hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
-                Click To Edit
-            </button>
-        </div>
-    </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
     
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop settings: {{workshop}}</h1>
-    <p class="mt-6 text-lg leading-8 text-gray-600">View and edit your workshop, view participants and invite new participants to join! </p>
-    <input type="email" id="email" aria-describedby="helper-text-explanation" class="w-60 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@mapmaker.nl">
-    <button type="button" class="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Invite participant</button>
-
-    <button type="button" onclick="location.href = '/dashboard/download';" hx-indicator="#spinner" hx-confirm="Do you want to download a image of your session?"   class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        Download image of session
-        </button>
-
-        <div class="w-1/2">
-            <div class=" row overflow-hidden bg-white shadow sm:rounded-lg mx-3 p-5">
-                <div class="bg-white py-24 sm:py-32">
-                    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8">Key stats</h1>
-            
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 ">
-                <dl class="grid grid-cols-5 gap-y-16 gap-x-8 text-center lg:grid-cols-3">
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dt class="text-base leading-7 text-gray-600">Cards Created</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{cardscount}}</dd>
-                    </div>
-        
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dt class="text-base leading-7 text-gray-600">Comments Posted</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{commentcount}}</dd>
-                    </div>
-        
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dt class="text-base leading-7 text-gray-600">Resources Added</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{resourcecount}}</dd>
-                    </div>
-        
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dt class="text-base leading-7 text-gray-600">Cards Liked</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{likecount}}</dd>
-                    </div>
-                    <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                    <dt class="text-base leading-7 text-gray-600">Participants</dt>
-                    <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{participantcount}}</dd>
-                    </div>
-                </dl>
-                </div>
-                </div>
-            </div>
-        </div>
-
-        </div>
-      </div>
-      
-
-    
-
-
-<div class="flex flex-row justify-center">    
-    
-    <div class="basis-3/8 overflow-hidden bg-white shadow sm:rounded-lg mx-3 p-5">
-        <div class="bg-white py-24 sm:py-32">
-            
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="max-w-2xl mb-4">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Participants: {{participantcount}} </h1>                
-            <div class="relative">
-                
-                </div>
-            </div>
-                <div class="bg-white py-24 sm:py-32">
-                    <div class="mx-auto grid max-w-7xl gap-y-20 gap-x-8 px-6 lg:px-8 xl:grid-cols-3">
-                    <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
-                        {% for participant in participants %}
-                        <li>
-                        <div class="flex items-center gap-x-6">
-                            <div class="relative">
-                                <img class="w-10 h-10 rounded-full" src="{{ participant.avatar_url}}" alt="{{participant.first_name}} {{participant.last_name}} picture">
-                                {% if participant.last_login == participant.date_created %}
-                                <span class="top-0 left-7 absolute  w-3.5 h-3.5 bg-red-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                                {% else %}
-                                <span class="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                                {% endif %}
-                            </div>
-                            <div>
-                            <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">{{ participant.first_name }} {{ participant.last_name }}</h3>
-                            <p class="text-sm font-semibold leading-6 text-indigo-600">{{ participant.organisation}}</p>
-                            {% if participant.last_login == participant.date_created %}
-                                <p class="text-sm font-semibold leading-6 text-indigo-600">Resend invite</p>
-                            {% else %}
-                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">last login {{participant.last_login}} </p>
-                            {% endif %}
-                            </div>
-                        </div>
-                        </li>
-                        {% endfor %}
-                
-                        <!-- More people... -->
-                    </ul>
-                    </div>
-            
-                
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="basis-3/8 overflow-hidden bg-white shadow sm:rounded-lg mx-3 p-5">
-        <div class="bg-white py-24 sm:py-32">
-        <div class="max-w-2xl mb-4 ">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop details</h2>
-        </div>
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 ">
-            {% include 'workshop_details.html' with workshop=workshop participants=participants %}
-            <button hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
-                Click To Edit
-            </button>
-        </div>
-    </div>
-    </div>
-</div>
-
 
 {% endblock %}
