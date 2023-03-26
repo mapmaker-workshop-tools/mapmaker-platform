@@ -10,7 +10,7 @@ from django.db import models
 from django.db.models import Case, When
 import json
 import ast
-from core.utils import mp, signer
+from core.utils import mp, signer, qrgenerator
 
 
 # Create your views here.
@@ -62,5 +62,6 @@ def workshop_settings(request):
 def share_workshop(request, workshop_secret):
     workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
     current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
-    context = {"workshop":current_workshop, "workshop_secret":workshop_secret}
+    qrcode = qrgenerator("https://mapmaker.nl/user/register/"+workshop_secret, current_workshop.id, workshop_secret)
+    context = {"workshop":current_workshop, "workshop_secret":workshop_secret, "qrcode":qrcode}
     return render(request, 'workshop_share.html', context)

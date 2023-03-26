@@ -48,6 +48,8 @@ def register(request, workshop_secret):
             password = form.cleaned_data['password']
             repeat_password = form.cleaned_data['repeat_password']
             organisation = form.cleaned_data['organisation']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
             if password != repeat_password:
                 messages.add_message(request, messages.INFO, 'Passwords do not match')
                 return redirect('/user/register/'+workshop_secret)
@@ -58,7 +60,9 @@ def register(request, workshop_secret):
             new_user = CustomUser(
                 email = email,
                 organisation = organisation,
-                active_workshop = workshop
+                active_workshop = workshop,
+                first_name = first_name,
+                last_name = last_name,
             )
             new_user.set_password(password)
             new_user.save()

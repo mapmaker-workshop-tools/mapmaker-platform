@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Share {{workshop}}{% endblock %}
+{% load static %}
 
 {% block content %}
 
@@ -7,6 +8,8 @@
 <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
     <div>
     <h1 class="mt-6 text-3xl font-bold tracking-tight text-gray-800">Share {{workshop}}</h1>
+    <img class="h-auto max-w-full" src="{{ qrcode }}" alt="image description">
+
     <br>
 
     </div>
