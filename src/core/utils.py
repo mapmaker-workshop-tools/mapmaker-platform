@@ -15,10 +15,9 @@ mp = mixpanel.Mixpanel(
   consumer=mixpanel.Consumer(api_host="api-eu.mixpanel.com"),
 )
 
-def qrgenerator(url, workshop, workshop_secret):
+def qrgenerator(url, workshop_secret):
   url = str(url)
   buffered = BytesIO()
-  workshop = str(workshop)
   img = qrcode.make(url)
   img.save(buffered, format="PNG")
   base64_qrcode = base64.b64encode(buffered.getvalue())

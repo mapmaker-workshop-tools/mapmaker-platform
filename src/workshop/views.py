@@ -38,6 +38,8 @@ def workshop_settings(request):
         userIDlist.append(i.customuser_id)
     #Get all the participants to this session --> This ensures we can query their details in templates
     participants = CustomUser.objects.filter(pk__in=userIDlist)
+    qrcode = qrgenerator("https://mapmaker.nl/user/register/"+workshop_secret, workshop_secret)
+
     context = {
             "firstname": current_user.first_name,
             'cards': ordered_cards, 
@@ -48,7 +50,8 @@ def workshop_settings(request):
             "likecount":likecount,
             "commentcount":commentcount,
             "resourcecount":resourcecount,
-            "workshop_secret":workshop_secret
+            "workshop_secret":workshop_secret,
+            "qrcode":qrcode
             }
     mp.track(request.user.email, 'Workshop settings', {
             'workshop': current_workshop.workshop_name,
@@ -62,6 +65,6 @@ def workshop_settings(request):
 def share_workshop(request, workshop_secret):
     workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
     current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
-    qrcode = qrgenerator("https://mapmaker.nl/user/register/"+workshop_secret, current_workshop.id, workshop_secret)
+    qrcode = qrgenerator("https://mapmaker.nl/user/register/"+workshop_secret, workshop_secret)
     context = {"workshop":current_workshop, "workshop_secret":workshop_secret, "qrcode":qrcode}
     return render(request, 'workshop_share.html', context)

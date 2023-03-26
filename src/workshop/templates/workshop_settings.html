@@ -62,7 +62,12 @@
         </div>
         
         <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel" aria-labelledby="about-tab">
+            <div class="flex min-h-full items-center justify-center py-40 px-4 sm:px-6 lg:px-8 bg">
+                <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
+
             <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Share </h2>
+            <img class="h-auto max-w-full" src="{{ qrcode }}" alt="image description">
+            <br>
             <!-- List -->
             <p>Share {{workshop}} with others in your organisation, all they need is this link.</p>
             <div>
@@ -75,12 +80,26 @@
                 <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Beware: anyone with this link can view your workshop.</p>
 
                 <br><br>
+            </div>
+            </div>
 
         </div>
         <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="faq" role="tabpanel" aria-labelledby="faq-tab">
         </div>
     </div>
 </div>
+<script>
+    function copyurltoclipboard() {
+      // Get the text field
+      var copyText = document.getElementById("myInput");
     
+      // Select the text field
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); // For mobile devices
+    
+       // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText.value);
+    }
+    </script>
 
 {% endblock %}
