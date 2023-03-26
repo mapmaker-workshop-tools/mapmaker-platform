@@ -14,10 +14,7 @@ import re
 from django.http import HttpResponse
 from .utils import create_image
 from workshop.models import Card
-from core.utils import mp
-from django.core.signing import Signer
-
-signer = Signer()
+from core.utils import mp, signer
 
 
 

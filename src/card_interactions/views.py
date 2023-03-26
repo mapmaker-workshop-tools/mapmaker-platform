@@ -10,10 +10,7 @@ from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, Card
 from .models import Follower, Resource, Comment
 from django.contrib import messages
 from emailhandler.standard_emails import send_simple_email, notify_followers_new_post
-from core.utils import mp 
-from django.core.signing import Signer
-
-signer = Signer()
+from core.utils import mp, signer
 
 def validate_user_access_to_card(id, request):
     card = Card.objects.get(id=id)

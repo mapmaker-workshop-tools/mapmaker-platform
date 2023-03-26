@@ -10,9 +10,7 @@ from django.db import models
 from django.db.models import Case, When
 import json
 import ast
-from core.utils import mp
-from django.core.signing import Signer
-signer = Signer()
+from core.utils import mp, signer
 
 
 # Create your views here.
@@ -26,6 +24,7 @@ def workshop_settings(request):
     resourcecount = Resource.objects.filter(card__workshop=current_workshop).count()
     participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
     participantcount = participants.count()
+    workshop_secret = signer.sign_object({'workshopid':current_workshop.id})
     # Here we fetch and order the cards in this workshop 
     if not current_workshop.card_order:
         ordered_cards = cards
@@ -48,7 +47,8 @@ def workshop_settings(request):
             "participantcount": participants.count(),
             "likecount":likecount,
             "commentcount":commentcount,
-            "resourcecount":resourcecount
+            "resourcecount":resourcecount,
+            "workshop_secret":workshop_secret
             }
     mp.track(request.user.email, 'Workshop settings', {
             'workshop': current_workshop.workshop_name,

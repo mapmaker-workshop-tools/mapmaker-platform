@@ -1,7 +1,99 @@
 {%  extends 'base.html' %}
 
 {% block content %}
-<div class="w-full ml-20 mb-4">
+
+<div style="height: 100px;"></div>
+<div class="p-8 w-8/12 mx-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop settings: {{workshop}}</h1>
+<p class="mt-6 text-lg leading-8 text-gray-600">View and edit your workshop, view participants and invite new participants to join! </p>
+
+    <div class="sm:hidden">
+        <label for="tabs" class="sr-only">Select tab</label>
+        <select id="tabs" class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option>Metrics</option>
+            <option>Share</option>
+            <option>Details</option>
+        </select>
+    </div>
+    <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
+        <li class="w-full">
+            <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Metrics</button>
+        </li>
+        <li class="w-full">
+            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Share</button>
+        </li>
+        <li class="w-full">
+            <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false" class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Details</button>
+        </li>
+    </ul>
+    <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+            <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
+                <div class="flex flex-col items-center justify-center">
+                    <dt class="mb-2 text-3xl font-extrabold">{{cardscount}}</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Cards created</dd>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <dt class="mb-2 text-3xl font-extrabold">{{commentcount}}</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Updates</dd>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <dt class="mb-2 text-3xl font-extrabold">{{resourcecount}}</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Resources</dd>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <dt class="mb-2 text-3xl font-extrabold">{{likecount}}</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Cards Liked</dd>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <dt class="mb-2 text-3xl font-extrabold">{{participantcount}}</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Participants</dd>
+                </div>
+            </dl>
+        </div>
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel" aria-labelledby="about-tab">
+            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Share </h2>
+            <!-- List -->
+            <p>Share {{workshop}} with others in your organisation, all they need is this link.</p>
+            <div>
+                <br>
+                <input type="text" readonly value="https://mapmaker.nl/dashboard/guest/{{workshop_secret}}" id="myInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <button  onclick="copyurltoclipboard()" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-700 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                Copy link to {{workshop}} to your clipboard
+                </button>
+                <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Beware: anyone with this link can view your workshop.</p>
+
+                <br><br>
+
+        </div>
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                  <div class="max-w-2xl mb-4 ">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop details</h2>
+        </div>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 ">
+            {% include 'workshop_details.html' with workshop=workshop participants=participants %}
+            <button hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
+                Click To Edit
+            </button>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
     <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop settings: {{workshop}}</h1>
     <p class="mt-6 text-lg leading-8 text-gray-600">View and edit your workshop, view participants and invite new participants to join! </p>
     <input type="email" id="email" aria-describedby="helper-text-explanation" class="w-60 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@mapmaker.nl">
