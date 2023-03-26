@@ -22,6 +22,4 @@ def qrgenerator(url, workshop, workshop_secret):
   img = qrcode.make(url)
   img.save(buffered, format="PNG")
   base64_qrcode = base64.b64encode(buffered.getvalue())
-  result = str("data:;base64,"+str(base64_qrcode.decode("utf-8")))
-  print(result)
-  return result
+  return str("data:;base64,"+str(base64_qrcode.decode("utf-8")))
