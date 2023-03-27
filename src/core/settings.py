@@ -28,9 +28,17 @@ environ.Env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
+#Security Settings
+SECURE_HSTS_SECONDS = True
+SECURE_HSTS_PRELOAD = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_SSL_REDIRECT = True
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
-#DEBUG = False
+#DEBUG = env('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = ['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', 
                     'localhost', 
