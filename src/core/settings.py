@@ -51,12 +51,10 @@ CSRF_TRUSTED_ORIGINS =['https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlig
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django_extensions',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_browser_reload',
     'rest_framework',
     'workshop',
     'users',  # customusers so we have more fields on usertable
