@@ -125,7 +125,7 @@ jobs:
             envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
             envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
             envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
-            envkey_DEBUG: "True"
+            envkey_DEBUG: "False"
             envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
             directory: src/core
             file_name: .env
