@@ -49,7 +49,6 @@ jobs:
   
   AddMixpAnelAnnotation:
     name: 🔭 Add Mixpanel annotation
-    needs: [buildnginx, builddjango, startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
