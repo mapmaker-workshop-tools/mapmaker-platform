@@ -1,8 +1,8 @@
-import {IconDefinition, IconLookup, IconName, IconFamily, IconPrefix, CssStyleClass, IconStyle, IconPathData, IconPack} from '@fortawesome/fontawesome-common-types';
-export {IconDefinition, IconLookup, IconName, IconFamily, IconPrefix, CssStyleClass, IconStyle, IconPathData, IconPack} from '@fortawesome/fontawesome-common-types';
+import {IconDefinition, IconLookup, IconName, IconPrefix, IconPathData, IconPack } from '@fortawesome/fontawesome-common-types';
+export {IconDefinition, IconLookup, IconName, IconPrefix, IconPathData, IconPack } from '@fortawesome/fontawesome-common-types';
 export const dom: DOM;
 export const library: Library;
-export const parse: { transform(transformString: string): Transform, icon(parseIconString: string): IconLookup };
+export const parse: { transform(transformString: string): Transform };
 export const config: Config;
 export function noAuto():void;
 export function findIconDefinition(iconLookup: IconLookup): IconDefinition;
@@ -20,12 +20,9 @@ export function icon(icon: IconName | IconLookup, params?: IconParams): Icon;
 export type IconProp = IconName | [IconPrefix, IconName] | IconLookup;
 export type FlipProp = "horizontal" | "vertical" | "both";
 export type SizeProp =
-  | "2xs"
   | "xs"
-  | "sm"
   | "lg"
-  | "xl"
-  | "2xl"
+  | "sm"
   | "1x"
   | "2x"
   | "3x"
@@ -40,10 +37,7 @@ export type PullProp = "left" | "right";
 export type RotateProp = 90 | 180 | 270;
 export type FaSymbol = string | boolean;
 export interface Config {
-  familyPrefix: string;
-  cssPrefix: string;
-  styleDefault: IconPrefix | CssStyleClass | IconStyle;
-  familyDefault: IconFamily;
+  familyPrefix: IconPrefix;
   replacementClass: string;
   autoReplaceSvg: boolean | 'nest';
   autoAddCss: boolean;
@@ -113,7 +107,7 @@ export interface IconParams extends Params {
   maskId?: string;
 }
 export interface DOM {
-  i2svg(params?: { node: Node; callback?: () => void }): Promise<void>;
+  i2svg(params?: { node: Node; callback: () => void }): Promise<void>;
   css(): string;
   insertCss(): string;
   watch(): void;

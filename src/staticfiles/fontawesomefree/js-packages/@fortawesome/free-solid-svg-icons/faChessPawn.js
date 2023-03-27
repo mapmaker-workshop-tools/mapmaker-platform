@@ -4,9 +4,9 @@ var prefix = 'fas';
 var iconName = 'chess-pawn';
 var width = 320;
 var height = 512;
-var aliases = [9823];
+var ligatures = [];
 var unicode = 'f443';
-var svgPathData = 'M199.4 224c29.2-18.4 48.6-50.9 48.6-88c0-57.4-46.6-104-104-104S40 78.6 40 136c0 37.1 19.4 69.6 48.5 88H80c-17.7 0-32 14.3-32 32c0 16.5 12.5 30 28.5 31.8L64 400H224L211.5 287.8c16-1.8 28.5-15.3 28.5-31.8c0-17.7-14.3-32-32-32h-8.6zM6.6 473.4c-4.2 4.2-6.6 10-6.6 16C0 501.9 10.1 512 22.6 512H265.4c12.5 0 22.6-10.1 22.6-22.6c0-6-2.4-11.8-6.6-16L240 432H48L6.6 473.4z';
+var svgPathData = 'M105.1 224H80a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h16v5.49c0 44-4.14 86.6-24 122.51h176c-19.89-35.91-24-78.51-24-122.51V288h16a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16h-25.1c29.39-18.38 49.1-50.78 49.1-88a104 104 0 0 0-208 0c0 37.22 19.71 69.62 49.1 88zM304 448H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h288a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z';
 
 exports.definition = {
   prefix: prefix,
@@ -14,7 +14,7 @@ exports.definition = {
   icon: [
     width,
     height,
-    aliases,
+    ligatures,
     unicode,
     svgPathData
   ]};
@@ -24,7 +24,6 @@ exports.prefix = prefix;
 exports.iconName = iconName;
 exports.width = width;
 exports.height = height;
-exports.ligatures = aliases;
+exports.ligatures = ligatures;
 exports.unicode = unicode;
 exports.svgPathData = svgPathData;
-exports.aliases = aliases;
