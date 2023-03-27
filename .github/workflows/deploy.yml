@@ -49,14 +49,13 @@ jobs:
   
   AddMixpAnelAnnotation:
     name: 🔭 Add Mixpanel annotation
-    needs: [deployimages, validatedeployment, buildnginx, builddjango, startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: Send annotation to Mixpanel
         run: |
-          curl --request POST 
-          --url 'https://mixpanel.com/api/app/workspaces/3471787/annotations'
-          --header 'Authorization: ${{ secrets.MIXPANEL_TOKEN }}'
+          curl --request POST \
+          --url 'https://mixpanel.com/api/app/workspaces/3471787/annotations' \
+          --header 'Authorization: ${{ secrets.MIXPANEL_TOKEN }}' \
           --data-raw '{"date":$(date +'%Y-%m-%d'),"description":${{ github.event.commits[0].message }} }'        
             
   buildnginx:
