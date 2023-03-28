@@ -51,7 +51,7 @@ def workshop_settings(request):
             "commentcount":commentcount,
             "resourcecount":resourcecount,
             "workshop_secret":workshop_secret,
-            "qrcode":qrcode
+            "qrcode":qrcodeq
             }
     mp.track(request.user.email, 'Workshop settings', {
             'workshop': current_workshop.workshop_name,
