@@ -20,6 +20,19 @@ def send_simple_email(recipient):
         headers={'Message-ID': 'foo'},
     )
     email.send()
+
+    
+def welcome_new_marketing_lead(recipient):
+    sender = 'mapmaker.server@gmail.com'
+    bcc_recipients = [recipient]
+    email = EmailMessage(
+        'Thanks for joining the Mapmaker email list',
+        'Thanks for joining the Mapmaker email list, we will let you know once we launch!',
+        sender,
+        bcc_recipients,
+        reply_to=[sender],
+    )
+    email.send()
     
     
 def welcome_new_user(recipient, workshop_name):

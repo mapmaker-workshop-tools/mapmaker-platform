@@ -20,4 +20,5 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.index, name='homepage'),
+    path('emaillist', views.sign_up_marketing_email, name='sign up for marketing')
 ]
