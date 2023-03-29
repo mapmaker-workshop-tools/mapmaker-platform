@@ -38,14 +38,12 @@ ALLOWED_HOSTS = ['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com',
                     'localhost', 
                     '127.0.0.1', 
                     'mapmaker.nl', 
-                    'www.mapmaker.nl',
-                    '0.0.0.0'
+                    'www.mapmaker.nl'
                     ]
 CSRF_TRUSTED_ORIGINS =['https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', 
                         'http://127.0.0.1', 
                         'https://mapmaker.nl', 
-                        'https://www.mapmaker.nl',
-                        'https://0.0.0.0']
+                        'https://www.mapmaker.nl']
 
 
 # Application definition
