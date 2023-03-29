@@ -31,8 +31,8 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = env('DEBUG')
-DEBUG = True
+DEBUG = env('DEBUG')
+#DEBUG = True
 
 ALLOWED_HOSTS = ['mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com', 
                     'localhost', 

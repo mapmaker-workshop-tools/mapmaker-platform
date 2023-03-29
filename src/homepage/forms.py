@@ -1,4 +1,5 @@
 from django import forms
+from .models import EmailList
 
 
 tailwind_class = """w-full border-2 border-ch-gray-light 
@@ -13,3 +14,7 @@ comment_class = """w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-g
 
 class EmailMarketing(forms.Form):
     email = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
+
+    class Meta:
+        model = EmailList
+        fields = ("email")
