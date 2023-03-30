@@ -112,11 +112,12 @@ def profile_edit(request, id):
             t.last_name = lastname
             t.email = email
             t.linkedin = linkedin
+            t.organisation = organisation
             t.save()
             mp.track(email, 'User profile updated', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
             #return redirect('/user/profile')
-            return render(request, 'user_profile_table.html')
+            return render(request, 'user_profile_table_edit.html', context)
         elif request.method == 'GET':
             user = request.user
             workshops = Workshop.objects.filter(participants__email=user.email)

@@ -42,6 +42,21 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
+        colors: {
+            'steunkleur': {  
+                DEFAULT: '#78E7BF',  
+                50: '#FFFFFF',  
+                100: '#FFFFFF',  
+                200: 'aliceblue',  
+                300: '#BDF3E0',  
+                400: '#9BEDCF',  
+                500: '#78E7BF',  
+                600: '#48DFA8',  
+                700: '#24CB8F',  
+                800: '#1C9B6D',  
+                900: '#136B4C',  
+                950: '#0F543B'},
+        },
         extend: {
             fontFamily: {
                 'Lexend': ['"Press Start 2P"', 'cursive'],
