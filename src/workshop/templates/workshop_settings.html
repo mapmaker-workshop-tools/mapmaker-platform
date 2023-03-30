@@ -3,87 +3,87 @@
 
 {% block content %}
 
-<div class="p-8 w-12/12 mx-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="p-8 w-12/12 mx-8 bg-white border border-gray-200 rounded-lg shadow  ">
 <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Workshop settings: {{workshop}}</h1>
 <p class="mt-6 text-lg leading-8 text-gray-600">View and edit your workshop, view participants and invite new participants to join! </p>
-<button type="button" onclick="location.href = '/dashboard/download';" hx-indicator="#spinner" hx-confirm="Do you want to download a image of your session?"   class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+<button type="button" onclick="location.href = '/dashboard/download';" hx-indicator="#spinner" hx-confirm="Do you want to download a image of your session?"   class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
     Download image of session
 </button>
 
     <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select tab</label>
-        <select id="tabs" class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <select id="tabs" class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5     dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option>Participant overview</option>
             <option>Share</option>
             <option>Details</option>
         </select>
     </div>
-    <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
+    <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex  " id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
         <li class="w-full">
-            <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Participant overview</button>
+            <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none  dark:hover:bg-gray-600">Participant overview</button>
         </li>
         <li class="w-full">
-            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Share</button>
+            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none  dark:hover:bg-gray-600">Share</button>
         </li>
         <li class="w-full">
-            <button id="faq-tab" data-tabs-target="#stats1" type="button" role="tab" aria-controls="stats1" aria-selected="false" class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Details</button>
+            <button id="faq-tab" data-tabs-target="#stats1" type="button" role="tab" aria-controls="stats1" aria-selected="false" class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none  dark:hover:bg-gray-600">Details</button>
         </li>
     </ul>
-    <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
-        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-            <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
+    <div id="fullWidthTabContent" class="border-t border-gray-200 ">
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="stats" role="tabpanel" aria-labelledby="stats-tab">
+            <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6  sm:p-8">
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{cardscount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Cards  </dd>
+                    <dd class="text-gray-500 ">Cards  </dd>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{commentcount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Updates</dd>
+                    <dd class="text-gray-500 ">Updates</dd>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{resourcecount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Resources</dd>
+                    <dd class="text-gray-500 ">Resources</dd>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{likecount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Followers</dd>
+                    <dd class="text-gray-500 ">Followers</dd>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl font-extrabold">{{participantcount}}</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Participants</dd>
+                    <dd class="text-gray-500 ">Participants</dd>
                 </div>
             </dl>
             {% include 'workshop_participants.html' with workshop=workshop participants=participants %}
         </div>
 
-        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats1" role="tabpanel" aria-labelledby="stats-tab">
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="stats1" role="tabpanel" aria-labelledby="stats-tab">
             {% include 'workshop_details.html' with workshop=workshop participants=participants %}
         </div>
         
-        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel" aria-labelledby="about-tab">
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="about" role="tabpanel" aria-labelledby="about-tab">
             <div class="flex min-h-full items-center justify-center py-40 px-4 sm:px-6 lg:px-8 bg">
                 <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
 
-            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Share </h2>
+            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 ">Share </h2>
             <img class="h-auto max-w-full" src="{{ qrcode }}" alt="image description">
             <br>
             <!-- List -->
             <p>Share {{workshop}} with others in your organisation, all they need is this link.</p>
             <div>
                 <br>
-                <input type="text" readonly value="https://mapmaker.nl/dashboard/guest/{{workshop_secret}}" id="myInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input type="text" readonly value="https://mapmaker.nl/dashboard/guest/{{workshop_secret}}" id="myInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5     dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 
                 <button  onclick="copyurltoclipboard()" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-700 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 Copy link to {{workshop}} to your clipboard
                 </button>
-                <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Beware: anyone with this link can view your workshop.</p>
+                <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 ">Beware: anyone with this link can view your workshop.</p>
 
                 <br><br>
             </div>
             </div>
 
         </div>
-        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="faq" role="tabpanel" aria-labelledby="faq-tab">
         </div>
     </div>
 </div>

@@ -1,8 +1,8 @@
 
 
     <div class="visible sm:invisible" style="position:absolute; top:10%; left: 25px; position: fixed;">
-        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Legend</h5>
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow  ">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Legend</h5>
             <ul>
                 <span class="flex items-center">
                     <svg style='scale:0.5;' fill="#ffeb39" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px" viewBox="-165.13 -165.13 815.95 815.95" xml:space="preserve" stroke="red" stroke-width="48.568799999999996"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#ffeb39" stroke-width="1.942752"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M364.269,453.155H121.416L0,242.844L121.416,32.533h242.853l121.419,210.312L364.269,453.155z M131.905,434.997h221.878 l110.939-192.152L353.783,50.691H131.905L20.966,242.844L131.905,434.997z"></path> </g> </g> </g></svg>
@@ -34,12 +34,12 @@
                 </span>
             </ul>
             {% if user.is_authenticated%}
-            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Zoom </h5> 
+            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 ">Zoom </h5> 
             <div class="flex">
                 <button hx-get="/dashboard/zoom_out"
-                hx-trigger="click" hx-target="#zoom" hx-indicator="#spinner" hx-swap="innerHTML" type="button" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">-</button>
+                hx-trigger="click" hx-target="#zoom" hx-indicator="#spinner" hx-swap="innerHTML" type="button" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">-</button>
                 <button hx-get="/dashboard/zoom_in"
-                hx-trigger="click" hx-target="#zoom" hx-indicator="#spinner" hx-swap="innerHTML" type="button" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">+</button>
+                hx-trigger="click" hx-target="#zoom" hx-indicator="#spinner" hx-swap="innerHTML" type="button" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">+</button>
             </div>
             {% endif %}
         </div>
