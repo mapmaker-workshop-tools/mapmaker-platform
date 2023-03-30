@@ -1,3 +1,4 @@
+{% load static%}
 {% include 'comment.html' with comments=comments id=id %}
 {% if user.is_authenticated %}
 <form>
@@ -7,16 +8,16 @@
             {{ form }}       
          </div>
         <div class="flex items-end justify-end py-2 border-t ">
-            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/no/" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2.5 text-center mr-2 mb-2   dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/no/" class="text-white hover:text-white border border-steunkleur-700 bg-steunkleur-700 hover:bg-steunkleur-800 focus:ring-4 focus:outline-none focus:ring-steunkleur-300 font-medium rounded-lg text-xs px-4 py-2.5 text-center mr-2 mb-2">
                 Post comment
             </button>
-            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/yes/" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2  dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/yes/" class="text-white bg-steunkleur bg-steunkleur-700  hover:bg-steunkleur-800 focus:ring-4 focus:ring-steunkleur-400 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
             Post and notify followers
             </button>
         </div>
     </div>
  </form>
- <p class="px-4 ml-auto text-xs text-gray-500 ">Remember, contributions to this topic should follow our <a href="#" class="text-blue-600  hover:underline">Community Guidelines</a>.</p>
+ <p class="px-4 ml-auto text-xs text-gray-500 ">Remember, contributions to this topic should follow our <a href="#" class="text-steunkleur-600  hover:underline">Community Guidelines</a>.</p>
  {% else%}
  <div class="p-4 w-full mb-40 border border-gray-200 rounded-lg bg-gray-50  ">
  </div>

@@ -2,6 +2,6 @@
 <form hx-post="/card/{{ cardid }}/edit/description/" hx-indicator="#spinner" hx-target="this"  hx-swap="outerHTML">
   {% csrf_token %}
   {{ form }}
-  <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300  dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+  <button class="my-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-steunkleur-700 rounded-lg hover:bg-steunkleur-800 focus:ring-4 focus:outline-none focus:ring-steunkleur-300  dark:hover:bg-steunkleur-700 dark:focus:ring-steunkleur-800">Submit</button>
   <button class="btn" hx-indicator="#spinner" hx-get="/contact/1">Cancel</button>
 </form> 

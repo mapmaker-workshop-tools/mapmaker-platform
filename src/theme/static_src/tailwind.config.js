@@ -47,7 +47,7 @@ module.exports = {
                 DEFAULT: '#78E7BF',  
                 50: '#FFFFFF',  
                 100: '#FFFFFF',  
-                200: 'aliceblue',  
+                200: '#E0F9F0',  
                 300: '#BDF3E0',  
                 400: '#9BEDCF',  
                 500: '#78E7BF',  
