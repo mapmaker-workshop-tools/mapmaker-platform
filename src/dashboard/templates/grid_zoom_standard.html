@@ -55,7 +55,7 @@
     }
 </style>
 {% if user.is_authenticated %}
-<div hx-get="/dashboard/update" hx-indicator="#spinner" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom"></div>
+<div hx-get="/dashboard/update" hx-indicator="#spinner" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom">
 {% endif %}
 <div id="drawer"></div>
 <div id="modal"></div>
