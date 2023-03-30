@@ -1,3 +1,4 @@
+{% load static %}
 <style type="text/css">
     .gridmain {
         display:inline-flex;
@@ -41,6 +42,10 @@
         background: #fff;
         
     }
+    .hexagonhidden img {
+        display: block;
+        margin: auto;
+    }
     .hexagonhidden:hover{
         background-color:#78E7BF;
         opacity: 0.5;
@@ -49,13 +54,18 @@
     .hexagon {
         padding-top: 10px;
         text-align: center;
+        justify-content: center;
         vertical-align: middle;
         color: #000000;
         cursor: pointer;
     }
+    .hexagon img {
+        display: block;
+        margin: auto;
+    }
 </style>
 {% if user.is_authenticated %}
-<div hx-get="/dashboard/update" hx-indicator="#spinner" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom">
+<div hx-get="/dashboard/update" hx-target="#grid" hx-trigger="every 4s" hx-swap="morphdom">
 {% endif %}
 <div id="drawer"></div>
 <div id="modal"></div>
@@ -69,7 +79,7 @@
         {% if card.cardtype == 'empty' %}
             {% if user.is_authenticated %}
             <div class="hexagonhidden flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/create"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-regular fa-2xl fa-plus"></i><br>
+                <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="{% static '/icons/plus-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 <b>New</b>       
             {% else %}
             <div class="hexagonhidden flex items-center" style="pointer-events: none;" ><input type='hidden' name='item' value='{{ card.id}}'/>   
@@ -77,27 +87,27 @@
             </div>
         {% elif card.cardtype == 'ambition' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-solid fa-xl fa-eye"></i><br>
+                <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="{% static '/icons/flag-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{ card.title|truncatechars:20}}
             </div>
-        {% elif card.cardtype == 'challenge' %}E6799D
+        {% elif card.cardtype == 'challenge' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-regular fa-xl fa-mountain"></i><br>
+                <img src="{% static '/icons/mountain-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'idea' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-regular fa-lightbulb fa-xl"></i><br>
+                <img src="{% static '/icons/lightbulb-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{ card.title|truncatechars:20}}
             </div>
         {% elif card.cardtype == 'pro' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #ffeb39;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-solid fa-circle-up fa-xl"></i><br>
+                <img src="{% static '/icons/thumbs-up-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{ card.title|truncatechars:20}}
             </div>
-            {% elif card.cardtype == 'con' %}
-            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: red;"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-solid fa-circle-down fa-xl"></i><br>
+        {% elif card.cardtype == 'con' %}
+            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #78E7BF;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+                <img src="{% static '/icons/thumbs-down-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{ card.title|truncatechars:20}}
             </div>
         {% endif %}

@@ -1,4 +1,4 @@
-
+{% load static %}
 
 <div id="comments" class="flow-root p-4">
     {% for comment in comments %}
@@ -20,7 +20,7 @@
                 </div>
                 {% if comment.author == request.user %}
                 <button type="button" hx-indicator="#spinner" hx-confirm="Are you sure you wish to delete your comment?" hx-target="#comments" hx-swap="outerHTML" hx-DELETE="/card/{{ id }}/comment/{{comment.id}}/delete/" class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
-                    <i class="fa-regular fa-trash"></i><br> 
+                    delete                
                 </button>
                 {% endif %}
             </div>

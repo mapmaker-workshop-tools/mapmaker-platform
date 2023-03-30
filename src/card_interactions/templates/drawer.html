@@ -1,6 +1,7 @@
 {% load static tailwind_tags %}
 {% load static %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
 
 <!--  left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 " tabindex="-1" aria-labelledby="drawer-label"> -->
 
@@ -8,12 +9,17 @@
 <div id='drawer' class="overflow-y-auto h-screen m-4 p-4 fixed top-20 right-0 z-40 max-w-xl bg-white border border-gray-200 rounded-lg shadow  ">
     <div class="flex justify-between">
         {% if user.is_authenticated %}
-        <button type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 m-4 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">Close</button>
+        <a type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 ">
+            <img src="{% static '/icons/xmark-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+        </a>
 
-        <button type="button" hx-indicator="#spinner" hx-get="/card/{{id}}/delete" hx-confirm="Are you sure you wish to delete this card?"  hx-target="#drawer" class="m-4 py-2.5  text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5 text-center   dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete Card</button>
+        <a type="button" hx-indicator="#spinner" hx-get="/card/{{id}}/delete" hx-confirm="Are you sure you wish to delete this card?"  hx-target="#drawer" class="focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+            <img src="{% static '/icons/trash-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+
+        </a>
         {% else %}
         <a href="/dashboard/guest/{{workshop_secret}}">
-            <button type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 m-4 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">Close</button>
+            <img src="{% static '/icons/xmark-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
         </a>
         <a href="/user/register/{{workshop_secret}}">
             <button type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 m-4 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">Create account to edit</button>
@@ -22,75 +28,125 @@
     </div>
     
         {% include "new_title.html" with author=author %}
-        
-        <div class="p-5">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Author</h5>
-            
-            <div class="p-3">
-            <div class="flex items-center justify-between mb-2">
-                <a href="#">
-                    <img class="w-10 h-10 rounded-full" src="{{author.avatar_url}}" alt="{{author.firstname}} {{author.last_name}}">
-                </a>
-            </div>
-            <p class="text-base font-semibold leading-none text-gray-900 ">
-                {{author.first_name}} {{author.last_name}}
-            </p>
-            <p class="mb-3 text-sm font-normal">
-                <a href="#" class="hover:underline">{{author.organisation}} </a>
-            </p>
-            <ul class="flex text-sm font-light">
-                <li class="mr-2">
-                    <a href="{{author.linkedin}}" class="hover:underline">
-                        <span class="font-semibold text-gray-900 "><i class="fa-brands fa-linkedin"></i></span>
-                        <span>{{author.linkedin}}</span>
+ 
+
+        <div class="pt-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    <div class="flex">
+                        <img src="{% static '/icons/pen-nib-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Author </h5> 
+                    </div>
+                </div>
+            </div>     
+        </div>  
+        <div class=" bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+                    <a href="#">
+                        <img class="w-full p-6 rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{author.avatar_url}}" alt="{{author.first_name}} Avatar">
                     </a>
-                </li>
-                <li>
-                    <a href="mailto:{{author.email}}" class="hover:underline">
-                        <span class="font-semibold text-gray-900 "> <i class="fa-solid fa-envelope"></i></span>
-                        <span>{{author.email}}</span>
-                    </a>
-                </li>
-            </ul>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{author.first_name}} {{author.last_name}}
+                        </h3>
+                        <span class="text-gray-500 dark:text-gray-400">{{author.organisation}}</span>
+                        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{author.email}} <br> {{author.linkedin}}</p>
+                    </div>
+                </div>             
         </div>
-    <div class="flex">
-        <img src="{% static '/icons/participants.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Following </h5> 
-    </div>
-        <div class="flex -space-x-1 overflow-hidden p-4">
+
+        
+        <div class="pt-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    <div class="flex">
+                        <img src="{% static '/icons/heart-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Followers </h5> 
+                    </div>
+                </div>
+            </div>     
+        </div>  <div class="pb-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 py-4 bg-gray-50 rounded-lg shadow sm:flex">
+                    {% if user.is_authenticated%}
+                    {% if user_follows_card %}
+                    <div id="like">
+                        {% include "liked.html" with id=id %}
+                    </div>
+                    {% else %}
+                    <div id="like">
+                        {% include "notliked.html" with id=id %}
+                    </div>
+                    {% endif %}
+                {% endif %}
             {% for follower in followers %}
-                <img class="inline-block h-4 w-4 rounded-full ring-2 ring-white" src="{{follower.avatar_url}}" alt="">
-                {% empty %}
-                <p class="ml-auto text-xs text-gray-500 ">No followers yet, be the first!</p>
+            <div class="m-4">
+                <div id="tooltip-{{follower.first_name}}-{{follower.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    {{follower.first_name}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                <img data-tooltip-target="tooltip-{{follower.first_name}}-{{follower.id}}" class="w-10 h-10 rounded" src="{{follower.avatar_url}}" alt="Medium avatar">
+              </div>
+            {% empty %}
+                <p class="ml-auto text-xs p-20 m-20 text-gray-500 ">No followers yet, be the first!</p>
             {% endfor %}
         </div> 
-        {% if user.is_authenticated%}
-            {% if user_follows_card %}
-                {% include "liked.html" with id=id %}
-            {% else %}
-                {% include "notliked.html" with id=id %}
-            {% endif %}
-        {% endif %}
-        
-        <div class="flex">
-            <img src="{% static '/icons/Notes.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Notes </h5> 
-        </div>
-            {% include "new_description.html" %}
-        </div>
-    <div class="flex m-4">
-        <img src="{% static '/icons/resources.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">resources </h5> 
-    </div>
-    {% include 'resources.html' with resources=resources id=id %}       
 
-    <div class="flex ml-4">
-        <img src="{% static '/icons/Update.svg' %}" class="pb-1 h-4 w-4 mr-3 sm:h-9" alt="mapmaker Logo" />
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Updates </h5> 
-    </div>
+        <div class="pt-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    <div class="flex">
+                        <img src="{% static '/icons/Notes.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Description </h5> 
+                    </div>
+                </div>
+            </div>     
+        </div> 
+        <div class="pt--2 pb-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    {% include "new_description.html" %}
 
-   {% include 'typecomment.html' with comments=comments %}
+                </div>
+            </div>     
+        </div> 
+        <div class="pt-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    <div class="flex">
+                        <img src="{% static '/icons/Resources.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Resources </h5> 
+                    </div>
+                </div>
+            </div>     
+        </div> 
+        <div class="pt--2 pb-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    {% include 'resources.html' with resources=resources id=id %}       
 
+                </div>
+            </div>     
+        </div> 
+
+        <div class="pt-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
+                    <div class="flex">
+                        <img src="{% static '/icons/bell-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Updates </h5> 
+                    </div>
+                </div>
+            </div>     
+        </div> 
+        <div class="pt--2 pb-4 bg-grey-100">
+            <div class="bg-grey-100">
+                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow"> 
+                    {% include 'typecomment.html' with comments=comments %}
+
+                </div>
+            </div>     
+        </div> 
     </div>
-    
 </div>

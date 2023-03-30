@@ -1,10 +1,13 @@
-<div hx-target="this"  hx-swap="outerHTML" class="justify-between">
+
+<div hx-target="this"  hx-swap="innerHTML" class="justify-between">
+    
     {% if user.is_authenticated %}
     <div hx-get="/card/{{ id }}/edit/description" hx-indicator="#spinner">
     {% endif %}
     <p >{{ description }}</p>
     {% if user.is_authenticated %}
     </div>
-    <button hx-get="/card/{{ id }}/edit/description" hx-indicator="#spinner" class="px-3 py-2 my-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300  dark:hover:bg-blue-700 dark:focus:ring-blue-800">edit description</button>
+    <button hx-get="/card/{{ id }}/edit/description" hx-indicator="#spinner" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">edit description</button>
+
     {% endif %}
 </div>
