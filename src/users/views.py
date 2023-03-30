@@ -106,17 +106,14 @@ def profile_edit(request, id):
             email = request.POST['email']
             organisation = request.POST['organisation']
             linkedin = request.POST['linkedin']
-            active_workshop = request.POST['default-radio']
             messages.add_message(request, messages.INFO, 'Updated profile')
-            workshop = Workshop.objects.get(id=int(request.POST['default-radio']))
             t = CustomUser.objects.get(id=id)
             t.first_name = firstname
-            t.active_workshop = workshop
             t.last_name = lastname
             t.email = email
             t.linkedin = linkedin
             t.save()
-            mp.track(user.email, 'User profile updated', {
+            mp.track(email, 'User profile updated', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
             #return redirect('/user/profile')
             return render(request, 'user_profile_table.html')
