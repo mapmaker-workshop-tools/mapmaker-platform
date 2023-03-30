@@ -154,16 +154,17 @@ jobs:
           run: |
             sudo pip3 install --upgrade pip
             sudo pip3 install -r requirements.txt
-        - name: Building tailwind CSS file
+        - name: 🔨 Building tailwind CSS file
           run: |
             ls
+            npm i rimraf
             python3 src/manage.py tailwind --no-input build
-        - name: Collecting all static files
+        - name: 📦 Collecting all static files
           run: |
             ls
             python3 src/manage.py collectstatic --noinput
         - name: 🐳 Create a Docker Container for DJANGO
-          run: docker build -t mapmaker:latest .
+          run: docker build -t mapmaker:latest -f ./Infrastructure/Dockerfile .
         - name: 📬 Upload Backend image to AWS container register
           run: |
             service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
