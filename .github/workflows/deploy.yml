@@ -154,6 +154,10 @@ jobs:
           run: |
             sudo pip3 install --upgrade pip
             sudo pip3 install -r requirements.txt
+        - name: Building tailwind CSS file
+          run: |
+            ls
+            python3 src/manage.py tailwind --no-input build
         - name: Collecting all static files
           run: |
             ls
