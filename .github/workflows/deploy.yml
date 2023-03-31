@@ -159,7 +159,7 @@ jobs:
             ls
             python3 src/manage.py collectstatic --noinput
         - name: 🐳 Create a Docker Container for DJANGO
-          run: docker build -t mapmaker:latest -f ./Infrastructure/Dockerfile .
+          run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/Dockerfile .
         - name: 📬 Upload Backend image to AWS container register
           run: |
             service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
@@ -210,8 +210,8 @@ jobs:
       - name: 🚀 Launching the Containers
         run: |
           aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
-          --containers file://Infrastructure/deploymentconfig.json \
-          --public-endpoint file://Infrastructure/publicendpoint.json
+          --containers file://Infrastructure/AWS/deploymentconfig.json \
+          --public-endpoint file://Infrastructure/AWS/publicendpoint.json
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
       - name: Build Alerts
