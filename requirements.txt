@@ -17,3 +17,4 @@ django-storages
 mixpanel
 qrcode
 whitenoise
+uwsgi

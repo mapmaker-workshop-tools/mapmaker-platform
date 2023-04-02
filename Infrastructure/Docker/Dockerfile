@@ -21,9 +21,10 @@ COPY src .
 
 # Specify the command to run on container start
 
-# This is the "standard" local development server and thus should not be used
+# This is the "standard" local development server and thus should not be used in prod
 #CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-#This starts the production Gunicorn wsgi process on all ports be aware that the wsgi can't serve static files. 
-CMD [ "gunicorn", "-b", "0.0.0.0:8000", "core.wsgi:application"]
-#CMD ['python', 'manage.py', 'runserver']
-# Check out the infrastructure/nginx folder for further information on the nginx webserver container configuration. 
+#This starts the production Gunicorn wsgi process on all ports
+# be aware that the wsgi can't serve static files. NGINX handles this
+#CMD [ "gunicorn", "-b", "0.0.0.0:8000", "core.wsgi:application"]
+# Implementation with uWSGI server instead of GUNICORN
+CMD [ "uwsgi", "-http :8000", "--module core.wsgi", "-L", "--enable-threads", "--thunder-lock"]
