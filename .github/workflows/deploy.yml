@@ -153,7 +153,7 @@ jobs:
         - name: Installing dependancies
           run: |
             sudo pip3 install --upgrade pip
-            sudo pip3 install -r requirements.txt
+            sudo pip3 install -r Infrastructure/requirements.txt
         - name: 📦 Collecting all static files
           run: |
             ls

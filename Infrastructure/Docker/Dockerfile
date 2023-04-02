@@ -1,6 +1,6 @@
 # Set base image (host OS)
 # The Django version we are using depends on Sequence which was moved in python 3.10. That's why we install 3.9. 
-FROM python:3.9-buster
+FROM python:3.9-alpine
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
 
 # Copy the dependencies file to the working directory
-COPY requirements.txt requirements.txt
+COPY Infrastructure/requirements.txt requirements.txt
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
@@ -28,6 +28,5 @@ RUN adduser --system --group --no-create-home uwsgi
 USER uwsgi
 CMD [ "uwsgi", "--http", "0.0.0.0:8000", \
                "--uid", "uwsgi", \
-               "--plugins", "python3", \
                "--protocol", "uwsgi", \
                "--wsgi", "core.wsgi:application" ]

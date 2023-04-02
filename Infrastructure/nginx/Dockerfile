@@ -3,7 +3,8 @@
 # docker build -t nginx:latest -f Infrastructure/nginx/Dockerfile .
 
 FROM nginx:1.19.0-alpine
-
+# Adding temp file for cache
+RUN mkdir /tmp/nginx
 
 #Adding Django Static files into nginx so they dont have to be answered by Django
 COPY src/staticfiles/ ./static 
