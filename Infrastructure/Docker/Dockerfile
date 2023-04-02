@@ -23,8 +23,9 @@ COPY src .
 #This starts the production Gunicorn wsgi process on all ports
 # be aware that the wsgi can't serve static files. NGINX handles this
 #CMD [ "gunicorn", "-b", "0.0.0.0:8000", "core.wsgi:application"]
-# Implementation with uWSGI server instead of GUNICORN
-#CMD [ "uwsgi", "-http", ":8000", "--module core.wsgi", "-L" "--thunder-lock"]
+# Implementation with uWSGI server instead of GUNICORN using user uwsgi
+RUN adduser --system --group --no-create-home uwsgi
+USER uwsgi
 CMD [ "uwsgi", "--http", "0.0.0.0:8000", \
                "--uid", "uwsgi", \
                "--plugins", "python3", \
