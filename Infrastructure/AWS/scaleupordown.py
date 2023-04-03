@@ -13,4 +13,4 @@ set_power = str(set_power)
 
 import os
 
-os.system("aws lightsail update-container-service --service-name photoscavenger --scale " +set_nodes+" --power "+set_power)
+os.system("aws lightsail update-container-service --service-name mapmaker --scale " +set_nodes+" --power "+set_power)
