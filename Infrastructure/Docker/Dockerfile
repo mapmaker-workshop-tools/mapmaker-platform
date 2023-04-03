@@ -1,6 +1,6 @@
 # Set base image (host OS)
 # The Django version we are using depends on Sequence which was moved in python 3.10. That's why we install 3.9. 
-FROM python:3.9-alpine
+FROM python:3.9-buster
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
