@@ -4,6 +4,9 @@ import time
 from statistics import mean
 import pandas as pd
 from datetime import datetime
+from random import randrange
+
+print(randrange(1,20))
 
 """
 This script helps you get the CPU and MEMORY usage of AWS lightsail container services. 
@@ -15,20 +18,24 @@ Source: https://docs.aws.amazon.com/cli/latest/reference/lightsail/get-container
 
 
 """SETUP"""
-DATA_INTERVAL = 3600 #sets how far you want to look back for capacity (In seconds)
-REFRESH_INTERVAL = 15 #Set's the frequency at which we check the capacity (in seconds)
+DATA_INTERVAL = 3600 # Takes the average server load over that interval in seconds. e.g. 3600 means get the average over last hour
+REFRESH_INTERVAL = 15 #Set's the frequency at which we check the capacity (in seconds), this is how quickly the autoscaler will kick in
 N_ITEMS_TO_EVALUATE = 5 #How many datapoints do we use to make a decision (We take the average load over those points)
-MIN_NUMBER_INSTANCES = 1 # Define how many instances you want
-MAX_NUMBER_INSTANCES = 2 #Define the maximum number of instances you want
-ENABLE_AUTOSCALING = True
-SCALE_UP_IF_CPU = 70
-SCALE_UP_IF_MEM = 70
-SCALE_DOWN_IF_CPU = 2
-SCALE_DOWN_IF_MEM = 30
-SCALE_PREFERENCE = 'both' # 'horizontal', 'vertical' or 'both' for aggressive scaling
+MIN_NUMBER_INSTANCES = 10 # Define how many instances you want minimum
+MAX_NUMBER_INSTANCES = 12 #Define the maximum number of instances you want
+MIN_POWER_INSTANCE = 'nano'  #Options are: ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
+MAX_POWER_INSTANCE = 'small' #Options are: ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
+ENABLE_AUTOSCALING = False #Disable for testing
+
+# AUTOSCALING: integers represent % of load
+SCALE_UP_IF_CPU = 70 #If the load goes above this threshold we'll scale up
+SCALE_UP_IF_MEM = 70 #If the load goes above this threshold we'll scale up
+SCALE_DOWN_IF_CPU = 50 #If load is below this number the server will scale down 
+SCALE_DOWN_IF_MEM = 50 # If load is below this number the server will scale down 
+SCALE_PREFERENCE = 'horizontal' # 'horizontal', 'vertical' or 'both' for aggressive scaling
 
 
-#Sanity check
+#Sanity check lowerbound should always be higher than treshold to scale up
 if SCALE_DOWN_IF_CPU > SCALE_UP_IF_CPU:
     raise Exception("ERROR Lower threshold not met")
 if SCALE_DOWN_IF_MEM > SCALE_UP_IF_MEM:
@@ -68,51 +75,87 @@ def get_current_configuration():
     return scale, power, state 
 
 def scale_to(scale, power):
-    if scale == 0:
-        scale = 1
-    print("\n\n###### RESULT #######")
-    print(scale)
-    print(power)
-
+    print(scale, power)
+    if ENABLE_AUTOSCALING:
+        AWS = os.popen("aws lightsail update-container-service --service-name mapmaker --scale " +scale+" --power "+power).read()
+    else: 
+        print("No update because ENABLE_AUTOSCALING is False\n\n")
+        print("Desired outcome: ")
+        print(scale, power)
 
 def evaluate(CPU, MEM, SCALE, POWER):
-    print("evaluate")
-    if CPU > SCALE_UP_IF_CPU or MEM > SCALE_UP_IF_MEM:
-        if SCALE_PREFERENCE == 'horizontal':
-            power = POWER
-            scale = SCALE + 1
-            scale_to(scale, power)
-            return 'scaling up horizontally'
-        if SCALE_PREFERENCE == 'vertical':
-            power = find_capacity(POWER, 'up')
-            scale = SCALE
-            scale_to(scale, power)
-            return 'scaling up vertically'
-        if SCALE_PREFERENCE == 'both':
-            power = find_capacity(POWER, 'up')
-            scale = SCALE + 1
-            scale_to(scale, power)
-            return 'scaling up vertically and horizontally'
-    elif CPU > SCALE_DOWN_IF_CPU or MEM > SCALE_DOWN_IF_MEM:
-        if SCALE_PREFERENCE == 'horizontal':
-            power = POWER
-            scale = SCALE + 1
-            scale_to(scale, power)
-            return 'scaling down horizontally'
-        if SCALE_PREFERENCE == 'vertical':
-            power = find_capacity(POWER, 'down')
-            scale = SCALE
-            scale_to(scale, power)
-            return 'scaling down vertically'
-        if SCALE_PREFERENCE == 'both':
-            power = find_capacity(POWER, 'down')
-            scale = SCALE - 1
-            scale_to(scale, power)
-            return 'scaling down vertically and horizontally'
+    """
+    Decides if we should scale up or down
+    """
+    #Validating if we are below minimum
+    options = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
+    current = options.index(POWER)
+    minimum = options.index(MIN_POWER_INSTANCE)
+    if current < minimum:
+        result = "Power Under minimum"
+        scale_to(scale, minimum)
+    elif MIN_NUMBER_INSTANCES > SCALE:
+        result = "Instance under minimum"
+        scale_to(MIN_NUMBER_INSTANCES, POWER)
+    elif CPU > SCALE_UP_IF_CPU or MEM > SCALE_UP_IF_MEM:
+        #Validate if we reached the limits we set
+        if SCALE == MAX_NUMBER_INSTANCES or SCALE > 19 :
+            result = "Max. instances reached"
+        #Validate if we reached the limits we set
+        elif POWER == MAX_POWER_INSTANCE or POWER == 'xlarge':
+            result = "Max. Power reached"
+        #If we are not hitting our limits: We should scale
+        else:
+            if SCALE_PREFERENCE == 'horizontal':
+                power = POWER
+                scale = SCALE + 1
+                scale_to(scale, power)
+                result = "Scaling up horizontal"
+            if SCALE_PREFERENCE == 'vertical':
+                power = find_capacity(POWER, 'up')
+                scale = SCALE
+                scale_to(scale, power)
+                result = "Scaling up vertical"
+            if SCALE_PREFERENCE == 'both':
+                power = find_capacity(POWER, 'up')
+                scale = SCALE + 1
+                scale_to(scale, power)
+                result = "Scaling up both"
+    elif CPU < SCALE_DOWN_IF_CPU or MEM < SCALE_DOWN_IF_MEM:
+        #Validate if we reached the limits we set
+        if SCALE == MIN_NUMBER_INSTANCES or SCALE == 1 :
+            result = "Min. instances reached"
+        #Validate if we reached the limits we set
+        elif POWER == MIN_POWER_INSTANCE or POWER == 'nano':
+            result = "Min. Power reached"
+        else:
+            if SCALE_PREFERENCE == 'horizontal':
+                power = POWER
+                scale = SCALE - 1
+                scale_to(scale, power)
+                result = "Scaling down horizontal"
+            if SCALE_PREFERENCE == 'vertical':
+                power = find_capacity(POWER, 'down')
+                scale = SCALE
+                scale_to(scale, power)
+                result = "Scaling down vertical"
+            if SCALE_PREFERENCE == 'both':
+                power = find_capacity(POWER, 'down')
+                scale = SCALE - 1
+                scale_to(scale, power)
+                result = "Scaling down both"
+
+
     else:
-        return "Load within specification"
+        result = "Load within parameters"
+    return result
+
+    
         
 def find_capacity(current, upordown):
+    """
+    Finds the capacity we should scale to. 
+    """
     print("Finding capacity")
     options = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
     index = options.index(current)
@@ -135,19 +178,30 @@ data = {'Timestamp': [0],
         'Period (Sec)': [0],
         'Capacity': [0],
         'Power': [''],
-        'Decicion': [''],
+        'Decision': [''],
         'State': ['']}
 df = pd.DataFrame(data)
  
 
-while ENABLE_AUTOSCALING:
-    current_scale, current_power, current_state = get_current_configuration()
+"""
+Main loop that checks
+"""
+while True:
+    #current_scale, current_power, current_state = get_current_configuration()
+    current_scale = randrange(1, 19)
+    test = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
+    i = randrange(0, 5)
+    current_power = test[i]
+    current_state = 'running'
     df = df.tail(N_ITEMS_TO_EVALUATE)
-    CPU = get_average_CPU(DATA_INTERVAL)
-    MEMORY = get_average_Memory(DATA_INTERVAL)
+    #CPU = get_average_CPU(DATA_INTERVAL)
+    CPU = randrange(1,100)
+    MEMORY = randrange(1,100)
+    #MEMORY = get_average_Memory(DATA_INTERVAL)
+
     if current_state == "UPDATING":
-        print("Capacity is already updating - no need to evaluate")
-        decision = "Do nothing"
+        print("\n\nCapacity is already updating - no need to evaluate")
+        decision = "Wait for new server to come live"
     else:
         decision = evaluate(CPU, MEMORY, current_scale, current_power)
 
@@ -159,7 +213,7 @@ while ENABLE_AUTOSCALING:
             'Capacity': current_scale, 
             'Power':current_power, 
             'State': current_state, 
-            'Decicion':decision}
+            'Decision':decision}
     df.loc[len(df)] = new_row
     df = df.tail(N_ITEMS_TO_EVALUATE)
     print(df)
