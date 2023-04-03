@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
 
 # Copy the dependencies file to the working directory
-COPY Infrastructure/requirements.txt requirements.txt
+COPY Infrastructure/requirements.txt Infrastructure/requirements.txt
 RUN pip3 install --upgrade pip
 RUN pip3 install -r Infrastructure/requirements.txt
 
