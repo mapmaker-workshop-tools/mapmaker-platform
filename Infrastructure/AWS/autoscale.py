@@ -4,9 +4,7 @@ import time
 from statistics import mean
 import pandas as pd
 from datetime import datetime
-from random import randrange
 
-print(randrange(1,20))
 
 """
 This script helps you get the CPU and MEMORY usage of AWS lightsail container services. 
