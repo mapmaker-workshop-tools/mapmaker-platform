@@ -3,7 +3,6 @@ import json
 import time
 from statistics import mean
 import pandas as pd
-from datetime import datetime
 
 
 """
@@ -168,8 +167,7 @@ def find_capacity(current, upordown):
 
 
 # Initialize empty dataframe
-data = {'Timestamp': [0],
-        'CPU': [0],
+data = {'CPU': [0],
         'Memory': [0],
         'Period (Sec)': [0],
         'Capacity': [0],
@@ -194,9 +192,7 @@ if current_state == "UPDATING":
 else:
     decision = evaluate(CPU, MEMORY, current_scale, current_power)
 
-now = datetime.now()  
-new_row = {'Timestamp': now, 
-        'CPU': CPU, 
+new_row = {'CPU': CPU, 
         'Memory': MEMORY, 
         'Period (Sec)':DATA_INTERVAL, 
         'Capacity': current_scale, 
