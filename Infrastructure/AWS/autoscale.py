@@ -186,35 +186,35 @@ df = pd.DataFrame(data)
 """
 Main loop that checks
 """
-while True:
-    #current_scale, current_power, current_state = get_current_configuration()
-    current_scale = randrange(1, 19)
-    test = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
-    i = randrange(0, 5)
-    current_power = test[i]
-    current_state = 'running'
-    df = df.tail(N_ITEMS_TO_EVALUATE)
-    #CPU = get_average_CPU(DATA_INTERVAL)
-    CPU = randrange(1,100)
-    MEMORY = randrange(1,100)
-    #MEMORY = get_average_Memory(DATA_INTERVAL)
+#while True:
+#current_scale, current_power, current_state = get_current_configuration()
+current_scale = randrange(1, 19)
+test = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
+i = randrange(0, 5)
+current_power = test[i]
+current_state = 'running'
+df = df.tail(N_ITEMS_TO_EVALUATE)
+#CPU = get_average_CPU(DATA_INTERVAL)
+CPU = randrange(1,100)
+MEMORY = randrange(1,100)
+#MEMORY = get_average_Memory(DATA_INTERVAL)
 
-    if current_state == "UPDATING":
-        print("\n\nCapacity is already updating - no need to evaluate")
-        decision = "Wait for new server to come live"
-    else:
-        decision = evaluate(CPU, MEMORY, current_scale, current_power)
+if current_state == "UPDATING":
+    print("\n\nCapacity is already updating - no need to evaluate")
+    decision = "Wait for new server to come live"
+else:
+    decision = evaluate(CPU, MEMORY, current_scale, current_power)
 
-    now = datetime.now()  
-    new_row = {'Timestamp': now, 
-            'CPU': CPU, 
-            'Memory': MEMORY, 
-            'Period (Sec)':DATA_INTERVAL, 
-            'Capacity': current_scale, 
-            'Power':current_power, 
-            'State': current_state, 
-            'Decision':decision}
-    df.loc[len(df)] = new_row
-    df = df.tail(N_ITEMS_TO_EVALUATE)
-    print(df)
-    time.sleep(REFRESH_INTERVAL)
+now = datetime.now()  
+new_row = {'Timestamp': now, 
+        'CPU': CPU, 
+        'Memory': MEMORY, 
+        'Period (Sec)':DATA_INTERVAL, 
+        'Capacity': current_scale, 
+        'Power':current_power, 
+        'State': current_state, 
+        'Decision':decision}
+df.loc[len(df)] = new_row
+df = df.tail(N_ITEMS_TO_EVALUATE)
+print(df)
+time.sleep(REFRESH_INTERVAL)
