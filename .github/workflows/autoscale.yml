@@ -1,7 +1,7 @@
 name: 📈 Autoscale
 on:
   schedule:
-    - cron: '*/3 * * * *'
+    - cron: '*/30 * * * *'
 
 env:
   AWS_REGION: eu-central-1
