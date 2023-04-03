@@ -18,20 +18,19 @@ Source: https://docs.aws.amazon.com/cli/latest/reference/lightsail/get-container
 
 
 """SETUP"""
-DATA_INTERVAL = 3600 # Takes the average server load over that interval in seconds. e.g. 3600 means get the average over last hour
-REFRESH_INTERVAL = 15 #Set's the frequency at which we check the capacity (in seconds), this is how quickly the autoscaler will kick in
+DATA_INTERVAL = 900 # Takes the average server load over that interval in seconds. e.g. 3600 means get the average over last hour
 N_ITEMS_TO_EVALUATE = 5 #How many datapoints do we use to make a decision (We take the average load over those points)
-MIN_NUMBER_INSTANCES = 10 # Define how many instances you want minimum
-MAX_NUMBER_INSTANCES = 12 #Define the maximum number of instances you want
+MIN_NUMBER_INSTANCES = 1 # Define how many instances you want minimum
+MAX_NUMBER_INSTANCES = 3 #Define the maximum number of instances you want
 MIN_POWER_INSTANCE = 'nano'  #Options are: ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
-MAX_POWER_INSTANCE = 'small' #Options are: ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
+MAX_POWER_INSTANCE = 'micro' #Options are: ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
 ENABLE_AUTOSCALING = False #Disable for testing
 
 # AUTOSCALING: integers represent % of load
-SCALE_UP_IF_CPU = 70 #If the load goes above this threshold we'll scale up
-SCALE_UP_IF_MEM = 70 #If the load goes above this threshold we'll scale up
-SCALE_DOWN_IF_CPU = 50 #If load is below this number the server will scale down 
-SCALE_DOWN_IF_MEM = 50 # If load is below this number the server will scale down 
+SCALE_UP_IF_CPU = 20 #If the load goes above this threshold we'll scale up
+SCALE_UP_IF_MEM = 20 #If the load goes above this threshold we'll scale up
+SCALE_DOWN_IF_CPU = 15 #If load is below this number the server will scale down 
+SCALE_DOWN_IF_MEM = 15 # If load is below this number the server will scale down 
 SCALE_PREFERENCE = 'horizontal' # 'horizontal', 'vertical' or 'both' for aggressive scaling
 
 
@@ -170,7 +169,6 @@ def find_capacity(current, upordown):
     
 
 
-
 # Initialize empty dataframe
 data = {'Timestamp': [0],
         'CPU': [0],
@@ -187,17 +185,10 @@ df = pd.DataFrame(data)
 Main loop that checks
 """
 #while True:
-#current_scale, current_power, current_state = get_current_configuration()
-current_scale = randrange(1, 19)
-test = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
-i = randrange(0, 5)
-current_power = test[i]
-current_state = 'running'
+current_scale, current_power, current_state = get_current_configuration()
 df = df.tail(N_ITEMS_TO_EVALUATE)
-#CPU = get_average_CPU(DATA_INTERVAL)
-CPU = randrange(1,100)
-MEMORY = randrange(1,100)
-#MEMORY = get_average_Memory(DATA_INTERVAL)
+CPU = get_average_CPU(DATA_INTERVAL)
+MEMORY = get_average_Memory(DATA_INTERVAL)
 
 if current_state == "UPDATING":
     print("\n\nCapacity is already updating - no need to evaluate")
@@ -217,4 +208,3 @@ new_row = {'Timestamp': now,
 df.loc[len(df)] = new_row
 df = df.tail(N_ITEMS_TO_EVALUATE)
 print(df)
-time.sleep(REFRESH_INTERVAL)
