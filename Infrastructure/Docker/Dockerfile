@@ -13,7 +13,7 @@ EXPOSE 8000
 # Copy the dependencies file to the working directory
 COPY Infrastructure/requirements.txt requirements.txt
 RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r Infrastructure/requirements.txt
 
 # Copy the content of the local src directory to the working directory
 COPY src .
