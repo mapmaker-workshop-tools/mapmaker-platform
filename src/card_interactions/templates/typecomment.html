@@ -8,10 +8,10 @@
             {{ form }}       
          </div>
         <div class="flex items-end justify-end py-2 border-t ">
-            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/no/" class="text-white hover:text-white border border-steunkleur-700 bg-steunkleur-700 hover:bg-steunkleur-800 focus:ring-4 focus:outline-none focus:ring-steunkleur-300 font-medium rounded-lg text-xs px-4 py-2.5 text-center mr-2 mb-2">
+            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/no/" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                 Post comment
             </button>
-            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/yes/" class="text-white bg-steunkleur bg-steunkleur-700  hover:bg-steunkleur-800 focus:ring-4 focus:ring-steunkleur-400 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
+            <button type="button" hx-indicator="#spinner" hx-target="#comments" hx-post="/card/{{ id }}/comment/create/yes/" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
             Post and notify followers
             </button>
         </div>

@@ -9,17 +9,13 @@
 <div id='drawer' class="overflow-y-auto h-screen m-4 p-4 fixed top-20 right-0 z-40 max-w-xl bg-white border border-gray-200 rounded-lg shadow  ">
     <div class="flex justify-between">
         {% if user.is_authenticated %}
-        <a type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 ">
-            <img src="{% static '/icons/xmark-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-        </a>
+        <button type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 m-4 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Close</button>
 
-        <a type="button" hx-indicator="#spinner" hx-get="/card/{{id}}/delete" hx-confirm="Are you sure you wish to delete this card?"  hx-target="#drawer" class="focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-            <img src="{% static '/icons/trash-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-
-        </a>
+        <button type="button" hx-indicator="#spinner" hx-get="/card/{{id}}/delete" hx-confirm="Are you sure you wish to delete this card?"  hx-target="#drawer" class="m-4 py-2.5  text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete Card</button>
         {% else %}
+
         <a href="/dashboard/guest/{{workshop_secret}}">
-            <img src="{% static '/icons/xmark-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+            close
         </a>
         <a href="/user/register/{{workshop_secret}}">
             <button type="button" hx-indicator="#spinner" hx-get="close"  hx-target="#drawer" class="py-2.5 px-5 m-4 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-steunkleur-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">Create account to edit</button>
@@ -41,7 +37,7 @@
             </div>     
         </div>  
         <div class=" bg-grey-100">
-            <div class="bg-grey-100">
+            <div class=" px-4 bg-grey-100">
                 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
                     <a href="#">
                         <img class="w-full p-6 rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{author.avatar_url}}" alt="{{author.first_name}} Avatar">
