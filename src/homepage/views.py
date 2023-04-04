@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from core.utils import mp
 from django.utils import timezone
-from .forms import EmailMarketing
-from .models import EmailList
+from .forms import EmailMarketing, Orderform
+from .models import EmailList, Order
 from django.contrib import messages
-from emailhandler.standard_emails import welcome_new_marketing_lead
+from emailhandler.standard_emails import welcome_new_marketing_lead, confirm_new_order
 
 # Create your views here.
 def index(request):
@@ -70,3 +70,30 @@ def product_platform(request):
 def product_workshop(request):
     mp.track('unknown user', 'productworkshop',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'productworkshop.html', {})
+
+def blog(request):
+    mp.track('unknown user', 'blog',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+    return render(request, 'blog.html', {})
+
+def contact(request):
+    if request.method == "POST":
+        form = Orderform(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            description = form.cleaned_data['description']
+            new_order = Order(
+                email = email,
+                description = description,
+            )
+            new_order.save()
+            mp.track(email, 'New order received' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
+            mp.people_set(email, {'$created': str(timezone.now)})
+            confirm_new_order(email)
+            return redirect('/')
+        else:
+            messages.add_message(request, messages.INFO, 'Please provide a valid email address')
+            return redirect('/')
+    else:
+        mp.track('unknown user', 'order page',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+        form = Orderform()
+        return render(request, 'request_order.html', {'form':form})

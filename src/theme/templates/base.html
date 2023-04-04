@@ -78,18 +78,10 @@
 	<a href="/dashboard/guest/{{workshop_secret}}" class="flex items-center">
 		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
-	<a href="/workshop/share/{{workshop_secret}}">
-		<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
-	</a>
 	{% else%}
 	<a href="/" class="flex items-center">
 		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
-	{% if workshop_secret %}
-	<a href="/workshop/share/{{workshop_secret}}">
-		<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
-	</a>
-	{% endif %}
 	{% endif %}
 	
 	{% endif %}
@@ -122,6 +114,11 @@
 		<li>
 			<a href="/user/profile" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Profile</a>
 		</li>
+		{% if workshop_secret %}
+		<li>
+			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Share Workshop</a>
+		</li>
+		{% endif %}
 		<li>
 		<a href="/user/logout" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Log out</a>
 		</li>
@@ -129,6 +126,9 @@
 		{% if workshop_secret %}
 		<li>
 			<a href="/user/register/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Complete registration to edit</a>
+		</li>
+		<li>
+			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Share Workshop</a>
 		</li>
 
 		{% else%}
@@ -176,18 +176,10 @@
 					<a href="/dashboard/guest/{{workshop_secret}}" class="flex items-center">
 						<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 					</a>
-					<a href="/workshop/share/{{workshop_secret}}">
-						<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
-					</a>
 					{% else%}
 					<a href="/" class="flex items-center">
 						<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 					</a>
-					{% if workshop_secret %}
-					<a href="/workshop/share/{{workshop_secret}}">
-						<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Share</button>
-					</a>
-					{% endif %}
 					{% endif %}
 					
 					{% endif %}
@@ -195,24 +187,24 @@
             </div>
             <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                 <div>
-                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">Resources</h2>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">Website</h2>
                     <ul class="text-gray-600 ">
                         <li class="mb-4">
-                            <a href="/admin" class="hover:underline">Admin</a>
+                            <a href="/user/login" class="hover:underline">Platform</a>
                         </li>
                         <li>
-                            <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                            <a href="/contact" class="hover:underline">Contact</a>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">Follow us</h2>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">Products us</h2>
                     <ul class="text-gray-600 ">
                         <li class="mb-4">
-                            <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
+                            <a href="/product/cards" class="hover:underline ">Cards</a>
                         </li>
                         <li>
-                            <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                            <a href="/product/workshop" class="hover:underline">Workshop</a>
                         </li>
                     </ul>
                 </div>
