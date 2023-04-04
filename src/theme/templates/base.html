@@ -12,10 +12,9 @@
 	<meta name="keywords" content="Mapmaker workshop online tool netwerk" />
 	<meta name="author" content="Peter van Doorn" />
 	<!--Replace with your tailwind.css once created-->
+	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
-	<link rel="preload" href="{% static '/css/dist/styles.css' %}" as="style">
-	<link rel="stylesheet" href="{% static '/css/dist/styles.css' %}">
-	<!--<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>-->
+	
 	<!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />-->
 	<link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
@@ -117,7 +116,7 @@
 		</li>
 		{% if workshop.workshop_owner == user %}
 		<li>
-			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 text-steunkleur bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Workshop settings</a>
+			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 text-gray bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Workshop settings</a>
 		</li>
 		{% endif%}
 		<li>
@@ -221,10 +220,10 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">Legal</h2>
                     <ul class="text-gray-600 ">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">Privacy Policy</a>
+                            <a href="/legal/privacy" class="hover:underline">Privacy Policy</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                            <a href="/legal/terms" class="hover:underline">Terms &amp; Conditions</a>
                         </li>
                     </ul>
                 </div>

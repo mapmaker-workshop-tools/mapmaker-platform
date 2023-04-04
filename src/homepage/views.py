@@ -50,3 +50,23 @@ def sign_up_marketing_email(request):
         form = EmailMarketing()
         return render(request, 'sign_up_marketing.html', {'form':form})
     
+    
+def legal_terms(request):
+    mp.track('unknown user', 'termsandconditions',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+    return render(request, 'terms.html', {})
+
+def legal_privacy(request):
+    mp.track('unknown user', 'privacypolicy',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+    return render(request, 'privacy.html', {})
+
+def product_cards(request):
+    mp.track('unknown user', 'productcards',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+    return render(request, 'productcards.html', {})
+
+def product_platform(request):
+    mp.track('unknown user', 'productplatform',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+    return render(request, 'productplatform.html', {})
+
+def product_workshop(request):
+    mp.track('unknown user', 'productworkshop',{'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
+    return render(request, 'productworkshop.html', {})

@@ -20,5 +20,10 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.index, name='homepage'),
+    path('legal/terms', views.legal_terms, name='homepage'),
+    path('legal/privacy', views.legal_privacy, name='homepage'),
+    path('product/cards', views.product_cards, name='homepage'),
+    path('product/platform', views.product_platform, name='homepage'),
+    path('product/workshop', views.product_workshop, name='homepage'),
     path('emaillist', views.sign_up_marketing_email, name='sign up for marketing')
 ]
