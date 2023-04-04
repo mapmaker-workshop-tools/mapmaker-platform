@@ -37,7 +37,7 @@ def welcome_new_marketing_lead(recipient):
     
 def confirm_new_order(recipient):
     sender = 'mapmaker.server@gmail.com'
-    bcc_recipients = [recipient]
+    bcc_recipients = [recipient, 'peter@petervandoorn.com']
     email = EmailMessage(
         'We received your request and will get back to you soon!',
         'Thanks for reaching out, we will get back to you soon!',
