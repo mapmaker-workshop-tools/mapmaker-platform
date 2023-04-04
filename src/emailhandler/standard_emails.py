@@ -7,6 +7,8 @@ from django.db.models import Count, Q
 from workshop.models import Card, Workshop
 from users.models import CustomUser as User
 from card_interactions.models import Follower, Comment, Resource
+from core.utils import mp
+
 connection = mail.get_connection()
 
 
@@ -34,6 +36,7 @@ def welcome_new_marketing_lead(recipient):
                 'Welcome to Mapmaker! Thanks for joining the Mapmaker email list, we will let you know once we launch! In the meantime:',
                 'If you have any questions, or want to get in touch feel free to send a message: https://mapmaker.nl/contact'
                 )
+    mp.track(recipient, 'Marketing list email confirmation received',{})
     
     
 def confirm_new_order(recipient):
@@ -45,6 +48,8 @@ def confirm_new_order(recipient):
                 'Thanks for your message! We love questions. We will get back to you asap, usually within 24H. In the meantime:',
                 'If you have any questions, or want to get in touch feel free to send a message: https://mapmaker.nl/contact'
                 )
+    mp.track(recipient, 'Contact form confirmation email received',{})
+
     
     
     
@@ -61,6 +66,7 @@ def confirm_new_order(recipient):
     
     
 def welcome_new_user(recipient, workshop_name):
+    mp.track(recipient, 'Welcome email received',{})
     standard_email(recipient, 
                 'Here is your mapmaker account for'+workshop_name, 
                 recipient,
@@ -69,6 +75,7 @@ def welcome_new_user(recipient, workshop_name):
                 'Your account with Mapmaker was created succesfully. You can now view and edit',
                 'If you want to learn more about what Mapmaker is, check out our blog: https://mapmaker.nl/blog'
                 )
+
 
 def notify_followers_new_post(cardid):
     card = Card.objects.get(id=cardid)
@@ -80,6 +87,7 @@ def notify_followers_new_post(cardid):
     for comment in last_comments:
         message += comment.author.first_name +' from ' + comment.author.organisation + " said: " + comment.comment_text + "\n"
     for follower in followers:
+        mp.track(follower.user_like.email, 'Post update email received',{'Card':card.id})
         standard_email(follower.user_like.first_name, 
                 "New update in Mapmaker on card: " + card.title, 
                 follower.user_like.email,
@@ -87,7 +95,8 @@ def notify_followers_new_post(cardid):
                 'https://mapmaker.nl/dashboard',
                 message,
                 'Log in to mapmaker.nl to join the discussion, if you forgot your password simply reset it here: https://mapmaker.nl/user/reset_password/'
-                )        
+                )
+        
 
 
 
@@ -143,6 +152,7 @@ def workshop_summary(workshopid):
     connection.open()
     messageque = []
     for participant in participants:
+        mp.track(participant.email, 'Workshop summary received',{'Workshop':workshop.id})
         standard_email(participant.first_name, 
                 subject, 
                 participant.email,
@@ -150,7 +160,7 @@ def workshop_summary(workshopid):
                 'https://mapmaker.nl/dashboard',
                 message,
                 'Log in to mapmaker.nl to join the discussion, if you forgot your password simply reset it here: https://mapmaker.nl/user/reset_password/'
-                )
+                )    
     
 
 
