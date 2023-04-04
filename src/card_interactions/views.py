@@ -9,7 +9,7 @@ from users.models import CustomUser
 from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment
 from .models import Follower, Resource, Comment
 from django.contrib import messages
-from emailhandler.standard_emails import send_simple_email, notify_followers_new_post
+from emailhandler.standard_emails import standard_email, notify_followers_new_post
 from core.utils import mp, signer
 
 def validate_user_access_to_card(id, request):

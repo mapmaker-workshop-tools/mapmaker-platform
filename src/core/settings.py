@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'theme', #App with theme files
     'fontawesomefree',
     'api',
+    'emailhandler'
 ]
 
 MIDDLEWARE = [

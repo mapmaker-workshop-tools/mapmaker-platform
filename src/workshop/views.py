@@ -11,6 +11,7 @@ from django.db.models import Case, When
 import json
 import ast
 from core.utils import mp, signer, qrgenerator
+from emailhandler.standard_emails import workshop_summary
 
 
 # Create your views here.
@@ -68,3 +69,15 @@ def share_workshop(request, workshop_secret):
     qrcode = qrgenerator("https://mapmaker.nl/user/register/"+workshop_secret, workshop_secret)
     context = {"workshop":current_workshop, "workshop_secret":workshop_secret, "qrcode":qrcode}
     return render(request, 'workshop_share.html', context)
+
+def trigger_summary_email(request):
+    current_user = request.user
+    current_workshop = current_user.active_workshop
+    id = current_workshop.id
+    workshop_summary(id)
+    mp.track(request.user.email, 'Workshop summary sent ', {
+            'workshop': current_workshop.workshop_name,
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+            })
+    print('sending email to participants')
+    return HttpResponse(status='204')

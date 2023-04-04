@@ -20,5 +20,6 @@ from workshop import views
 
 urlpatterns = [
     path('settings', views.workshop_settings, name='workshop settings'),
+    path('summary', views.trigger_summary_email, name='Workshop summary'),
     path('share/<str:workshop_secret>', views.share_workshop, name="share"),
 ]

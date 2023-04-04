@@ -9,6 +9,9 @@
 <button type="button" onclick="location.href = '/dashboard/download';" hx-indicator="#spinner" hx-confirm="Do you want to download a image of your session?"   class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
     Download image of session
 </button>
+<button type="button" hx-get="summary" hx-indicator="#spinner" hx-confirm="We'll now send a email to each participant with a summary of the workshop"   class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
+    Send session summary to all participants
+</button>
 
     <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select tab</label>
