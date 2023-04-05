@@ -20,7 +20,7 @@ def index(request):
             mp.people_set(email, {'$created': str(timezone.now)})
             messages.add_message(request, messages.INFO, 'Signed up for waiting list')
             welcome_new_marketing_lead(email)
-            return redirect('/')
+            return render(request, 'confirm_waitinglist.html')
         else:
             messages.add_message(request, messages.INFO, 'Please provide a valid email address')
             return redirect('/')
@@ -41,8 +41,7 @@ def sign_up_marketing_email(request):
             mp.track(email, 'New user signed up for marketing' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
             mp.people_set(email, {'$created'       : self.date_created,})
             welcome_new_marketing_lead(email)
-            messages.add_message(request, messages.INFO, 'Signed up for waiting list')
-            return redirect('/')
+            return render(request, 'confirm_waitinglist.html')
         else:
             messages.add_message(request, messages.INFO, 'Please provide a valid email address')
             return redirect('/')
@@ -89,7 +88,7 @@ def contact(request):
             mp.track(email, 'New order received' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
             mp.people_set(email, {'$created': str(timezone.now)})
             confirm_new_order(email)
-            return redirect('/')
+            return render(request, 'confirm_contact.html')
         else:
             messages.add_message(request, messages.INFO, 'Please provide a valid email address')
             return redirect('/')
