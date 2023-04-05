@@ -66,7 +66,8 @@ def get_card_details(request, id):
         'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
         })
     return render(request, 'drawer.html', context)
-    
+ 
+@login_required   
 def create_card(request, id):
     card = Card.objects.get(id=id)
     current_user = request.user
@@ -102,6 +103,7 @@ def create_card(request, id):
     })
     return render(request, 'drawer.html', context)
 
+@login_required
 def edit_card_title(request, id):
     card = Card.objects.get(id=id)
     if request.method == 'POST':
@@ -125,7 +127,7 @@ def edit_card_title(request, id):
         form = CardTitle()
     return render(request, 'edit_title.html', {'form': form, "cardid": id ,"title":card.title, "type":card.cardtype})
 
-
+@login_required
 def edit_card_description(request, id):
     if request.method == 'POST':
         form = CardDescription(request.POST)
@@ -150,6 +152,7 @@ def edit_card_description(request, id):
         description = card.description
     return render(request, 'edit_description.html', {'form': form, "cardid": id, "description":description})
 
+@login_required
 def register_like(request, id):
     current_user = request.user
     cardid = id
@@ -178,7 +181,7 @@ def register_like(request, id):
             })
             messages.add_message(request, messages.INFO, 'You followed card' +card.title)
             return render(request, 'liked.html', {"id":id})
-    
+@login_required   
 def delete_card(request, id):
     ## If this card exists
     if not Card.objects.filter(pk=id).exists():
@@ -204,6 +207,7 @@ def delete_card(request, id):
         clear_card(id)
         return render(request, 'empty.html')
 
+@login_required
 def create_resource(request, id):
     if request.method == 'POST':
         form = CardResource(request.POST)
@@ -240,6 +244,7 @@ def create_resource(request, id):
         form = CardResource()
         return render(request, 'create_resource.html', {'form': form, "cardid": id})
 
+@login_required
 def create_comment(request, id, notify):
     if request.method == 'POST':
         card = Card.objects.get(id=id)
@@ -281,6 +286,7 @@ def create_comment(request, id, notify):
     else:
         return HttpResponse(status=404)
 
+@login_required
 def delete_comment(request, id, comment_id):
     if request.method == 'DELETE':
         card = Card.objects.get(id=id)
@@ -299,7 +305,7 @@ def delete_comment(request, id, comment_id):
         comment_delete.delete()
         return render(request, 'comment.html', {'comments': comments, 'id':id})
 
-
+@login_required
 def delete_resource(request, id, resource_id):
     if request.method == 'DELETE':
         card = Card.objects.get(id=id)

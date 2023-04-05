@@ -8,6 +8,8 @@ from datetime import datetime
 from workshop.models import Workshop
 from core.utils import mp, signer
 from emailhandler.standard_emails import welcome_new_user
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def login_user(request):
@@ -30,7 +32,8 @@ def login_user(request):
     else:
         form = CustomUserLoginForm()
         return render(request, 'login.html', {'form':form})
-    
+
+@login_required  
 def logout_view(request):
     mp.track(request.user.email, 'Log out', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
@@ -85,7 +88,7 @@ def register(request, workshop_secret):
             return render(request, 'register.html', {'form':form, 'workshop':workshop, 'workshop_secret':workshop_secret})
 
 
-
+@login_required  
 def profile(request):
     user = request.user
     workshop = user.active_workshop
@@ -98,6 +101,7 @@ def profile(request):
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})
 
+@login_required  
 def profile_edit(request, id):
     if request.user.id == id:    
         if request.method == 'POST':
@@ -125,7 +129,8 @@ def profile_edit(request, id):
             return render(request, 'user_profile_table_edit.html', context)
     else: 
         return HttpResponse(status=403)
-    
+
+@login_required     
 def delete_user(request, id):
     ## If this user exists
     if not CustomUser.objects.filter(pk=id).exists():

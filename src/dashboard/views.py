@@ -18,7 +18,7 @@ from core.utils import mp, signer
 
 
 
-#@login_required
+@login_required
 def index(request):
     if request.user.is_authenticated:
         # Getting the user, active workshop cards and participants
@@ -96,7 +96,7 @@ def view_only(request, workshop_secret):
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
         return render(request, 'dashboard_index.html', context)
     
-
+@login_required
 def handle_grid_update(request):
     if request.method == "POST":
         current_user = request.user
@@ -133,7 +133,7 @@ def handle_grid_update(request):
 def close(request):
     return render(request, 'empty.html')
 
-
+@login_required
 def zoom_in(request):
     print("Zoom in hit")
     user = request.user
@@ -158,6 +158,7 @@ def zoom_in(request):
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'adjust_zoom.html', context)
 
+@login_required
 def zoom_out(request):
     print("Zoom out hit")
     user = request.user
@@ -184,7 +185,7 @@ def zoom_out(request):
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'adjust_zoom.html', context)
 
-
+@login_required
 def download_image(request):
     workshop = request.user.active_workshop.workshop_name
     #Putting a template together with the information of the usersession

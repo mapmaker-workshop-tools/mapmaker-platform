@@ -15,6 +15,7 @@ from emailhandler.standard_emails import workshop_summary
 
 
 # Create your views here.
+@login_required  
 def workshop_settings(request):
     current_user = request.user
     current_workshop = current_user.active_workshop
@@ -62,7 +63,7 @@ def workshop_settings(request):
     return render(request, 'workshop_settings.html', context)
     
     
-    
+
 def share_workshop(request, workshop_secret):
     workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
     current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
@@ -70,6 +71,7 @@ def share_workshop(request, workshop_secret):
     context = {"workshop":current_workshop, "workshop_secret":workshop_secret, "qrcode":qrcode}
     return render(request, 'workshop_share.html', context)
 
+@login_required  
 def trigger_summary_email(request):
     current_user = request.user
     current_workshop = current_user.active_workshop
