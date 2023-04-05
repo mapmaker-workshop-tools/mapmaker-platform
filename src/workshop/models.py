@@ -5,6 +5,7 @@ from random import randrange
 import uuid
 
 
+
 # Create your models here.
 class Workshop(models.Model):
     is_active = models.BooleanField(default=True)
@@ -15,7 +16,7 @@ class Workshop(models.Model):
     participants = models.ManyToManyField(CustomUser, related_name = 'workshop_participants')
     workshop_owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'workshop_owners')
     card_order = models.TextField(null=True, blank=True)
-    
+        
     # If we save a new Workshop (new because no primary key yet) we add 100 empty cards to database
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -27,8 +28,10 @@ class Workshop(models.Model):
                         title=str(randrange(20000)),
                         description='')
                 card.save()
-  
-        return super().save(*args, **kwargs)
+            legend = Legenda(workshop=Workshop.objects.latest('date_created'))
+            legend.save()
+            
+        return super().save(*args, **kwargs) 
         
     def __str__(self):
         return self.workshop_name
@@ -48,7 +51,24 @@ class Card(models.Model):
         return self.workshop.workshop_name + ' - ' + self.title
 
 class Legenda(models.Model):
-    legend_label = models.CharField(blank=False, max_length=40)
-    legend_color = models.CharField(blank=False, max_length=40)
-    legend_icon = models.CharField(blank=False, max_length=40)
-    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, related_name = 'workshoplegenda')
+    legend_label_1 = models.CharField(blank=False, max_length=40, default='Con')
+    legend_hex_color_1 = models.CharField(blank=False, max_length=6, default='ffeb39')
+    legend_icon_1 = models.CharField(blank=False, max_length=40, default='thumbs-up-solid.svg')
+    legend_label_2 = models.CharField(blank=False, max_length=40, default='Idea')
+    legend_hex_color_2 = models.CharField(blank=False, max_length=6, default='51c1ff')
+    legend_icon_2 = models.CharField(blank=False, max_length=40, default='thumbs-up-solid.svg')
+    legend_label_3 = models.CharField(blank=False, max_length=40, default='Pro')
+    legend_hex_color_3 = models.CharField(blank=False, max_length=6, default='51c1ff')
+    legend_icon_3 = models.CharField(blank=False, max_length=40, default='thumbs-up-solid.svg')
+    legend_label_4 = models.CharField(blank=False, max_length=40, default='Challenge')
+    legend_hex_color_4 = models.CharField(blank=False, max_length=6, default='ffeb39')
+    legend_icon_4 = models.CharField(blank=False, max_length=40, default='thumbs-up-solid.svg')
+    legend_label_5 = models.CharField(blank=False, max_length=40, default='Ambition')
+    legend_hex_color_5 = models.CharField(blank=False, max_length=6, default='ffeb39')
+    legend_icon_5 = models.CharField(blank=False, max_length=40, default='thumbs-up-solid.svg')
+    workshop = models.OneToOneField(Workshop, on_delete=models.CASCADE, null=True, related_name = 'legend')
+    date_created = models.DateTimeField(default=timezone.now, editable=False)
+
+    
+    def __str__(self):
+        return self.workshop.workshop_name
