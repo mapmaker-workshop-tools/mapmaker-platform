@@ -71,6 +71,7 @@ def get_current_configuration():
     return scale, power, state 
 
 def scale_to(scale, power):
+    print("\n\n #### Scaling to ####")
     print(scale, power)
     if ENABLE_AUTOSCALING:
         AWS = os.popen("aws lightsail update-container-service --service-name mapmaker --scale " +scale+" --power "+power).read()
@@ -83,6 +84,8 @@ def evaluate(CPU, MEM, SCALE, POWER):
     """
     Decides if we should scale up or down
     """
+    print("\n\n #### Current settings  ####")
+    print(SCALE, POWER)
     #Validating if we are below minimum
     options = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
     current = options.index(POWER)
