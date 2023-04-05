@@ -12,12 +12,6 @@ from django.contrib import messages
 from emailhandler.standard_emails import standard_email, notify_followers_new_post
 from core.utils import mp, signer
 
-def validate_user_access_to_card(id, request):
-    card = Card.objects.get(id=id)
-    if request.user in card.workshop.participants.all():
-        print(True)
-    else:
-        print(False)
 
 def get_card_details(request, id):
     card = Card.objects.get(id=id)

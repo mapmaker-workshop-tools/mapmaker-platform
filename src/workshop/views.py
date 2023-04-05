@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from workshop.models import Workshop, Card
 from card_interactions.models import Follower, Comment, Resource
 from django.utils import timezone
@@ -15,7 +15,7 @@ from emailhandler.standard_emails import workshop_summary
 
 
 # Create your views here.
-@login_required  
+@login_required
 def workshop_settings(request):
     current_user = request.user
     current_workshop = current_user.active_workshop
