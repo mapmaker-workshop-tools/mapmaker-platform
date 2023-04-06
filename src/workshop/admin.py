@@ -18,8 +18,6 @@ class CardAdmin(admin.ModelAdmin):
     list_filter = ('workshop', 'author', 'cardtype')
     search_fields = ['title']
 
-    def not_empty():
-        
 
 
 
