@@ -7,6 +7,22 @@ from .models import Workshop, Card, Legenda
 admin.autodiscover()
 
 
-admin.site.register(Workshop)
-admin.site.register(Card)
+
+class WorkshopAdmin(admin.ModelAdmin):
+    list_display = ('workshop_name', 'workshop_date', 'workshop_owner')
+    list_filter = ('participants', 'workshop_date', 'workshop_owner')
+    search_fields = ["workshop_name"]
+
+class CardAdmin(admin.ModelAdmin):
+    list_display = ('title', 'workshop', 'author', 'cardtype')
+    list_filter = ('workshop', 'author', 'cardtype')
+    search_fields = ['title']
+
+    def not_empty():
+        
+
+
+
+admin.site.register(Workshop, WorkshopAdmin)
+admin.site.register(Card, CardAdmin)
 admin.site.register(Legenda)
