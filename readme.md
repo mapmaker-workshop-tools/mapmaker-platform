@@ -11,6 +11,4 @@ This repository contains all the assets, instructions and the cardset designs.
 The collection of works are published on Github and under a creative commons license because we value transparency. This means you'll be able to host your own sessions using the materials, code and methodology we developed. Restrictions may apply. 
 
 
-
-
-<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img src="[[http://url.to/image.png](https://user-images.githubusercontent.com/71013416/230730844-738a8447-3a33-4fc3-9898-1531df42e8b5.png)](https://user-images.githubusercontent.com/71013416/230730844-738a8447-3a33-4fc3-9898-1531df42e8b5.png)" align="left" height="48" ></a>
+![by-nc-nd](https://user-images.githubusercontent.com/71013416/230730932-b32e5048-5d7f-4f81-9df1-bfc658f6f5e4.png)
