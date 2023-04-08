@@ -1,14 +1,13 @@
 [![🏗 Build and deploy containers to AWS](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/deploy.yml/badge.svg)](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/deploy.yml)
-![logo](https://user-images.githubusercontent.com/71013416/223648375-3462132b-9e69-4ce6-b8d6-3ace8256adbd.png)
+
+![Schermafbeelding 2023-04-08 om 17 41 56](https://user-images.githubusercontent.com/71013416/230730243-2166d24e-ae01-4985-bcf2-5f9cbefc396c.png)
+
 
 # Mapmaker
-Mapmaker saves your workshop when the physical session is over
-![demo](https://user-images.githubusercontent.com/71013416/223648277-8662e657-6e8e-42ae-b34f-c9070de68917.jpeg)
+Mapmaker is a workshop platform consisting of a unique cardset, a methodology and a online collaboration platform.
+This repository contains all the assets, instructions and the cardset designs. 
 
-# How to run: 
-- Install dependancies pip install -r requirements.txt
-- on DEV `python3 src/manage.py runserver`
-- on PROD `gunicorn-b 0.0.0.0:8000 core.wsgi`
+# Open Source and Creative Commons
+The collection of works are published on Github and under a creative commons license because we value transparency. This means you'll be able to host your own sessions using the materials, code and methodology we developed. Restrictions may apply. 
 
-# License:
-![by-nc-nd](https://user-images.githubusercontent.com/71013416/230729888-010487e6-f7ea-4a55-9ae8-ea670e57e7a0.png)
+![by-nc-nd](https://user-images.githubusercontent.com/71013416/230729888-010487e6-f7ea-4a55-9ae8-ea670e57e7a0.png | width=100)
