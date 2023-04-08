@@ -12,5 +12,6 @@ The collection of works are published on Github and under a creative commons lic
 
 
 
+![230729888-010487e6-f7ea-4a55-9ae8-ea670e57e7a0](https://user-images.githubusercontent.com/71013416/230730844-738a8447-3a33-4fc3-9898-1531df42e8b5.png)
 
-<img src="https://github.com/favicon.ico](https://user-images.githubusercontent.com/71013416/230729888-010487e6-f7ea-4a55-9ae8-ea670e57e7a0.png" width="48">
+<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img src="[[http://url.to/image.png](https://user-images.githubusercontent.com/71013416/230730844-738a8447-3a33-4fc3-9898-1531df42e8b5.png)](https://user-images.githubusercontent.com/71013416/230730844-738a8447-3a33-4fc3-9898-1531df42e8b5.png)" align="left" height="48" width="48" ></a>
