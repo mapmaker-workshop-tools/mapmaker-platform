@@ -9,3 +9,6 @@ Mapmaker saves your workshop when the physical session is over
 - Install dependancies pip install -r requirements.txt
 - on DEV `python3 src/manage.py runserver`
 - on PROD `gunicorn-b 0.0.0.0:8000 core.wsgi`
+
+# License:
+![by-nc-nd](https://user-images.githubusercontent.com/71013416/230729888-010487e6-f7ea-4a55-9ae8-ea670e57e7a0.png)
