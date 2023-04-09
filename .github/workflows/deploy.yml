@@ -184,6 +184,83 @@ jobs:
               See the details here:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
+  builddjangodev:
+    name: 🤠 building Django dev
+    needs: [startnotification]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🗂  Getting code from Github
+        uses: actions/checkout@v2
+      - name: 🤐 Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
+          envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
+          envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          envkey_DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          envkey_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
+          envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
+          envkey_SECURE_SETTINGS: True
+          envkey_DEBUG: "False"
+          envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
+          directory: src/core
+          file_name: .env
+          fail_on_empty: false
+      - name: ⚙️  Updating to the latest versions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
+      - name: 🏢 Install Amazon Client
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install || true
+          aws --version
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+      - name: 🤐 Log in to AWS Lightsail with Secrets
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Installing dependancies
+        run: |
+          sudo pip3 install --upgrade pip
+          sudo pip3 install -r Infrastructure/requirements.txt
+      - name: 📦 Collecting all static files
+        run: |
+          ls
+          python3 src/manage.py collectstatic --noinput
+      - name: 🐳 Create a Docker Container for DJANGO
+        run: docker build -t mapmakerdev:latest -f ./Infrastructure/Docker/Dockerfile .
+      - name: 📬 Upload Backend image to AWS container register
+        run: |
+          service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
+          aws lightsail push-container-image \
+            --region ${{ env.AWS_REGION }} \
+            --service-name ${service_name} \
+            --label mapmaker \
+            --image mapmaker:latest
+      - name: =========== All done. Cleaning up ♻️  ===========
+        run: ls
+      - name: Build Alerts
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🚨 Deployment failed 🚨
+            Build ${{ github.run_id }} failed
+            Something went wrong while building the Django container
+            
+            See the details here:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail

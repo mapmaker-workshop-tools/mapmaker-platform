@@ -2,6 +2,10 @@
     "image": ":mapmaker.mapmaker.latest",
     "ports": {"8000": "HTTP"}
   },
+  "dev-mapmaker-django": {
+    "image": ":mapmaker.mapmakerdev.latest",
+    "ports": {"8080": "HTTP"}
+  },
   "mapmaker-nginx": {
     "image": ":mapmaker.nginx.latest",
     "ports": {"80": "HTTP"}
