@@ -1,8 +1,9 @@
-name: 🚀 Production deployment
-# Only trigger, when the build workflow succeeded
+name: 🧪 Triage deployment
 on:
   push:
-    branches: [ "master" ]
+    branches:    
+      - '**'        # matches every branch
+      - '!main'   # excludes master
 permissions:
   contents: read
 
@@ -33,7 +34,7 @@ jobs:
 
   sendnotification:
     name: ✅ Notify success
-    needs: [deployimages, validatedeployment, buildnginx, builddjango, builddjangodev, startnotification]
+    needs: [deployimages, buildnginx, builddjangodev]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -42,20 +43,11 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ Deployment succesful - run ${{ github.run_id }}
+            ✅ Triage deployment succesful - run ${{ github.run_id }}
             🌎 server is up - we checked!
-            Site: https://mapmaker.nl 
+            Site: https://triage.mapmaker.nl 
             Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   
-  AddMixpAnelAnnotation:
-    name: 🔭 Add Mixpanel annotation
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🗂  Getting code from Github
-        uses: actions/checkout@v2
-      - name: Send annotation to Mixpanel
-        run: python Infrastructure/Mixpanel/addannotation.py ${{ github.event.commits[0].message }} ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} ${{ secrets.MIXPANEL_ANNOTATIONS }}
-            
   buildnginx:
     name: 🌎 building nginx webserver
     needs: [startnotification]
@@ -107,85 +99,6 @@ jobs:
             Something went wrong while building the NGINX container the containers to AWS. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-  builddjango:
-      name: 🚨 Prod Django
-      needs: [startnotification]
-      runs-on: ubuntu-latest
-      steps:
-        - name: 🗂  Getting code from Github
-          uses: actions/checkout@v2
-        - name: 🤐 Make envfile
-          uses: SpicyPizza/create-envfile@v1.3
-          with:
-            envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
-            envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
-            envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-            envkey_DATABASE_USER: ${{ secrets.DATABASE_USER }}
-            envkey_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-            envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-            envkey_DATABASE_NAME: "mapmaker_prod"
-            envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
-            envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
-            envkey_SECURE_SETTINGS: True
-            envkey_DEBUG: "False"
-            envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
-            directory: src/core
-            file_name: .env
-            fail_on_empty: false
-        - name: ⚙️  Updating to the latest versions
-          run: |
-            sudo apt-get update
-            sudo apt-get install -y jq unzip
-        - name: 🏢 Install Amazon Client
-          run: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install || true
-            aws --version
-            curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
-            sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
-            sudo chmod +x /usr/local/bin/lightsailctl
-        - name: 🤐 Log in to AWS Lightsail with Secrets
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-region: ${{ env.AWS_REGION }}
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        - name: Installing dependancies
-          run: |
-            sudo pip3 install --upgrade pip
-            sudo pip3 install -r Infrastructure/requirements.txt
-        - name: 📦 Collecting all static files and Migrate
-          run: |
-            python3 src/manage.py collectstatic --noinput
-            python3 src/manage.py makemigrations --noinput
-            python3 src/manage.py migrate --noinput
-
-        - name: 🐳 Create a Docker Container for DJANGO
-          run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/DockerfilePROD .
-        - name: 📬 Upload Backend image to AWS container register
-          run: |
-            service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
-            aws lightsail push-container-image \
-              --region ${{ env.AWS_REGION }} \
-              --service-name ${service_name} \
-              --label mapmaker \
-              --image mapmaker:latest
-        - name: =========== All done. Cleaning up ♻️  ===========
-          run: ls
-        - name: Build Alerts
-          if: ${{ failure() }}
-          uses: appleboy/telegram-action@master
-          with:
-            to: ${{ secrets.TELEGRAM_CHAT }}
-            token: ${{ secrets.TELEGRAM_TOKEN }}
-            message: |
-              🚨 Deployment failed 🚨
-              Build ${{ github.run_id }} failed
-              Something went wrong while building the Django container
-              
-              See the details here:
-              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjangodev:
     name: 🧪 Dev Django
@@ -308,45 +221,18 @@ jobs:
 
             Something went wrong while activating the containers to AWS. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-  validatedeployment:
-    name: 🤨 Server up?
+  pull-request:
+    needs: [deployimages, builddjangodev, buildnginx, sendnotification]
+    name: 🔃 Creating Pull request to merge with Master
     runs-on: ubuntu-latest
-    continue-on-error: false
     steps:
-      - name: 🗂  Getting config files from Github
-        uses: actions/checkout@v2
-      - name: 🏢 Install Amazon Client
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install || true
-          aws --version
-          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
-          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
-          sudo chmod +x /usr/local/bin/lightsailctl
-      - name: 🤐 Log in to AWS Lightsail with Secrets
-        uses: aws-actions/configure-aws-credentials@v1
+      - uses: actions/checkout@v3
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
         with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: 🙋🏻‍♂️ Checking current version
-        run: aws lightsail get-container-service-deployments --service-name mapmaker --output json
-      - name: ⏱ Checking if the container went live
-        run: python Infrastructure/AWS/checkdeploymentsuccess.py
-      - name: =========== All done. Cleaning up ♻️  ===========
-        run: ls
-      - name: Build Alerts
-        if: ${{ failure() }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🚨 Deployment failed 🚨
-            Build ${{ github.run_id }} failed
-
-            The server did not come online after deploying to AWS. 
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  
+          destination_branch: "main"
+          assignees: "two-trick-pony-NL"
+          pr_title: "🤖 Automatically pulling ${{ github.ref }} into main"
+          pr_body: "All Checks passed, so the CI opened this pull request. Check out the changes here: "
+          pr_label: "automatic-pullrequest"
+          github_token: ${{ secrets.GH }} 
