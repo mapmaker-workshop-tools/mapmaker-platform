@@ -215,7 +215,7 @@ jobs:
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          destination_branch: "main"
+          destination_branch: "master"
           assignees: "two-trick-pony-NL"
           pr_title: "🤖 Automatically pulling ${{ github.ref }} into main"
           pr_body: "All Checks passed, so the CI opened this pull request. Check out the changes here: "
