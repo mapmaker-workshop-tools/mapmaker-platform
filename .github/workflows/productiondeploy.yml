@@ -1,4 +1,4 @@
-name: 🏗 Build and deploy containers to AWS
+name: 🚀 Production deployment
 # Only trigger, when the build workflow succeeded
 on:
   push:
