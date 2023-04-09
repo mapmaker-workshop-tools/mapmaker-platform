@@ -243,7 +243,7 @@ jobs:
           aws lightsail push-container-image \
             --region ${{ env.AWS_REGION }} \
             --service-name ${service_name} \
-            --label mapmaker \
+            --label mapmakerdev \
             --image mapmakerdev:latest
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
@@ -264,7 +264,7 @@ jobs:
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail
-    needs: [builddjango, buildnginx]
+    needs: [builddjango, buildnginx, builddjangodev]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github

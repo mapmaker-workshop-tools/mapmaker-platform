@@ -1,4 +1,4 @@
-{"mapmaker-django": {
+{"prod-mapmaker-django": {
     "image": ":mapmaker.mapmaker.latest",
     "ports": {"8000": "HTTP"}
   },
