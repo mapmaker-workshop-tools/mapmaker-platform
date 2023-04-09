@@ -182,7 +182,7 @@ jobs:
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail
-    needs: [builddjango, buildnginx, builddjangodev]
+    needs: [buildnginx, builddjangodev]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github
@@ -221,6 +221,7 @@ jobs:
 
             Something went wrong while activating the containers to AWS. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
   pull-request:
     needs: [deployimages, builddjangodev, buildnginx, sendnotification]
     name: 🔃 Creating Pull request to merge with Master

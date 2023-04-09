@@ -188,7 +188,7 @@ jobs:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjangodev:
-    name: 🧪 Dev Django
+    name: 🧪 Dev Django 
     needs: [startnotification]
     runs-on: ubuntu-latest
     steps:
@@ -269,7 +269,7 @@ jobs:
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail
-    needs: [buildnginx, builddjangodev]
+    needs: [builddjango, buildnginx, builddjangodev]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github
