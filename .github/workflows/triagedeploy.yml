@@ -297,44 +297,19 @@ jobs:
             Something went wrong while activating the containers to AWS. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-  validatedeployment:
-    name: 🤨 Server up?
+  pull-request:
+    needs: [deployimages, builddjangodev, buildnginx, builddjango]
+    name: 🔃 Creating Pull request to merge with Master
     runs-on: ubuntu-latest
-    continue-on-error: false
     steps:
-      - name: 🗂  Getting config files from Github
-        uses: actions/checkout@v2
-      - name: 🏢 Install Amazon Client
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install || true
-          aws --version
-          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
-          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
-          sudo chmod +x /usr/local/bin/lightsailctl
-      - name: 🤐 Log in to AWS Lightsail with Secrets
-        uses: aws-actions/configure-aws-credentials@v1
+      - uses: actions/checkout@v3
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
         with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: 🙋🏻‍♂️ Checking current version
-        run: aws lightsail get-container-service-deployments --service-name mapmaker --output json
-      - name: ⏱ Checking if the container went live
-        run: python Infrastructure/AWS/checkdeploymentsuccess.py
-      - name: =========== All done. Cleaning up ♻️  ===========
-        run: ls
-      - name: Build Alerts
-        if: ${{ failure() }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🚨 Deployment failed 🚨
-            Build ${{ github.run_id }} failed
-
-            The server did not come online after deploying to AWS. 
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          destination_branch: "master"
+          assignees: "two-trick-pony-NL"
+          pr_title: "🤖 Automatically pulling ${{ github.ref }} into main"
+          pr_body: "All Checks passed, so the CI opened this pull request. Check out the changes here: "
+          pr_label: "automatic-pullrequest"
+          github_token: ${{ secrets.GH }} 
   
