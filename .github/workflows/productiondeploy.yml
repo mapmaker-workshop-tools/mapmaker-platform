@@ -47,15 +47,7 @@ jobs:
             Site: https://mapmaker.nl 
             Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   
-  AddMixpAnelAnnotation:
-    name: 🔭 Add Mixpanel annotation
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🗂  Getting code from Github
-        uses: actions/checkout@v2
-      - name: Send annotation to Mixpanel
-        run: python Infrastructure/Mixpanel/addannotation.py ${{ github.event.commits[0].message }} ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} ${{ secrets.MIXPANEL_ANNOTATIONS }}
-            
+  
   buildnginx:
     name: 🌎 building nginx webserver
     needs: [startnotification]
