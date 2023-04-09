@@ -244,7 +244,7 @@ jobs:
             --region ${{ env.AWS_REGION }} \
             --service-name ${service_name} \
             --label mapmaker \
-            --image mapmaker:latest
+            --image mapmakerdev:latest
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
       - name: Build Alerts
