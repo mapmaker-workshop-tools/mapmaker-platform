@@ -31,22 +31,6 @@ jobs:
             - Description: ${{ github.event.commits[0].message }}
             - Code: https://github.com/${{ github.repository }}/commit/${{github.sha}}
             - Build: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-  sendnotification:
-    name: ✅ Notify success
-    needs: [deployimages, buildnginx, builddjangodev]
-    runs-on: ubuntu-latest
-    steps:
-      - name: send telegram message on push
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            ✅ Triage deployment succesful - run ${{ github.run_id }}
-            🌎 server is up - we checked!
-            Site: https://triage.mapmaker.nl 
-            Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   
   buildnginx:
     name: 🌎 building nginx webserver
@@ -223,7 +207,7 @@ jobs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             
   pull-request:
-    needs: [deployimages, builddjangodev, buildnginx, sendnotification]
+    needs: [deployimages, builddjangodev, buildnginx]
     name: 🔃 Creating Pull request to merge with Master
     runs-on: ubuntu-latest
     steps:
@@ -236,4 +220,4 @@ jobs:
           pr_title: "🤖 Automatically pulling ${{ github.ref }} into main"
           pr_body: "All Checks passed, so the CI opened this pull request. Check out the changes here: "
           pr_label: "automatic-pullrequest"
-          github_token: ${{ secrets.GH }} 
+          github_token: ${{ secrets.GH_TOKEN }} 
