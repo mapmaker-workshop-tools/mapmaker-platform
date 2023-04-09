@@ -108,7 +108,7 @@ jobs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjango:
-      name: 🤠 building Django
+      name: 🚨 building Django
       needs: [startnotification]
       runs-on: ubuntu-latest
       steps:
@@ -155,12 +155,14 @@ jobs:
           run: |
             sudo pip3 install --upgrade pip
             sudo pip3 install -r Infrastructure/requirements.txt
-        - name: 📦 Collecting all static files
+        - name: 📦 Collecting all static files and Migrate
           run: |
-            ls
             python3 src/manage.py collectstatic --noinput
+            python3 src/manage.py makemigrations --noinput
+            python3 src/manage.py migrate --noinput
+
         - name: 🐳 Create a Docker Container for DJANGO
-          run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/Dockerfile .
+          run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/DockerfilePROD .
         - name: 📬 Upload Backend image to AWS container register
           run: |
             service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
@@ -186,7 +188,7 @@ jobs:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjangodev:
-    name: 🤠 building Django dev
+    name: 🧪 building Django dev
     needs: [startnotification]
     runs-on: ubuntu-latest
     steps:
@@ -235,10 +237,11 @@ jobs:
           sudo pip3 install -r Infrastructure/requirements.txt
       - name: 📦 Collecting all static files
         run: |
-          ls
           python3 src/manage.py collectstatic --noinput
+          python3 src/manage.py makemigrations --noinput
+          python3 src/manage.py migrate --noinput
       - name: 🐳 Create a Docker Container for DJANGO
-        run: docker build -t mapmakerdev:latest -f ./Infrastructure/Docker/Dockerfile .
+        run: docker build -t mapmakerdev:latest -f ./Infrastructure/Docker/DockerfileDEV .
       - name: 📬 Upload Backend image to AWS container register
         run: |
           service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
