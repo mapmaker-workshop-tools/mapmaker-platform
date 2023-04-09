@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 
 # By default, listen on port 8000
 #EXPOSE 80
-EXPOSE 8000
+EXPOSE 8080
 
 # Copy the dependencies file to the working directory
 COPY Infrastructure/requirements.txt .
@@ -27,6 +27,6 @@ COPY src .
 RUN adduser --system --group --no-create-home uwsgi
 USER uwsgi
 CMD [ "uwsgi", "--http", "0.0.0.0:8080", \
-               "--uid", "uwsgi", \
-               "--protocol", "uwsgi", \
-               "--wsgi", "core.wsgi:application" ]
+                "--uid", "uwsgi", \
+                "--protocol", "uwsgi", \
+                "--wsgi", "core.wsgi:application" ]
