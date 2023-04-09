@@ -2,11 +2,11 @@ from django import forms
 
 
 CARD_TYPE_CHOICES =(
-    ("1", "ambition"),
-    ("2", "challenge"),
-    ("3", "pro"),
-    ("4", "con"),
-    ("5", "idea"),
+    ("1", "legend_1"),
+    ("2", "legend_2"),
+    ("3", "legend_4"),
+    ("4", "legend_5"),
+    ("5", "legend_3"),
 )
 
 tailwind_class = """w-full border-2 border-ch-gray-light 

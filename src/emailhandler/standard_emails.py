@@ -118,7 +118,7 @@ def workshop_summary(workshopid):
     likecount = str(Follower.objects.filter(card_liked__workshop=workshop).count())
     message += 'You stayed up to date and followed ' + commentcount+ " cards between all participants. \n"
     cardcount = str(Card.objects.filter(workshop=workshop).filter(~Q(cardtype='empty')).count())
-    message += '\nIn total you created ' + cardcount+ " cards full of ideas and concerns. These cards were discussed the most:\n"
+    message += '\nIn total you created ' + cardcount+ " cards full of legend_3s and concerns. These cards were discussed the most:\n"
     populaircard_bycomment = Card.objects.alias(num_comments=Count('commented_card')).order_by('-commented_card')[:3]
     populaircard_bylikes = Follower.objects.values("card_liked").annotate(count=Count('card_liked')).order_by("-count")[:3]
     populairuser_byresource = Resource.objects.values("owner").annotate(count=Count('owner')).order_by("-count")[:3]

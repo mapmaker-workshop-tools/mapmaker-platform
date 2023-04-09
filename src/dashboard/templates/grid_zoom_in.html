@@ -92,7 +92,7 @@
                 <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="{% static '/icons/plus-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 <b>Create new card</b>       
             </div>
-        {% elif card.cardtype == 'ambition' %}
+        {% elif card.cardtype == 'legend_1' %}
             <div class="hexagon flex items-center" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #000000; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="{% static '/icons/flag-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{card.cardtype}}<br>
@@ -100,7 +100,7 @@
                 <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
-        {% elif card.cardtype == 'challenge' %}
+        {% elif card.cardtype == 'legend_2' %}
             <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #E6799D;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <img src="{% static '/icons/thumbs-up-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{card.cardtype}}<br>
@@ -108,7 +108,7 @@
                 <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
-        {% elif card.cardtype == 'idea' %}
+        {% elif card.cardtype == 'legend_3' %}
             <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #51c1ff;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <img src="{% static '/icons/lightbulb-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{card.cardtype}}<br>
@@ -116,7 +116,7 @@
                 <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
-        {% elif card.cardtype == 'pro' %}
+        {% elif card.cardtype == 'legend_4' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #ffeb39;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <img src="{% static '/icons/thumbs-up-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{card.cardtype}}<br>
@@ -124,7 +124,7 @@
                 <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
-            {% elif card.cardtype == 'con' %}
+            {% elif card.cardtype == 'legend_5' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #78E7BF;"><input type='hidden' name='item' value='{{ card.id}}'/>            
                 <img src="{% static '/icons/thumbs-down-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{card.cardtype}}<br>

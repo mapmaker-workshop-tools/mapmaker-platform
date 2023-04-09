@@ -10,7 +10,7 @@
 {% else %}
 <div>
 {% endif %}
-    {% if type == 'ambition' %}
+    {% if type == 'legend_1' %}
     <div style="background: #000000; cursor: pointer; color: #fff" class="w-full my-4  p-6 max-w bg-white border border-gray-200 rounded-lg shadow  ">
     <div class="flex flex-col align-text-top items-center m-8">
         <img style="filter: invert(100%)  brightness(119%) contrast(119%); height: 100px; width: 100px;" src="{% static '/icons/flag-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
@@ -18,7 +18,7 @@
         <h1  class="mb-2 text-4xl font-bold tracking-tight text-white ">{{ title }}</h1>
     </div>
     </div>
-{% elif type == 'challenge' %}
+{% elif type == 'legend_2' %}
         <div style="background: #E6799D; cursor: pointer;"  class="w-full max-w my-4  p-6 bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
                 <img src="{% static '/icons/mountain-solid.svg' %}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
@@ -27,7 +27,7 @@
             </div>    
         </div>
         
-{% elif type == 'idea' %}
+{% elif type == 'legend_3' %}
         <div style="background: #51c1ff; cursor: pointer;"  class="w-full max-w my-4   p-6 bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
                 <img src="{% static '/icons/lightbulb-solid.svg' %}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
@@ -35,7 +35,7 @@
                 <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 ">{{ title }}</h1>
             </div>
             </div>
-{% elif type == 'pro' %}
+{% elif type == 'legend_4' %}
         <div style="background: #ffeb39; cursor: pointer;" class="w-full max-w my-4  bg-white p-6 border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
                 <img src="{% static '/icons/thumbs-up-solid.svg' %}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
@@ -44,7 +44,7 @@
                 
             </div>
             </div>
-{% elif type == 'con' %}          
+{% elif type == 'legend_5' %}          
         <div style="background: #78E7BF; cursor: pointer;" class="w-full max-w my-4  bg-white p-6 border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
                 <img src="{% static '/icons/thumbs-down-solid.svg' %}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
