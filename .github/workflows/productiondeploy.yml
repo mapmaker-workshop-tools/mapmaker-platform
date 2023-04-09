@@ -269,7 +269,7 @@ jobs:
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail
-    needs: [builddjango, buildnginx, builddjangodev]
+    needs: [buildnginx, builddjangodev]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github
