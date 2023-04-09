@@ -33,7 +33,7 @@ jobs:
 
   sendnotification:
     name: ✅ Notify success
-    needs: [deployimages, validatedeployment, buildnginx, builddjango, startnotification]
+    needs: [deployimages, validatedeployment, buildnginx, builddjango, builddjangodev, startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -108,7 +108,7 @@ jobs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjango:
-      name: 🚨 building Django
+      name: 🚨 building Django Production
       needs: [startnotification]
       runs-on: ubuntu-latest
       steps:
