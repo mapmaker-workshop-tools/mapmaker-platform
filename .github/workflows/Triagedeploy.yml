@@ -217,7 +217,7 @@ jobs:
         with:
           destination_branch: "master"
           assignees: "two-trick-pony-NL"
-          pr_title: "🤖 Automatically pulling ${{ github.ref }} into main"
-          pr_body: "All Checks passed, so the CI opened this pull request. Check out the changes here: "
+          pr_title: "🤖 Automatically pulling ${{ github.ref }} into master"
+          pr_body: "Verify the code is working on triage.mapmaker.nl If you merge this pull-request the code will be deployed to production. Check out the changes here: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
           pr_label: "automatic-pullrequest"
           github_token: ${{ secrets.GH_TOKEN }} 
