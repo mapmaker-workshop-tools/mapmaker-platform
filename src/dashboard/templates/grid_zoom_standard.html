@@ -112,6 +112,7 @@
             </div>
         {% elif card.cardtype == 'image_card' %}
         <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background-image: url('https://static01.nyt.com/images/2020/12/14/well/14google-photo/14google-photo-videoSixteenByNineJumbo1600.jpg'); background-size: cover; background-position: center;"><input type='hidden' name='item' value='{{ card.id}}'/>            
+
         </div>
     {% endif %}
     {% endfor %}
