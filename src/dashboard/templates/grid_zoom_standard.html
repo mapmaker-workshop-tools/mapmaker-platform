@@ -110,8 +110,11 @@
                 <img src="{% static '/icons/thumbs-down-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{ card.title|truncatechars:20}}
             </div>
-        {% endif %}
-        {% endfor %}
+        {% elif card.cardtype == 'image_card' %}
+        <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background-image: url(https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI');"><input type='hidden' name='item' value='{{ card.id}}'/>            
+        </div>
+    {% endif %}
+    {% endfor %}
         </form>
     </div>
 </div>
