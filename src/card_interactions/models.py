@@ -31,7 +31,7 @@ class Resource(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True, related_name = 'document_card')
     document_description = models.TextField(blank=False)    
     document_type = models.CharField(blank=False, choices=documenttypechoices.choices, max_length=20)
-    document_url = models.CharField(max_length=500, unique=False, blank=False)
+    document_url = models.URLField(unique=False, blank=False)
 
     
     def __str__(self):

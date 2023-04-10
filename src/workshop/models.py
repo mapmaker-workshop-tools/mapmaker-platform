@@ -61,6 +61,7 @@ class Card(models.Model):
     title = models.CharField(max_length=30, unique=False, blank=False)
     description = models.TextField(blank=True,)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
+    image_Url = models.URLField(blank=True)
     
     def __str__(self):
         return self.workshop.workshop_name + ' - ' + self.title
