@@ -25,9 +25,16 @@ class CardForm(forms.Form):
     title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': tailwind_class}))
     
+    
+    
 class CardTitle(forms.Form):
     cardtype = forms.ChoiceField(choices = CARD_TYPE_CHOICES, widget=forms.Select(attrs={'class': tailwind_class}))
+    image_url = forms.URLField(max_length=1000, widget=forms.TextInput(attrs={'class': tailwind_class, 'placeholder': 'Link a image', "label": ''}))
     title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class, 'placeholder': 'Write a new title', "label": ''}))
+    
+    def __init__(self, *args, **kwargs):
+        super(CardTitle, self).__init__(*args, **kwargs)
+        self.fields['image_url'].required = False
     
 class CardDescription(forms.Form):
     description = forms.CharField(widget=forms.Textarea(attrs={'class': tailwind_class, 'placeholder': 'Write a new description'}))
