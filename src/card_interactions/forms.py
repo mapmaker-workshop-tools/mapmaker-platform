@@ -7,6 +7,7 @@ CARD_TYPE_CHOICES =(
     ("3", "legend_4"),
     ("4", "legend_5"),
     ("5", "legend_3"),
+    ("6", "image_card"),
 )
 
 tailwind_class = """w-full border-2 border-ch-gray-light 
