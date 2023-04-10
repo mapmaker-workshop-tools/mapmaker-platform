@@ -33,6 +33,7 @@ def get_card_details(request, id):
         'title': card.title,
         'type': card.cardtype,
         'description': card.description,
+        'card_image': card.image_Url,
         'followers': followers,
         'id': card.id,        
         'user_follows_card': user_follows_card,
@@ -82,6 +83,7 @@ def create_card(request, id):
         'description': "Add a new description",
         'followers': followers,
         'id': card.id,        
+        'card_image': card.image_Url,
         'user_follows_card': user_follows_card,
         'resources': resources,
         'comments': comments,
@@ -105,6 +107,7 @@ def edit_card_title(request, id):
         if form.is_valid():
             card.title = form.cleaned_data['title']
             card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
+            card.image_Url = form.cleaned_data['title']
             card.author = request.user
             card.save()
             messages.add_message(request, messages.INFO, 'Card title updated')
