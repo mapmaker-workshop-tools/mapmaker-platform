@@ -97,12 +97,13 @@ jobs:
           envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
           envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
           envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          envkey_DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          envkey_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          envkey_DATABASE_NAME: "mapmaker_dev"
+          envkey_DB_USER: ${{ secrets.DATABASE_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          envkey_DB_HOST: ${{ secrets.DATABASE_HOST }}
+          envkey_DB_NAME: "mapmaker_dev"
           envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
           envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
+          envkey_MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
           envkey_SECURE_SETTINGS: True
           envkey_DEBUG: True
           envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}

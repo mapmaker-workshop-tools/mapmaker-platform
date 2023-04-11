@@ -118,7 +118,7 @@ DATABASES = {
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': '3306',
-        'OPTIONS': {'ssl': {'ca': '/etc/ssl/certs/ca-certificates.crt'}}
+        'OPTIONS': {'ssl': {'ca': env('MYSQL_ATTR_SSL_CA')}}
         
     }
 }
