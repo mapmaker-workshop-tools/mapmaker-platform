@@ -118,7 +118,7 @@ DATABASES = {
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': '3306',
-        'OPTIONS': {'ssl': {'ca': '/etc/ssl/cert.pem'}}
+        'OPTIONS': {'ssl': {'ca': '/etc/ssl/certs/ca-certificates.crt'}}
         
     }
 }
