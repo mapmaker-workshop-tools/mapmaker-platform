@@ -112,16 +112,14 @@ jobs:
             envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
             envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
             envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-            envkey_DB_USER: ${{ secrets.DB_USER }}
-            envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-            envkey_DB_HOST: ${{ secrets.DB_HOST }}
-            envkey_DB_NAME: ${{ secrets.DB_NAME }}
-            envkey_DB_PORT: ${{ secrets.DB_PORT }}
-            envkey_MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
+            envkey_DATABASE_USER: ${{ secrets.DATABASE_USER }}
+            envkey_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+            envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+            envkey_DATABASE_NAME: "mapmaker_prod"
             envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
             envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
             envkey_SECURE_SETTINGS: True
-            envkey_DEBUG: False
+            envkey_DEBUG: false
             envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
             directory: src/core
             file_name: .env
@@ -149,6 +147,12 @@ jobs:
           run: |
             sudo pip3 install --upgrade pip
             sudo pip3 install -r Infrastructure/requirements.txt
+        - name: 📦 Collecting all static files and Migrate
+          run: |
+            python3 src/manage.py collectstatic --noinput
+            python3 src/manage.py makemigrations --noinput
+            python3 src/manage.py migrate --noinput
+
         - name: 🐳 Create a Docker Container for DJANGO
           run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/DockerfilePROD .
         - name: 📬 Upload Backend image to AWS container register
@@ -174,6 +178,9 @@ jobs:
               
               See the details here:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+  
+
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail

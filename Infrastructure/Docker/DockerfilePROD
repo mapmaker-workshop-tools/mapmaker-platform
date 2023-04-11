@@ -17,6 +17,8 @@ RUN pip3 install -r requirements.txt
 
 # Copy the content of the local src directory to the working directory
 COPY src .
+RUN python manage.py migrate --noinput
+
 
 # This is the "standard" local development server and thus should not be used in prod
 #CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
