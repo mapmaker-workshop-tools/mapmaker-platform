@@ -101,6 +101,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='legenda',
             name='workshop',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='workshoplegend', to='workshop.workshop'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='workshoplegend', to='workshop.workshop'),
         ),
     ]

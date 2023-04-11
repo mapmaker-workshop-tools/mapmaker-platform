@@ -109,15 +109,17 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': '3306',
-    }
+  'default': {
+    'ENGINE': 'django_psdb_engine',
+    'NAME': env('DB_NAME'),
+    'HOST': env('DB_HOST'),
+    'PORT': env('DB_PORT'),
+    'USER': env('DB_USER'),
+    'PASSWORD': env('DB_PASSWORD'),
+    'OPTIONS': {'ssl': {'ca': env('MYSQL_ATTR_SSL_CA')}}
+  }
 }
 import sys
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage

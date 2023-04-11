@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('document_description', models.TextField()),
                 ('document_type', models.CharField(choices=[('link', 'Link'), ('document', 'Document')], max_length=20)),
                 ('document_url', models.CharField(max_length=500)),
-                ('card', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='document_card', to='workshop.card')),
+                ('card', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='document_card', to='workshop.card')),
                 ('owner', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='document_owner', to=settings.AUTH_USER_MODEL)),
             ],
         ),

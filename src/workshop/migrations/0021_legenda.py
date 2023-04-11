@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('legend_label', models.CharField(max_length=40)),
                 ('legend_color', models.CharField(max_length=40)),
                 ('legend_icon', models.CharField(max_length=40)),
-                ('workshop', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='workshoplegenda', to='workshop.workshop')),
+                ('workshop', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='workshoplegenda', to='workshop.workshop')),
             ],
         ),
     ]
