@@ -119,6 +119,7 @@ jobs:
             envkey_DB_PORT: ${{ secrets.DB_PORT }}
             envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
             envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
+            envkey_MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
             envkey_SECURE_SETTINGS: True
             envkey_DEBUG: false
             envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
