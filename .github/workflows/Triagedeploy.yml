@@ -137,8 +137,6 @@ jobs:
       - name: 📦 Collecting all static files
         run: |
           python3 src/manage.py collectstatic --noinput
-          python3 src/manage.py makemigrations --noinput
-          python3 src/manage.py migrate --noinput
       - name: 🐳 Create a Docker Container for DJANGO
         run: docker build -t mapmakerdev:latest -f ./Infrastructure/Docker/DockerfileDEV .
       - name: 📬 Upload Backend image to AWS container register

@@ -113,11 +113,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE': 'django_psdb_engine',
-    'NAME': env('DB_NAME'),
-    'HOST': env('DB_HOST'),
-    'PORT': env('DB_PORT'),
-    'USER': env('DB_USER'),
-    'PASSWORD': env('DB_PASSWORD'),
+    'NAME': 'mapmaker_prod',
+    'HOST': 'petervandoorn.com',
+    'PORT': '3306',
+    'USER': 'mapmaker_server',
+    'PASSWORD': '8P_8amH43XYhv62-8aCHb6s*eo6@oC8wjKvDDerec!XUAqFYm',
     'OPTIONS': {'ssl': {'ca': env('MYSQL_ATTR_SSL_CA')}}
   }
 }
