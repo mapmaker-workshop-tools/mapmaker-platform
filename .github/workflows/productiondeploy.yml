@@ -121,7 +121,7 @@ jobs:
             envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
             envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
             envkey_SECURE_SETTINGS: True
-            envkey_DEBUG: "False"
+            envkey_DEBUG: False
             envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
             directory: src/core
             file_name: .env
@@ -174,9 +174,6 @@ jobs:
               
               See the details here:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-  
-
 
   deployimages:
     name: 🚀 Deploying the containers to AWS Lightsail
