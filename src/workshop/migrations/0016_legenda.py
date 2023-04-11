@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('legend_label', models.CharField(max_length=40)),
                 ('legend_icon', models.CharField(max_length=40)),
-                ('workshop', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='workshoplegenda', to='workshop.workshop')),
+                ('workshop', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='workshoplegenda', to='workshop.workshop')),
             ],
         ),
     ]

@@ -38,26 +38,26 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='workshop',
             name='legend_1',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='legend_1', to='workshop.legenda'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='legend_1', to='workshop.legenda'),
         ),
         migrations.AddField(
             model_name='workshop',
             name='legend_2',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='legend_2', to='workshop.legenda'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='legend_2', to='workshop.legenda'),
         ),
         migrations.AddField(
             model_name='workshop',
             name='legend_3',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='legend_3', to='workshop.legenda'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='legend_3', to='workshop.legenda'),
         ),
         migrations.AddField(
             model_name='workshop',
             name='legend_4',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='legend_4', to='workshop.legenda'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='legend_4', to='workshop.legenda'),
         ),
         migrations.AddField(
             model_name='workshop',
             name='legend_5',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='legend_5', to='workshop.legenda'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='legend_5', to='workshop.legenda'),
         ),
     ]

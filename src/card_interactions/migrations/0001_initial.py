@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_modified', models.DateTimeField(auto_now=True)),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, editable=False)),
-                ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='like', to=settings.AUTH_USER_MODEL)),
-                ('card_liked', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='liked_card', to='workshop.card')),
+                ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='like', to=settings.AUTH_USER_MODEL)),
+                ('card_liked', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='liked_card', to='workshop.card')),
             ],
         ),
         migrations.CreateModel(
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, editable=False)),
                 ('comment_text', models.TextField()),
                 ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='comment_author', to=settings.AUTH_USER_MODEL)),
-                ('card', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='commented_card', to='workshop.card')),
+                ('card', models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='commented_card', to='workshop.card')),
             ],
         ),
     ]

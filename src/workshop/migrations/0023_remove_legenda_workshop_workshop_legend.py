@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='workshop',
             name='legend',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='workshoplegend', to='workshop.legenda'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='workshoplegend', to='workshop.legenda'),
         ),
     ]
