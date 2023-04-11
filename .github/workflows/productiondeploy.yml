@@ -151,6 +151,7 @@ jobs:
             sudo pip3 install -r Infrastructure/requirements.txt
         - name: 📦 Collecting all static files and Migrate
           run: |
+            ls
             python3 src/manage.py collectstatic --noinput
         - name: 🐳 Create a Docker Container for DJANGO
           run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/DockerfilePROD .
