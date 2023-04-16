@@ -14,27 +14,9 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 jobs:
-  startnotification:
-    name: 💬 Starting deployment 
-    runs-on: ubuntu-latest
-    steps:
-      - name: send telegram message on push
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          disable_notification: true
-          message: |
-            🏗️ New deployment started - run ${{ github.run_id }}
-            Details:
-            - By: ${{ github.actor }} 
-            - Description: ${{ github.event.commits[0].message }}
-            - Code: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-            - Build: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  
-  buildnginx:
+ 
+  buildcontainers:
     name: 🌎 building nginx webserver
-    needs: [startnotification]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
@@ -43,54 +25,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
-      - name: 🏢 Install Amazon Client
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install || true
-          aws --version
-          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
-          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
-          sudo chmod +x /usr/local/bin/lightsailctl
-      - name: 🤐 Log in to AWS Lightsail with Secrets
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: 🐳 Create a Docker Container for NGINX
-        run: docker build -t nginx:latest -f ./Infrastructure/nginx/Dockerfile .
-      - name: 📬 Upload NGINX image to AWS container register
-        run: |
-          service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
-          aws lightsail push-container-image \
-            --region ${{ env.AWS_REGION }} \
-            --service-name ${service_name} \
-            --label nginx \
-            --image nginx:latest
-      - name: =========== All done. Cleaning up ♻️  ===========
-        run: ls
-      - name: Build Alerts
-        if: ${{ failure() }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🚨 Deployment failed 🚨
-            Build ${{ github.run_id }} failed
-
-            Something went wrong while building the NGINX container the containers to AWS. See the details here:
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-
-  builddjangodev:
-    name: 🧪 Dev Django
-    needs: [startnotification]
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🗂  Getting code from Github
-        uses: actions/checkout@v2
       - name: 🤐 Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -110,10 +44,6 @@ jobs:
           directory: src/core
           file_name: .env
           fail_on_empty: false
-      - name: ⚙️  Updating to the latest versions
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq unzip
       - name: 🏢 Install Amazon Client
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -148,6 +78,16 @@ jobs:
             --service-name ${service_name} \
             --label mapmakerdev \
             --image mapmakerdev:latest
+      - name: 🐳 Create a Docker Container for NGINX
+        run: docker build -t nginx:latest -f ./Infrastructure/nginx/Dockerfile .
+      - name: 📬 Upload NGINX image to AWS container register
+        run: |
+          service_name=${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
+          aws lightsail push-container-image \
+            --region ${{ env.AWS_REGION }} \
+            --service-name ${service_name} \
+            --label nginx \
+            --image nginx:latest
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
       - name: Build Alerts
@@ -159,53 +99,14 @@ jobs:
           message: |
             🚨 Deployment failed 🚨
             Build ${{ github.run_id }} failed
-            Something went wrong while building the Django container
-            
-            See the details here:
+
+            Something went wrong while building the NGINX container the containers to AWS. See the details here:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-
-  deployimages:
-    name: 🚀 Deploying the containers to AWS Lightsail
-    needs: [buildnginx, builddjangodev]
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🗂  Getting config files from Github
-        uses: actions/checkout@v2
-      - name: 🏢 Install Amazon Client
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install || true
-          aws --version
-          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
-          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
-          sudo chmod +x /usr/local/bin/lightsailctl
-      - name: 🤐 Log in to AWS Lightsail with Secrets
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: 🚀 Launching the Containers
         run: |
           aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
           --containers file://Infrastructure/AWS/deploymentconfig.json \
           --public-endpoint file://Infrastructure/AWS/publicendpoint.json
-      - name: =========== All done. Cleaning up ♻️  ===========
-        run: ls
-      - name: Build Alerts
-        if: ${{ failure() }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            🚨 Deployment failed 🚨
-            Build ${{ github.run_id }} failed
-
-            Something went wrong while activating the containers to AWS. See the details here:
-            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             
   pull-request:
     needs: [deployimages, builddjangodev, buildnginx]
