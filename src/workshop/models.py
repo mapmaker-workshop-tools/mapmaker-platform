@@ -61,7 +61,7 @@ class Card(models.Model):
     title = models.CharField(max_length=100, unique=False, blank=False)
     description = models.TextField(blank=True,)
     followers = models.ManyToManyField(CustomUser, related_name = 'card_followers')
-    image_Url = models.URLField(blank=True)
+    image_Url = models.URLField(blank=True, default='https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png')
     
     def __str__(self):
         return self.workshop.workshop_name + ' - ' + self.title
