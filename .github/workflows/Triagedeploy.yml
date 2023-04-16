@@ -109,7 +109,7 @@ jobs:
           --public-endpoint file://Infrastructure/AWS/publicendpoint.json
             
   pull-request:
-    needs: [deployimages, builddjangodev, buildnginx]
+    needs: [buildcontainers]
     name: 🔃 Creating Pull request to merge with Master
     runs-on: ubuntu-latest
     steps:
