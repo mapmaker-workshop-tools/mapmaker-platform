@@ -26,124 +26,107 @@
     
         {% include "new_title.html" with author=author %}
  
-
-        <div class="pt-4 bg-grey-100">
+        <div class=" bg-grey-100 my-3">
             <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    <div class="flex">
+                <div class="bg-gray-50 rounded-lg shadow">
+                    <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/pen-nib-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Author </h5> 
                     </div>
-                </div>
-            </div>     
-        </div>  
-        <div class=" bg-grey-100">
-            <div class=" px-4 bg-grey-100">
-                <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                    <a href="#">
-                        <img class="w-full p-6 rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{author.avatar_url}}" alt="{{author.first_name}} Avatar">
-                    </a>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            {{author.first_name}} {{author.last_name}}
-                        </h3>
-                        <span class="text-gray-500 dark:text-gray-400">{{author.organisation}}</span>
-                        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{author.email}} <br> {{author.linkedin}}</p>
-                    </div>
-                </div>             
+                    <div class="items-center  sm:flex">
+                        <a href="#">
+                            <img class="w-full p-6 rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{author.avatar_url}}" alt="{{author.first_name}} Avatar">
+                        </a>
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold tracking-tight text-gray-900 ">
+                                {{author.first_name}} {{author.last_name}}
+                            </h3>
+                            <span class="text-gray-500 dark:text-gray-400">{{author.organisation}}</span>
+                            <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{author.email}} <br> {{author.linkedin}}</p>
+                        </div>
+                    </div>  
+                </div>           
+            </div>
         </div>
 
-        
-        <div class="pt-4 bg-grey-100">
+        <div class=" bg-grey-100 my-3">
             <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    <div class="flex">
+                <div class="bg-gray-50 rounded-lg shadow">
+                    <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/heart-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Followers </h5> 
                     </div>
-                </div>
-            </div>     
-        </div>  <div class="pb-4 bg-grey-100">
-            <div class="bg-grey-100">
-                <div class="items-center m-4 py-4 bg-gray-50 rounded-lg shadow sm:flex">
-                    {% if user.is_authenticated%}
-                    {% if user_follows_card %}
-                    <div id="like">
-                        {% include "liked.html" with id=id %}
-                    </div>
-                    {% else %}
-                    <div id="like">
-                        {% include "notliked.html" with id=id %}
-                    </div>
+                    <div class="items-center m-4 py-4 sm:flex">
+                        {% if user.is_authenticated%}
+                        {% if user_follows_card %}
+                        <div id="like">
+                            {% include "liked.html" with id=id %}
+                        </div>
+                        {% else %}
+                        <div id="like">
+                            {% include "notliked.html" with id=id %}
+                        </div>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            {% for follower in followers %}
-            <div class="m-4">
-                <div id="tooltip-{{follower.first_name}}-{{follower.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{follower.first_name}}
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-                <img data-tooltip-target="tooltip-{{follower.first_name}}-{{follower.id}}" class="w-10 h-10 rounded" src="{{follower.avatar_url}}" alt="Medium avatar">
-              </div>
-            {% empty %}
-                <p class="ml-auto text-xs p-20 m-20 text-gray-500 ">No followers yet, be the first!</p>
-            {% endfor %}
-        </div> 
+                    {% for follower in followers %}
+                    <div class="m-4">
+                    <div id="tooltip-{{follower.first_name}}-{{follower.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        {{follower.first_name}}
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <img data-tooltip-target="tooltip-{{follower.first_name}}-{{follower.id}}" class="w-10 h-10 rounded" src="{{follower.avatar_url}}" alt="Medium avatar">
+                    </div>
+                    {% empty %}
+                    <p class="ml-auto text-xs p-4 m-4 text-gray-500 ">No followers yet, be the first!</p>
+                {% endfor %}
+            </div>  
+                </div>           
+            </div>
+        </div>
 
-        <div class="pt-4 bg-grey-100">
+        <div class=" bg-grey-100 my-3">
             <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    <div class="flex">
+                <div class="bg-gray-50 rounded-lg shadow">
+                    <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/Notes.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Description </h5> 
                     </div>
-                </div>
-            </div>     
-        </div> 
-        <div class="pt--2 pb-4 bg-grey-100">
-            <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    {% include "new_description.html" %}
+                    <div class="items-center  sm:flex">
+                        <div class="items-center m-4 p-4 sm:flex"> 
+                            {% include "new_description.html" %}
+        
+                        </div>
+                    </div>  
+                </div>           
+            </div>
+        </div>
 
-                </div>
-            </div>     
-        </div> 
-        <div class="pt-4 bg-grey-100">
+        <div class=" bg-grey-100 my-3">
             <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    <div class="flex">
+                <div class="bg-gray-50 rounded-lg shadow">
+                    <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/Resources.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Resources </h5> 
                     </div>
-                </div>
-            </div>     
-        </div> 
-        <div class="pt--2 pb-4 bg-grey-100">
-            <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    {% include 'resources.html' with resources=resources id=id %}       
+                    <div class="items-center  mx-4 px-4  ">
+                            {% include 'resources.html' with resources=resources id=id %}       
+                    </div>  
+                </div>           
+            </div>
+        </div>
 
-                </div>
-            </div>     
-        </div> 
-
-        <div class="pt-4 bg-grey-100">
+        <div class=" bg-grey-100 my-3">
             <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow sm:flex"> 
-                    <div class="flex">
+                <div class="bg-gray-50 rounded-lg shadow">
+                    <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/bell-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Updates </h5> 
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Updates </h5>
                     </div>
-                </div>
-            </div>     
-        </div> 
-        <div class="pt--2 pb-4 bg-grey-100">
-            <div class="bg-grey-100">
-                <div class="items-center m-4 p-4 bg-gray-50 rounded-lg shadow"> 
-                    {% include 'typecomment.html' with comments=comments %}
-
-                </div>
-            </div>     
-        </div> 
+                    <div class="items-center  mx-4 px-4  ">
+                        {% include 'typecomment.html' with comments=comments %}
+                    </div>  
+                </div>           
+            </div>
+        </div>
     </div>
 </div>
