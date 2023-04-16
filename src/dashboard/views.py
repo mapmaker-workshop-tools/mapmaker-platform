@@ -1,5 +1,6 @@
 
 # Create your views here.
+from django.core import serializers
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -24,6 +25,23 @@ def index(request):
         # Getting the user, active workshop cards and participants
         current_user = request.user
         current_workshop = current_user.active_workshop
+        legend = {
+            'legend_label_1': current_workshop.legend_label_1,
+            'legend_hex_color_1': current_workshop.legend_hex_color_1,
+            'legend_label_1':current_workshop.legend_icon_1,
+            'legend_label_2': current_workshop.legend_label_2,
+            'legend_hex_color_2': current_workshop.legend_hex_color_2,
+            'legend_label_2':current_workshop.legend_icon_2,
+            'legend_label_3': current_workshop.legend_label_3,
+            'legend_hex_color_3': current_workshop.legend_hex_color_3,
+            'legend_label_3':current_workshop.legend_icon_3,
+            'legend_label_4': current_workshop.legend_label_4,
+            'legend_hex_color_4': current_workshop.legend_hex_color_4,
+            'legend_label_4':current_workshop.legend_icon_4,
+            'legend_label_5': current_workshop.legend_label_5,
+            'legend_hex_color_5': current_workshop.legend_hex_color_5,
+            'legend_label_5':current_workshop.legend_icon_5,
+        }
         workshop_secret = signer.sign_object({'workshopid':current_workshop.id})
         cards = Card.objects.filter(workshop=current_workshop)
         participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
@@ -47,7 +65,8 @@ def index(request):
                 "workshop": current_workshop,
                 "legend_1count": cards.filter(cardtype='legend_1').count(),
                 "legend_3count": cards.filter(workshop=current_workshop).filter(cardtype='legend_3').count(), 
-                "legend_2count": cards.filter(workshop=current_workshop).filter(cardtype='legend_2').count(),  
+                "legend_2count": cards.filter(workshop=current_workshop).filter(cardtype='legend_2').count(),
+                "legend": legend,  
                 "cardscount": cards.count(), 
                 "zoomlevel": str(current_user.zoom_level),
                 "workshop_secret": workshop_secret,
@@ -66,6 +85,23 @@ def view_only(request, workshop_secret):
         # Getting the live workshop from the secret 
         workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
         current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
+        legend = {
+            'legend_label_1': current_workshop.legend_label_1,
+            'legend_hex_color_1': current_workshop.legend_hex_color_1,
+            'legend_label_1':current_workshop.legend_icon_1,
+            'legend_label_2': current_workshop.legend_label_2,
+            'legend_hex_color_2': current_workshop.legend_hex_color_2,
+            'legend_label_2':current_workshop.legend_icon_2,
+            'legend_label_3': current_workshop.legend_label_3,
+            'legend_hex_color_3': current_workshop.legend_hex_color_3,
+            'legend_label_3':current_workshop.legend_icon_3,
+            'legend_label_4': current_workshop.legend_label_4,
+            'legend_hex_color_4': current_workshop.legend_hex_color_4,
+            'legend_label_4':current_workshop.legend_icon_4,
+            'legend_label_5': current_workshop.legend_label_5,
+            'legend_hex_color_5': current_workshop.legend_hex_color_5,
+            'legend_label_5':current_workshop.legend_icon_5,
+        }
         cards = Card.objects.filter(workshop=current_workshop)
         participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
         if not current_workshop.card_order:
@@ -84,6 +120,7 @@ def view_only(request, workshop_secret):
                 "firstname": 'Anonymous',
                 'cards': ordered_cards, 
                 "participants": participants, 
+                "legend": legend,
                 "workshop": current_workshop,
                 "legend_1count": cards.filter(cardtype='legend_1').count(),
                 "legend_3count": cards.filter(workshop=current_workshop).filter(cardtype='legend_3').count(), 
@@ -120,7 +157,7 @@ def handle_grid_update(request):
             get_card_order_list = ast.literal_eval(current_workshop.card_order)
             order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
             ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
-        context = {'cards': ordered_cards }
+        context = {'cards': ordered_cards, 'workshop':current_workshop }
         if current_user.zoom_level == '0':
             return render(request, 'grid_zoom_standard.html', context)
         elif current_user.zoom_level == '1':
@@ -153,7 +190,7 @@ def zoom_in(request):
         get_card_order_list = ast.literal_eval(current_workshop.card_order)
         order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
-    context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
+    context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level, "workshop": current_workshop}
     mp.track(request.user.email, 'Zoom in', {'workshop': current_workshop.workshop_name, 
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'adjust_zoom.html', context)
@@ -180,7 +217,7 @@ def zoom_out(request):
         get_card_order_list = ast.literal_eval(current_workshop.card_order)
         order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
-    context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level}
+    context = {'cards': ordered_cards, 'zoomlevel': t.zoom_level, "workshop": current_workshop,}
     mp.track(request.user.email, 'Zoom out', {'workshop': current_workshop.workshop_name, 
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'adjust_zoom.html', context)
