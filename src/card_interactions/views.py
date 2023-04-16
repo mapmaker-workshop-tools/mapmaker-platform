@@ -6,7 +6,7 @@ from django.views.decorators.http import condition
 from workshop.models import Card
 from django.utils import timezone
 from users.models import CustomUser
-from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment
+from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment, imageCardTitle
 from .models import Follower, Resource, Comment
 from django.contrib import messages
 from emailhandler.standard_emails import standard_email, notify_followers_new_post
@@ -40,7 +40,8 @@ def get_card_details(request, id):
         'resources': resources,
         'comments': comments,
         'form': form,
-        'workshop_secret': workshop_secret
+        'workshop_secret': workshop_secret,
+        'workshop': card.workshop
     }
     try:
         mp.track(request.user.email, 'Viewed card', {
@@ -103,26 +104,34 @@ def create_card(request, id):
 def edit_card_title(request, id):
     card = Card.objects.get(id=id)
     if request.method == 'POST':
-        form = CardTitle(request.POST)
-        if form.is_valid():
-            card.title = form.cleaned_data['title']
-            card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
-            card.image_Url = form.cleaned_data['title']
-            card.author = request.user
-            card.save()
-            messages.add_message(request, messages.INFO, 'Card title updated')
+        if card.cardtype == "image_card":
+            form = imageCardTitle(request.POST)
+            if form.is_valid():
+                card.image_Url = form.cleaned_data['image_url']
+                card.author = request.user
+                card.save()
+        else:
+            form = CardTitle(request.POST)
+            #imageform = imageCardTitle(request.POST)
+            if form.is_valid():
+                card.title = form.cleaned_data['title']
+                card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data['cardtype'])-1][1]
+                card.author = request.user
+                card.save()
             mp.track(request.user.email, 'Card title updated', {
             'card title': card.title,
             'card id': card.id,
             'workshop': card.workshop.workshop_name,
-            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
             
             })
-            return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype})
+            return render(request, 'new_title.html', {"title":form.cleaned_data['title'], "id":id, "type":card.cardtype, 'workshop': card.workshop})
     else: 
-        form = CardTitle()
-    return render(request, 'edit_title.html', {'form': form, "cardid": id ,"title":card.title, "type":card.cardtype})
+        if card.cardtype == "image_card":
+            form = imageCardTitle()
+        else:
+            form = CardTitle()
+    return render(request, 'edit_title.html', {'form': form, "cardid": id ,"title":card.title, "type":card.cardtype, 'workshop': card.workshop})
 
 @login_required
 def edit_card_description(request, id):

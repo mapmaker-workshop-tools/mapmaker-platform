@@ -16,7 +16,8 @@ concurrency:
 jobs:
  
   buildcontainers:
-    name: 🌎 building nginx webserver
+    name: 🌎 Deploying to Triage env
+
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github

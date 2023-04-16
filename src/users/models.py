@@ -16,11 +16,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     date_modified = models.DateTimeField(auto_now=True)
     last_login = models.DateTimeField(default=timezone.now, editable=True)
-    linkedin = models.CharField(max_length=100, unique=False, blank=True)
+    linkedin = models.CharField(max_length=300, unique=False, blank=True)
     organisation = models.CharField(max_length=100, unique=False, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    avatar_url = models.CharField(max_length=300, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
+    avatar_url = models.CharField(max_length=500, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
     active_workshop = models.ForeignKey('workshop.Workshop', on_delete=models.SET('none'), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
     

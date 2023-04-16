@@ -3,10 +3,10 @@
 <form hx-post="/card/{{ cardid }}/edit/title/" hx-target="this" hx-indicator="#spinner" hx-swap="innerHTML">
 
     {% if type == 'legend_1' %}
-    <div style="background: #000000; color: #fff" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
+    <div style="background: #{{workshop.legend_hex_color_1}}; color: #fff" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
     <div class="flex flex-col align-text-top items-center m-8">
-        <img src="{% static '/icons/flag-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white ">{{type}}</h5>
+        <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_1}}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white ">{{workshop.legend_label_1}}</h5>
         {% csrf_token %}
         <div class="text-black">
         {{ form }}
@@ -15,10 +15,10 @@
     </div>
     </div>
 {% elif type == 'legend_2' %}
-        <div style="background: #E6799D;"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
+        <div style="background: #{{workshop.legend_hex_color_2}};"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
-                <i class="fa-solid fa-2xl fa-mountain"></i><br>
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{type}}</h5>
+                <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_2}}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{workshop.legend_label_2}}</h5>
                 {% csrf_token %}
                 {{ form }}
                 <button class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Submit</button>
@@ -26,20 +26,20 @@
             </div>
             
 {% elif type == 'legend_3' %}
-        <div style="background: #51c1ff;"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
+        <div style="background: #{{workshop.legend_hex_color_3}};"  class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
-                <i class="fa-solid fa-2xl fa-eye"></i><br>
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{type}}</h5>
+                <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_3}}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{workshop.legend_label_3}}</h5>
                 {% csrf_token %}
                 {{ form }}
                 <button class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Submit</button>
             </div>
             </div>
 {% elif type == 'legend_4' %}
-        <div style="background: #ffeb39; " class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
+        <div style="background: #{{workshop.legend_hex_color_4}}; " class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
-                <i class="fa-solid fa-circle-up fa-2xl"></i><br>
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{type}}</h5>
+                <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_4}}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{workshop.legend_label_4}}</h5>
                 {% csrf_token %}
                 {{ form }}
                 <button class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Submit</button>
@@ -47,10 +47,10 @@
             </div>
             </div>
 {% elif type == 'legend_5' %}          
-        <div style="background: #78E7BF;" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
+        <div style="background: #{{workshop.legend_hex_color_5}};" class="w-full max-w bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
-                <i class="fa-solid fa-circle-down fa-2xl"></i><br>
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{type}}</h5>
+                <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_5}}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{workshop.legend_label_5}}</h5>
                 {% csrf_token %}
                 {{ form }}
                 <button class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Submit</button>
