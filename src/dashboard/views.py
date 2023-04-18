@@ -145,7 +145,7 @@ def handle_grid_update(request):
         t.card_order = jsonStr
         t.save() 
         mp.track(request.user.email, 'Moved card', {'workshop': current_workshop.workshop_name, 
-    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
+            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
         return HttpResponse(status=204)
     elif request.method == "GET":
         current_user = request.user

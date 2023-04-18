@@ -23,10 +23,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     avatar_url = models.CharField(max_length=500, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
     active_workshop = models.ForeignKey('workshop.Workshop', on_delete=models.SET('none'), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
-    avatar = models.FileField(upload_to='media/avatars/', default=None)
+    avatar = models.FileField(upload_to='media/avatars/', default=None, null=True, blank=True)
      
     def save(self, *args, **kwargs):
         super(CustomUser, self).save(*args, **kwargs)
+        
         mp.people_set(self.email, {
             '$first_name'    : self.first_name,
             '$last_name'     : self.last_name,
