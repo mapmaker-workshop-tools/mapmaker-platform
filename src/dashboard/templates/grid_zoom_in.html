@@ -97,7 +97,7 @@
                 <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_1}}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{workshop.legend_label_1}}<br>
                 <b>{{ card.title|truncatechars:20}}</b>
-                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar.url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
         {% elif card.cardtype == 'legend_2' %}
@@ -105,7 +105,7 @@
                 <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_2}}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{workshop.legend_label_2}}<br>
                 <b>{{ card.title|truncatechars:20}}</b>
-                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar.url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
         {% elif card.cardtype == 'legend_3' %}
@@ -113,7 +113,7 @@
                 <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_3}}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{workshop.legend_label_3}}<br>
                 <b>{{ card.title|truncatechars:20}}</b>
-                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar.url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
         {% elif card.cardtype == 'legend_4' %}
@@ -121,7 +121,7 @@
                 <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_4}}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 {{workshop.legend_label_4}}<br>
                 <b>{{ card.title|truncatechars:20}}</b>
-                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar_url}}">
+                <img class="w-10 h-10 rounded-full avatar" src="{{card.author.avatar.url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
             </div>
             {% elif card.cardtype == 'legend_5' %}
@@ -130,7 +130,7 @@
                 {{workshop.legend_label_5}}<br>
                 <b>{{ card.title|truncatechars:20}}</b>
                 <div class="flex">
-                <img class="w-10 h-10 rounded-full avatar" style="position: center;" src="{{card.author.avatar_url}}">
+                <img class="w-10 h-10 rounded-full avatar" style="position: center;" src="{{card.author.avatar.url}}">
                 <br>{{ card.author.first_name}}  {{ card.author.last_name}} 
                 </div>
             </div>
