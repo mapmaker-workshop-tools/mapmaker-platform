@@ -96,16 +96,6 @@ jobs:
             aws-region: ${{ env.AWS_REGION }}
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        - name: Installing dependancies
-          run: |
-            sudo pip3 install --upgrade pip
-            sudo pip3 install -r Infrastructure/requirements.txt
-        - name: 📦 Collecting all static files and Migrate
-          run: |
-            python3 src/manage.py collectstatic --noinput
-            python3 src/manage.py makemigrations --noinput
-            python3 src/manage.py migrate --noinput
-
         - name: 🐳 Create a Docker Container for DJANGO
           run: docker build -t mapmaker:latest -f ./Infrastructure/Docker/DockerfilePROD .
         - name: 📬 Upload Backend image to AWS container register

@@ -4,6 +4,10 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from random import randrange
 from core.utils import mp
+from core.settings import BASE_DIR
+
+avatar_path = BASE_DIR / 'staticfiles/images/avatar.jpg'
+print(avatar_path)
 
 from .managers import CustomUserManager
 # Created using: https://testdriven.io/blog/django-custom-user-model/
@@ -23,7 +27,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     avatar_url = models.CharField(max_length=500, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
     active_workshop = models.ForeignKey('workshop.Workshop', on_delete=models.SET('none'), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
-    avatar = models.FileField(upload_to='media/avatars/', default=None, null=True, blank=True)
+    avatar = models.FileField(upload_to='media/avatars/', default=avatar_path, null=True, blank=True)
      
     def save(self, *args, **kwargs):
         super(CustomUser, self).save(*args, **kwargs)
