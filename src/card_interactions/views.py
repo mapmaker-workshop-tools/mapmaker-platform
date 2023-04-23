@@ -41,7 +41,8 @@ def get_card_details(request, id):
         'comments': comments,
         'form': form,
         'workshop_secret': workshop_secret,
-        'workshop': card.workshop
+        'workshop': card.workshop,
+        'card_url': card.image.url
     }
     try:
         mp.track(request.user.email, 'Viewed card', {
@@ -105,11 +106,15 @@ def edit_card_title(request, id):
     card = Card.objects.get(id=id)
     if request.method == 'POST':
         if card.cardtype == "image_card":
-            form = imageCardTitle(request.POST)
+            form = imageCardTitle(request.POST, request.FILES, instance=card)
             if form.is_valid():
-                card.image_Url = form.cleaned_data['image_url']
-                card.author = request.user
-                card.save()
+                #card.image_Url = form.cleaned_data['image_url']
+                #card.image = form.cleaned_data.get('image')
+                #card.author = request.user
+                #card.save()
+                form.save()
+            else: 
+                print("NOT VALID")
         else:
             form = CardTitle(request.POST)
             #imageform = imageCardTitle(request.POST)
