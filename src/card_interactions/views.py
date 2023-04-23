@@ -108,11 +108,11 @@ def edit_card_title(request, id):
         if card.cardtype == "image_card":
             form = imageCardTitle(request.POST, request.FILES, instance=card)
             if form.is_valid():
-                #card.image_Url = form.cleaned_data['image_url']
-                #card.image = form.cleaned_data.get('image')
-                #card.author = request.user
-                #card.save()
-                form.save()
+                img = form.cleaned_data['image']
+                print(img)
+                card.image.delete()
+                card.image.save("image.png", img)
+                print("Saved form")
             else: 
                 print("NOT VALID")
         else:
