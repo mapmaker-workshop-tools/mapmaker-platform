@@ -15,6 +15,8 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ("email",)
+        
+        
 
 class CustomUserRegisterToWorkshop(forms.Form):
     
