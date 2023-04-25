@@ -13,8 +13,10 @@
 Mapmaker is a workshop platform consisting of a unique cardset, a methodology and a online collaboration platform.
 This repository contains all the assets, instructions and the cardset designs. For more information visit: mapmaker.nl
 
-[<kbd> <br> Website <br> </kbd>][https://mapmaker.nl]
+[<kbd> <br> Website <br> </kbd>][link]
 [<kbd> <br> Code documentation <br> </kbd>][https://github.com/two-trick-pony-NL/mapmaker/tree/master/src]
+
+[Link]: # 'https://mapmaker.nl'
 
 
 # Open Source and Creative Commons
