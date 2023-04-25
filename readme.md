@@ -1,3 +1,6 @@
+![mapmaker_logo](https://user-images.githubusercontent.com/71013416/234362507-1ecd5c9b-ae42-4729-8572-094846007f28.png)
+
+
 [![📈 Autoscale](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/autoscale.yml/badge.svg?branch=master)](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/autoscale.yml)
 [![🚀 Production deployment](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/productiondeploy.yml/badge.svg)](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/productiondeploy.yml)
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
