@@ -8,10 +8,10 @@
 	<title>
 		{% block title %}{% endblock %}
 	</title>
-	<meta property="og:title" content="Create big picture workshops">
+	<meta property="og:title" content="See the big picture">
 	<meta property="og:site_name" content="Mapmaker">
 	<meta property="og:url" content="https://mapmaker.nl">
-	<meta property="og:description" content="We bring you the best workshops with our Mapmaker certified trainers, bring you the tools to get results out of your workshop. And we built the online tool that allows you to keep on making a difference even after the workshop is done.">
+	<meta property="og:description" content="Mapmaker aligns your teams while youre working on complex problems.">
 	<meta property="og:type" content="business.business">
 	<meta property="og:image" content="https://mapmaker.nl/static/images/heroimage.png">
 	<meta property="og:image" content="https://mapmaker.nl/static/images/joephero.png">
@@ -56,7 +56,6 @@
 			y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 		})(window, document, "clarity", "script", "gpgohh9dep");
 	</script>
-
 </head>
 <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous"></script>
 <script>
@@ -113,46 +112,46 @@
 	<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
 	</button>
 	<div class="hidden w-full md:block md:w-auto" id="navbar-default">
-	<ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white  md: ">
+	<ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white  md: "style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
 		
 		{% if user.is_authenticated%}
 		<li>
-			<a href="/dashboard" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Dashboard</a>
+			<a href="/dashboard" class="block py-2 pl-3 pr-4 md:p-0 " aria-current="page">Dashboard</a>
 		</li>
 		{% if workshop.workshop_owner == user %}
 		<li>
-			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 text-gray bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Workshop settings</a>
+			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 md:p-0 " aria-current="page">Workshop settings</a>
 		</li>
 		{% endif%}
 		<li>
-			<a href="/user/profile" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Profile</a>
+			<a href="/user/profile" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Profile</a>
 		</li>
 		{% if workshop_secret %}
 		<li>
-			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Share Workshop</a>
+			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Share Workshop</a>
 		</li>
 		{% endif %}
 		<li>
-		<a href="/user/logout" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Log out</a>
+		<a href="/user/logout" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Log out</a>
 		</li>
 		{% else %}
 		{% if workshop_secret %}
 		<li>
-			<a href="/user/register/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Complete registration to edit</a>
+			<a href="/user/register/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Complete registration to edit</a>
 		</li>
 		<li>
-			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Share Workshop</a>
+			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Share Workshop</a>
 		</li>
 
 		{% else%}
 		<li>
-			<a href="/contact" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Contact</a>
+			<a href="/contact" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Contact</a>
 		</li>
 		<li>
-			<a href="/blog" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Blog</a>
+			<a href="/blog" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Blog</a>
 		</li>
 		<li>
-			<a href="/user/login" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Log in</a>
+			<a href="/user/login" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Log in</a>
 		</li>
 		{% endif %}
 		{% endif %}
@@ -175,13 +174,15 @@
 	</div>
 </div>
 </nav>
-<div style="height: 100px; background-color: #ffef39;"></div>				
+
+<div style="height: 100px; background-color: #ffef39;"></div>
+
 	
 	{% block content%}{% endblock %}
 
 	{% if not user.is_authenticated %}
 	{% if not workshop_secret %}
-		<footer style="background-color: #ffef39;" class="p-4 bg-white sm:p-6 ">
+	<footer style="background-color: #ffef39;" class="p-4 bg-white sm:p-6 ">
     <div class="mx-auto max-w-screen-xl">
         <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
