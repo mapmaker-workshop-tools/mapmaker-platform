@@ -10,8 +10,7 @@
 
 # Mapmaker
 Mapmaker is a workshop platform consisting of a unique cardset, a methodology and a online collaboration platform.
-This repository contains all![Uploading Schermafbeelding 2023-04-25 om 19.31.58.png…]()
- the assets, instructions and the cardset designs. For more information visit: mapmaker.nl
+This repository contains all the assets, instructions and the cardset designs. For more information visit: mapmaker.nl
 
 # Open Source and Creative Commons
 The collection of works are published on Github and under the BY-NC-ND creative commons license.  This is because we value transparency, as well as want others to benefit from our work. This means you'll be able to host your own sessions using the materials, code and methodology we developed. Restrictions do apply: we do not permit: using the works for commercial purposes, redistribution and modification. If you do want to use these materials send us a message at mapmaker.nl/contact to work out a license agreement.
