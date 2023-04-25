@@ -26,6 +26,10 @@ def get_card_details(request, id):
         followerIDlist.append(i.user_like)
     followers = CustomUser.objects.filter(email__in=followerIDlist)
     user_follows_card = current_user in followerIDlist
+    if card.image:
+        card_image = card.image.url
+    else:
+        card_image = None
     form = CardComment()
     context = {
         'cardtype': card.cardtype,
@@ -33,7 +37,7 @@ def get_card_details(request, id):
         'title': card.title,
         'type': card.cardtype,
         'description': card.description,
-        'card_image': card.image_Url,
+        'card_image': card_image,
         'followers': followers,
         'id': card.id,        
         'user_follows_card': user_follows_card,
@@ -41,7 +45,8 @@ def get_card_details(request, id):
         'comments': comments,
         'form': form,
         'workshop_secret': workshop_secret,
-        'workshop': card.workshop
+        'workshop': card.workshop,
+        'card_url': card_image
     }
     try:
         mp.track(request.user.email, 'Viewed card', {
@@ -105,11 +110,15 @@ def edit_card_title(request, id):
     card = Card.objects.get(id=id)
     if request.method == 'POST':
         if card.cardtype == "image_card":
-            form = imageCardTitle(request.POST)
+            form = imageCardTitle(request.POST, request.FILES)
             if form.is_valid():
-                card.image_Url = form.cleaned_data['image_url']
-                card.author = request.user
-                card.save()
+                img = form.cleaned_data['image']
+                print(img)
+                card.image.delete()
+                card.image.save("image.png", img)
+                print("Saved form")
+            else: 
+                print("NOT VALID")
         else:
             form = CardTitle(request.POST)
             #imageform = imageCardTitle(request.POST)

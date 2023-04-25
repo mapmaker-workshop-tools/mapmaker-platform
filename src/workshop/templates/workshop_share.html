@@ -6,32 +6,32 @@
 
 <div class="flex min-h-full items-center justify-center py-40 px-4 sm:px-6 lg:px-8 bg">
 <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-    <div>
-    <h1 class="mt-6 text-3xl font-bold tracking-tight text-gray-800">Share {{workshop}}</h1>
-    <p>Scan the QR code to gain access to  {{workshop}}.</p>
-    <img class="h-auto max-w-full" src="{{ qrcode }}" alt="image description">
-    <br>
-    </div>
-    <p>Share {{workshop}} with others in your organisation, all they need is this link.</p>
-    <div>
-        <input type="text" readonly value="https://mapmaker.nl/dashboard/guest/{{workshop_secret}}" id="myInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5     dark:focus:ring-gray-500 dark:focus:border-gray-500">
-        <br>
-        <button  onclick="copyurltoclipboard()" class="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-        Copy link to {{workshop}} to your clipboard
-        </button>
-        <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 ">Beware: anyone with this link can view your workshop.</p>
+<div>
+<h1 class="mt-6 text-3xl font-bold tracking-tight text-gray-800">Share {{workshop}}</h1>
+<p>Scan the QR code to gain access to  {{workshop}}.</p>
+<img class="h-auto max-w-full" src="{{ qrcode }}" alt="image description">
+<br>
+</div>
+<p>Share {{workshop}} with others in your organisation, all they need is this link.</p>
+<div>
+<input type="text" readonly value="https://mapmaker.nl/dashboard/guest/{{workshop_secret}}" id="myInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5     dark:focus:ring-gray-500 dark:focus:border-gray-500">
+<br>
+<button  onclick="copyurltoclipboard()" class="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
+Copy link to {{workshop}} to your clipboard
+</button>
+<p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 ">Beware: anyone with this link can view your workshop.</p>
 
-        <br><br>
-    <a href="/user/register/{{workshop_secret}}">
-    <button  class="group relative flex w-full justify-center rounded-md py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
-            Create a account for {{workshop}}
-    </button>
-    </a>
-    <a href="/user/login">
-      <button  class="group relative flex w-full justify-center rounded-md py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
-              I already have a account
-      </button>
-      </a>
+<br><br>
+<a href="/user/register/{{workshop_secret}}">
+<button  class="group relative flex w-full justify-center rounded-md py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
+        Create a account for {{workshop}}
+</button>
+</a>
+<a href="/user/login">
+<button  class="group relative flex w-full justify-center rounded-md py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
+        I already have a account
+</button>
+</a>
 </div>
 </div>
 

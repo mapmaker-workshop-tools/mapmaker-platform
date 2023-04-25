@@ -1,4 +1,5 @@
 from django import forms
+from workshop.models import Card
 
 CARD_TYPE_CHOICES =(
     ("1", "legend_1"),
@@ -30,12 +31,10 @@ class CardTitle(forms.Form):
     cardtype = forms.ChoiceField(choices = CARD_TYPE_CHOICES, widget=forms.Select(attrs={'class': tailwind_class}))
     title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': tailwind_class, 'placeholder': 'Write a new title', "label": ''}))
         
-class imageCardTitle(forms.Form):
-    image_url = forms.URLField(max_length=1000, widget=forms.TextInput(attrs={'class': tailwind_class, 'placeholder': 'Link a image', "label": ''}))
-    
-    def __init__(self, *args, **kwargs):
-        super(imageCardTitle, self).__init__(*args, **kwargs)
-        self.fields['image_url'].required = False    
+class imageCardTitle(forms.ModelForm):
+    class Meta:
+        model = Card
+        fields = ["image"]  
     
     
 class CardDescription(forms.Form):
