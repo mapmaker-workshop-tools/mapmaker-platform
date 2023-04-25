@@ -15,11 +15,11 @@ This repository contains all the assets, instructions and the cardset designs. F
 
 ### Learn more
 #### About our offering
+This page on Github is meant to share our workshop materials and document issues. If you want to learn more about our offering check out our  [Website](https://mapmaker.nl).
+
 
 #### About the code
-We documented the code of the platform in this repository under 'src'. For more information check out this readme
-[![Button Example]][Link]
-[Button Example]: https://img.shields.io/badge/Title-37a779?style=for-the-badge
+We documented the code of the platform in this repository under 'src'. For more information check out this  [README](https://github.com/two-trick-pony-NL/mapmaker/tree/master/src)
 
 
 # Open Source and Creative Commons
