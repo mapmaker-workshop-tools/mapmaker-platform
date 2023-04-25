@@ -46,7 +46,8 @@ def get_card_details(request, id):
         'form': form,
         'workshop_secret': workshop_secret,
         'workshop': card.workshop,
-        'card_url': card_image
+        'card_url': card_image,
+        'card': card
     }
     try:
         mp.track(request.user.email, 'Viewed card', {
@@ -93,7 +94,8 @@ def create_card(request, id):
         'user_follows_card': user_follows_card,
         'resources': resources,
         'comments': comments,
-        'form': form
+        'form': form,
+        
     }
     mp.track(request.user.email, 'Card created', {
     'card title': card.title,
@@ -165,7 +167,7 @@ def edit_card_description(request, id):
         form = CardDescription()
         card = Card.objects.get(id=id)
         description = card.description
-    return render(request, 'edit_description.html', {'form': form, "cardid": id, "description":description})
+    return render(request, 'edit_description.html', {'form': form, "cardid": id, "description":description, 'card':card})
 
 @login_required
 def register_like(request, id):
