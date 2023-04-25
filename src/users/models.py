@@ -7,7 +7,6 @@ from core.utils import mp
 from core.settings import BASE_DIR
 
 avatar_path = BASE_DIR / 'staticfiles/images/avatar.jpg'
-print(avatar_path)
 
 from .managers import CustomUserManager
 # Created using: https://testdriven.io/blog/django-custom-user-model/

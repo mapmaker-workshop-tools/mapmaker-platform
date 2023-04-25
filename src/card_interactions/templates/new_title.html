@@ -63,8 +63,9 @@
 {% elif type == 'image_card' %}          
 <div cursor: pointer;" class="w-full my-4 max-w bg-white border border-gray-200 rounded-lg shadow  ">
     <div class="flex flex-col align-text-top items-center m-8">
+        {% if card_url %}
         <img class="h-auto max-w-full" src="{{card_url}}" alt="image description">
-
+        {% endif %}
     </div>
     </div>    
 {% endif %}

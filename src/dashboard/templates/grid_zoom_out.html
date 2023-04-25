@@ -79,7 +79,7 @@
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
             <div class="hexagonhidden flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/create"><input type='hidden' name='item' value='{{ card.id}}'/>            
-                <i class="fa-regular fa-2xl fa-plus"></i><br>
+                <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="{% static '/icons/plus-solid.svg' %}" class="m-auto h-6 w-6 pb-2" alt="mapmaker Logo" />
             </div>
         {% elif card.cardtype == 'legend_1' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_1}}; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
