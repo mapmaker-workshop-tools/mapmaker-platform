@@ -41,6 +41,7 @@ class CardTitle(forms.Form):
         super(CardTitle, self).__init__(*args, **kwargs)
         self.fields['cardtype'].label = ""
         self.fields['title'].label = ""
+
         
 class imageCardTitle(forms.ModelForm):
     class Meta:
@@ -50,6 +51,7 @@ class imageCardTitle(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(imageCardTitle, self).__init__(*args, **kwargs)
         self.fields['image'].label = ""
+
     
     
 class CardDescription(forms.Form):
