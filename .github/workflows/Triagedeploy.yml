@@ -14,10 +14,24 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 jobs:
- 
+  linter:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Install Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: "3.11"
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install ruff
+        # Include `--format=github` to enable automatic inline annotations.
+        - name: Run Ruff
+          run: ruff check --format=github .
   buildcontainers:
     name: 🌎 Deploying to Triage env
-
+    needs: [linter]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
@@ -26,11 +40,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
-          python -m pip install --upgrade pip
-          pip install ruff
-      # Include `--format=github` to enable automatic inline annotations.
-      - name: Run Ruff Linter
-        run: ruff check --format=github .
+
       - name: 🤐 Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
