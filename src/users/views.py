@@ -42,6 +42,11 @@ def logout_view(request):
     return redirect('/')
 
 def register(request, workshop_secret):
+    try:
+        signer.unsign_object(workshop_secret, max_age=timedelta(days = 7))
+        pass
+    except:
+        return render(request, 'expired.html')
     workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
     workshop = Workshop.objects.get(id=workshopid_unsigned)    
     if request.method == "POST":
