@@ -16,6 +16,7 @@ from django.http import HttpResponse
 from .utils import create_image
 from workshop.models import Card
 from core.utils import mp, signer
+from datetime import datetime, timedelta
 
 
 
@@ -82,6 +83,12 @@ def view_only(request, workshop_secret):
     if request.user.is_authenticated:
         return redirect('/dashboard')
     else:
+        #Checking if the key is still valid
+        try:
+            signer.unsign_object(workshop_secret, max_age=timedelta(days = 7))
+            pass
+        except:
+            return render(request, 'expired.html')
         # Getting the live workshop from the secret 
         workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
         current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
@@ -145,7 +152,7 @@ def handle_grid_update(request):
         t.card_order = jsonStr
         t.save() 
         mp.track(request.user.email, 'Moved card', {'workshop': current_workshop.workshop_name, 
-            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
+    'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'], })
         return HttpResponse(status=204)
     elif request.method == "GET":
         current_user = request.user

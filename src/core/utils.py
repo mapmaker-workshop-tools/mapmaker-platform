@@ -6,8 +6,8 @@ import base64
 from io import BytesIO
 
 
-from django.core.signing import Signer
-signer = Signer()
+from django.core.signing import Signer, TimestampSigner
+signer = TimestampSigner()
 
 
 mp = mixpanel.Mixpanel(
