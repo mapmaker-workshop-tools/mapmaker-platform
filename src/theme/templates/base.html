@@ -98,16 +98,16 @@
 <div class="container flex flex-wrap items-center justify-between mx-auto">
 	{% if user.is_authenticated%}
 	<a href="/dashboard" class="flex items-center">
-		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 p-2 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
 	</a>
 	{% else %}
 	{% if workshop_secret %}
 	<a href="/dashboard/guest/{{workshop_secret}}" class="flex items-center ">
-		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 p-2 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
 	</a>
 	{% else%}
 	<a href="/" class="flex items-center">
-		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 p-2 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
 	</a>
 	{% endif %}
 	
@@ -131,15 +131,15 @@
 		
 		{% if user.is_authenticated%}
 		<li>
-			<a href="/dashboard" class="block py-2 pl-3 pr-4 md:p-0 hover:text-gray-500" aria-current="page">Dashboard</a>
+			<a href="/dashboard" class="block py-2 pl-3 pr-4 p-2 md:p-0 hover:text-gray-500" aria-current="page">Dashboard</a>
 		</li>
 		{% if workshop.workshop_owner == user %}
 		<li>
-			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 md:p-0 hover:text-gray-500" aria-current="page">Workshop settings</a>
+			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 p-2  md:p-0 hover:text-gray-500" aria-current="page">Workshop settings</a>
 		</li>
 		{% endif%}
 		<li>
-			<a href="/user/profile" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Profile</a>
+			<a href="/user/profile" class="block py-2 pl-3 pr-4  p-2  md:p-0 hover:text-gray-500" aria-current="page">Profile</a>
 		</li>
 		{% if workshop_secret %}
 		<li>
