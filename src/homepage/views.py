@@ -4,7 +4,7 @@ from django.utils import timezone
 from .forms import EmailMarketing, Orderform
 from .models import EmailList, Order
 from django.contrib import messages
-from emailhandler.standard_emails import welcome_new_marketing_lead, confirm_new_order, standard_email
+from emailhandler.standard_emails import welcome_new_marketing_lead, confirm_new_order
 
 # Create your views here.
 def index(request):

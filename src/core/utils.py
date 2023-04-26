@@ -1,12 +1,11 @@
 import mixpanel
 from .settings import env
 import qrcode
-import os.path
 import base64
 from io import BytesIO
 
 
-from django.core.signing import Signer, TimestampSigner
+from django.core.signing import TimestampSigner
 signer = TimestampSigner()
 
 

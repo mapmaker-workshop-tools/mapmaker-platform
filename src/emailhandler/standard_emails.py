@@ -1,6 +1,5 @@
 from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template.loader import render_to_string, get_template
-from django.template import Context
+from django.template.loader import get_template
 
 from django.core import mail
 from django.db.models import Count, Q
@@ -82,7 +81,7 @@ def notify_followers_new_post(cardid):
     followers = Follower.objects.filter(card_liked=card)
     last_comments = Comment.objects.filter(card=card).order_by('-id')[:5]
     last_comments= reversed(last_comments)
-    subject = "New update in Mapmaker on card: " + card.title
+    "New update in Mapmaker on card: " + card.title
     message = "A new update was posted on a card you follow \nHere are the last updates in the discussion:\n\n"
     for comment in last_comments:
         message += comment.author.first_name +' from ' + comment.author.organisation + " said: " + comment.comment_text + "\n"
@@ -115,7 +114,7 @@ def workshop_summary(workshopid):
     message += '\nTogether you shared ' + resourcecount+ " resources related to subjects you discussed. \n"
     commentcount = str(Comment.objects.filter(card__workshop=workshop).count())
     message += 'You collaborated by writing ' + commentcount+ " comments on all cards combined. \n"
-    likecount = str(Follower.objects.filter(card_liked__workshop=workshop).count())
+    str(Follower.objects.filter(card_liked__workshop=workshop).count())
     message += 'You stayed up to date and followed ' + commentcount+ " cards between all participants. \n"
     cardcount = str(Card.objects.filter(workshop=workshop).filter(~Q(cardtype='empty')).count())
     message += '\nIn total you created ' + cardcount+ " cards full of legend_3s and concerns. These cards were discussed the most:\n"
@@ -150,7 +149,6 @@ def workshop_summary(workshopid):
     participants = User.objects.filter(pk__in=userIDlist)
     
     connection.open()
-    messageque = []
     for participant in participants:
         mp.track(participant.email, 'Workshop summary received',{'Workshop':workshop.id})
         standard_email(participant.first_name, 

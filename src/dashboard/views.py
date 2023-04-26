@@ -1,13 +1,9 @@
 
 # Create your views here.
-from django.core import serializers
 from django.shortcuts import render, redirect, HttpResponse
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card
-from django.utils import timezone
 from users.models import CustomUser
-from django.db import models
 from django.db.models import Case, When
 import json
 import ast
@@ -16,7 +12,7 @@ from django.http import HttpResponse
 from .utils import create_image
 from workshop.models import Card
 from core.utils import mp, signer
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 

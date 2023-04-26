@@ -1,4 +1,3 @@
-from workshop.models import Card, Workshop
 
 """def validate_user_access_to_card(request):
     card = Card.objects.get(id=id)

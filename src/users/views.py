@@ -101,7 +101,7 @@ def profile(request):
     commentcount = Comment.objects.filter(author=user).count()
     resourcecount = Resource.objects.filter(owner=user).count()
     likecount = Follower.objects.filter(user_like=user).count()
-    form = CustomUserLoginForm()
+    CustomUserLoginForm()
     mp.track(user.email, 'User profile', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
     return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})

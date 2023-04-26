@@ -74,7 +74,7 @@ def scale_to(scale, power):
     print("\n\n #### Scaling to ####")
     print(scale, power)
     if ENABLE_AUTOSCALING:
-        AWS = os.popen("aws lightsail update-container-service --service-name mapmaker --scale " +scale+" --power "+power).read()
+        os.popen("aws lightsail update-container-service --service-name mapmaker --scale " +scale+" --power "+power).read()
     else: 
         print("No update because ENABLE_AUTOSCALING is False\n\n")
         print("Desired outcome: ")

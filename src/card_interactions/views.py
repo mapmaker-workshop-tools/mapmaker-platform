@@ -2,14 +2,13 @@
 # Create your views here.
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import condition
 from workshop.models import Card
 from django.utils import timezone
 from users.models import CustomUser
-from .forms import CardForm, CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment, imageCardTitle
+from .forms import CARD_TYPE_CHOICES, CardTitle, CardDescription, CardResource, CardComment, imageCardTitle
 from .models import Follower, Resource, Comment
 from django.contrib import messages
-from emailhandler.standard_emails import standard_email, notify_followers_new_post
+from emailhandler.standard_emails import notify_followers_new_post
 from core.utils import mp, signer
 
 
@@ -53,7 +52,6 @@ def get_card_details(request, id):
         mp.track(request.user.email, 'Viewed card', {
         'card title': card.title,
         'card id': card.id,
-        'card id': card.id,
         'workshop': card.workshop.workshop_name, 
         'anonymous': False,
         'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
@@ -61,7 +59,6 @@ def get_card_details(request, id):
     except:
         mp.track('Anonymous', 'Viewed card', {
         'card title': card.title,
-        'card id': card.id,
         'card id': card.id,
         'workshop': card.workshop.workshop_name, 
         'anonymous': True,
@@ -172,7 +169,6 @@ def edit_card_description(request, id):
 @login_required
 def register_like(request, id):
     current_user = request.user
-    cardid = id
     ## If this card exists
     if not Card.objects.filter(pk=id).exists():
         return HttpResponse(status=404)

@@ -1,14 +1,10 @@
 from django.shortcuts import render
-from django.shortcuts import render, redirect, HttpResponse
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, HttpResponse
+from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card
 from card_interactions.models import Follower, Comment, Resource
-from django.utils import timezone
 from users.models import CustomUser
-from django.db import models
 from django.db.models import Case, When
-import json
 import ast
 from core.utils import mp, signer, qrgenerator
 from emailhandler.standard_emails import workshop_summary
@@ -20,12 +16,12 @@ def workshop_settings(request):
     current_user = request.user
     current_workshop = current_user.active_workshop
     cards = Card.objects.filter(workshop=current_workshop)
-    cardcount = Card.objects.filter(workshop=current_workshop).count()
+    Card.objects.filter(workshop=current_workshop).count()
     likecount = Follower.objects.filter(card_liked__workshop=current_workshop).count()
     commentcount = Comment.objects.filter(card__workshop=current_workshop).count()
     resourcecount = Resource.objects.filter(card__workshop=current_workshop).count()
     participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
-    participantcount = participants.count()
+    participants.count()
     workshop_secret = signer.sign_object({'workshopid':current_workshop.id})
     # Here we fetch and order the cards in this workshop 
     if not current_workshop.card_order:

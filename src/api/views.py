@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from workshop.models import Workshop, Card
-from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
