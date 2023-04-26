@@ -1,10 +1,10 @@
 
-# Never enforce `E501` (line length violations).
 line-length = 200
 target-version = "py310"
 
-extend-ignore = ["E722"]
+extend-ignore = ["E722", "D100", "D103", "D101", "D106", "D105", "D102", "D104", "D107","A002","A001"]
 
+select = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "T", "W", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
 
 fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
 
@@ -32,6 +32,7 @@ exclude = [
     "migrations",
     "Infrastructure",
     "emailhandler",
+    "tests",
 ]
 [mccabe]
 # Unlike Flake8, default to a complexity level of 10.

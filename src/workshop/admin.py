@@ -1,22 +1,21 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Workshop, Card
-
+from .models import Card, Workshop
 
 admin.autodiscover()
 
 
 
 class WorkshopAdmin(admin.ModelAdmin):
-    list_display = ('workshop_name', 'workshop_date', 'workshop_owner')
-    list_filter = ('participants', 'workshop_date', 'workshop_owner')
+    list_display = ("workshop_name", "workshop_date", "workshop_owner")
+    list_filter = ("participants", "workshop_date", "workshop_owner")
     search_fields = ["workshop_name"]
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('title', 'workshop', 'author', 'cardtype')
-    list_filter = ('workshop', 'author', 'cardtype')
-    search_fields = ['title']
+    list_display = ("title", "workshop", "author", "cardtype")
+    list_filter = ("workshop", "author", "cardtype")
+    search_fields = ["title"]
 
 
 

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from workshop.models import Workshop, Card
+from workshop.models import Card, Workshop
 
 
 # Create your views here.
