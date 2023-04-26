@@ -20,7 +20,7 @@ while True:
     print("\nAttempt: #" + str(251 - attempts))
     x = os.popen("aws lightsail get-container-service-deployments --service-name mapmaker --output json").read()
     x = json.loads(x)
-    
+
     new_version = x['deployments'][0]['version']
     new_state = x['deployments'][0]['state']
     timestamp = x['deployments'][0]['createdAt']
@@ -47,10 +47,9 @@ while True:
         print("    Not yet ready")
         print("    Remaining attempts: " + str(attempts))
         print("    Trying again in 10 seconds.")
-        
+
     if attempts == 0:
         print("\n###   ERROR   ###")
         print("No new version found -- No more attempts")
         exit(1)
     time.sleep(10)
-    

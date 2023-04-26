@@ -36,4 +36,3 @@ class Resource(models.Model):
 
     def __str__(self) -> str:
         return self.document_description +" - "+ self.document_url
-

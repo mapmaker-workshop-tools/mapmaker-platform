@@ -58,12 +58,12 @@
 	</script>
 	<style>
 		.custombutton {
-			background-color: #78E7BF; 
-			color: black; 
+			background-color: #78E7BF;
+			color: black;
 			box-shadow: 3px 3px;
 			}
 		.custombutton:hover {
-			background-color: #60b898; 
+			background-color: #60b898;
 			border-color: black;
 			border-width: 1px;
 		}
@@ -90,9 +90,9 @@
 		{% endfor %}
 	</ul>
 	{% endif %}
-	
 
-<!--Nav-->	
+
+<!--Nav-->
 <nav class="fixed w-full z-20 top-0 left-0" style="background-color: #fae050;">
 
 <div class="container flex flex-wrap items-center justify-between mx-auto">
@@ -110,7 +110,7 @@
 		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 p-2 mr-3 sm:h-9" style="height: 75px" alt="mapmaker Logo" />
 	</a>
 	{% endif %}
-	
+
 	{% endif %}
 	<div id="spinner" class="htmx-indicator p-5">
 	<div role="status">
@@ -128,7 +128,7 @@
 	</button>
 	<div class="hidden w-full md:block md:w-auto" id="navbar-default">
 	<ul class="flex flex-col p-4 mt-4  rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
-		
+
 		{% if user.is_authenticated%}
 		<li>
 			<a href="/dashboard" class="block py-2 pl-3 pr-4 p-2 md:p-0 hover:text-gray-500" aria-current="page">Dashboard</a>
@@ -170,7 +170,7 @@
 		</li>
 		{% endif %}
 		{% endif %}
-	
+
 		<!--  <li>
 		<a href="#" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
 		</li>
@@ -240,7 +240,7 @@
 						<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
 					</a>
 					{% endif %}
-					
+
 					{% endif %}
                 </a>
             </div>
@@ -410,8 +410,8 @@
 	</script>
 	<script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-	
-	
+
+
 	<script>
 	htmx.onLoad(function(content) {
 		var sortables = content.querySelectorAll(".sortable");

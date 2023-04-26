@@ -22,5 +22,3 @@ class ResourceAdmin(admin.ModelAdmin):
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Follower, FollowerAdmin)
 admin.site.register(Resource, ResourceAdmin)
-
-

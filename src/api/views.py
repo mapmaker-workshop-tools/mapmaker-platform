@@ -15,4 +15,3 @@ def getnetwork(request, workshop_id):
         parent = Card.objects.get(pk=card.parentnode)
         networkdata.append([card.title, parent.title])
     return HttpResponse(networkdata)
-

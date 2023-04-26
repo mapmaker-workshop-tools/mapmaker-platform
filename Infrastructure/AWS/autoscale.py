@@ -6,7 +6,7 @@ import pandas as pd
 
 
 """
-This script helps you get the CPU and MEMORY usage of AWS lightsail container services. 
+This script helps you get the CPU and MEMORY usage of AWS lightsail container services.
 From there it can scale up or down the capacity.
 
 Source: https://docs.aws.amazon.com/cli/latest/reference/lightsail/get-container-service-metric-data.html
@@ -26,8 +26,8 @@ ENABLE_AUTOSCALING = False #Disable for testing
 # AUTOSCALING: integers represent % of load
 SCALE_UP_IF_CPU = 20 #If the load goes above this threshold we'll scale up
 SCALE_UP_IF_MEM = 20 #If the load goes above this threshold we'll scale up
-SCALE_DOWN_IF_CPU = 15 #If load is below this number the server will scale down 
-SCALE_DOWN_IF_MEM = 15 # If load is below this number the server will scale down 
+SCALE_DOWN_IF_CPU = 15 #If load is below this number the server will scale down
+SCALE_DOWN_IF_MEM = 15 # If load is below this number the server will scale down
 SCALE_PREFERENCE = 'horizontal' # 'horizontal', 'vertical' or 'both' for aggressive scaling
 
 
@@ -68,14 +68,14 @@ def get_current_configuration():
     power = unit['containerServices'][0]['power']
     scale = unit['containerServices'][0]['scale']
     state = unit['containerServices'][0]['state']
-    return scale, power, state 
+    return scale, power, state
 
 def scale_to(scale, power):
     print("\n\n #### Scaling to ####")
     print(scale, power)
     if ENABLE_AUTOSCALING:
         os.popen("aws lightsail update-container-service --service-name mapmaker --scale " +scale+" --power "+power).read()
-    else: 
+    else:
         print("No update because ENABLE_AUTOSCALING is False\n\n")
         print("Desired outcome: ")
         print(scale, power)
@@ -149,11 +149,11 @@ def evaluate(CPU, MEM, SCALE, POWER):
         result = "Load within parameters"
     return result
 
-    
-        
+
+
 def find_capacity(current, upordown):
     """
-    Finds the capacity we should scale to. 
+    Finds the capacity we should scale to.
     """
     print("Finding capacity")
     options = ['nano' , 'micro' , 'small' , 'medium' , 'large' , 'xlarge']
@@ -166,7 +166,7 @@ def find_capacity(current, upordown):
         if index == 0:
             return options[index]
         return options[index-1]
-    
+
 
 
 # Initialize empty dataframe
@@ -178,7 +178,7 @@ data = {'CPU': [0],
         'Decision': [''],
         'State': ['']}
 df = pd.DataFrame(data)
- 
+
 
 """
 Main loop that checks
@@ -195,12 +195,12 @@ if current_state == "UPDATING":
 else:
     decision = evaluate(CPU, MEMORY, current_scale, current_power)
 
-new_row = {'CPU': CPU, 
-        'Memory': MEMORY, 
-        'Period (Sec)':DATA_INTERVAL, 
-        'Capacity': current_scale, 
-        'Power':current_power, 
-        'State': current_state, 
+new_row = {'CPU': CPU,
+        'Memory': MEMORY,
+        'Period (Sec)':DATA_INTERVAL,
+        'Capacity': current_scale,
+        'Power':current_power,
+        'State': current_state,
         'Decision':decision}
 df.loc[len(df)] = new_row
 df = df.tail(N_ITEMS_TO_EVALUATE)

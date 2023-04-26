@@ -1,11 +1,11 @@
 {% load static %}
-<style> 
+<style>
     h1.pointer {
             cursor: pointer;
-    }       
+    }
     </style>
 <div hx-target="this" hx-indicator="#spinner"  hx-swap="innerHTML" class="justify-between">
-{% if user.is_authenticated %}    
+{% if user.is_authenticated %}
 <div hx-get="/card/{{ id }}/edit/title">
 {% else %}
 <div>
@@ -24,9 +24,9 @@
                 <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_2}}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{workshop.legend_label_2}}</h5>
                 <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 ">{{ title }}</h1>
-            </div>    
+            </div>
         </div>
-        
+
 {% elif type == 'legend_3' %}
         <div style="background: #{{workshop.legend_hex_color_3}}; cursor: pointer;"  class="w-full max-w my-4   p-6 bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
@@ -41,10 +41,10 @@
                 <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_4}}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{workshop.legend_label_4}}</h5>
                 <h1 style=".grab {cursor: grab;}" class="mb-2 text-4xl font-bold tracking-tight text-gray-900 ">{{ title }}</h1>
-                
+
             </div>
             </div>
-{% elif type == 'legend_5' %}          
+{% elif type == 'legend_5' %}
         <div style="background: #{{workshop.legend_hex_color_5}}; cursor: pointer;" class="w-full max-w my-4  bg-white p-6 border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
                 <img src="https://mapmaker.nl/static/icons/{{workshop.legend_icon_5}}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
@@ -52,7 +52,7 @@
                 <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 ">{{ title }}</h1>
             </div>
             </div>
-{% elif type == 'empty' %}          
+{% elif type == 'empty' %}
         <div style="background:#78E7BF; cursor: pointer;" class="w-full my-4 max-w p-6 bg-white border border-gray-200 rounded-lg shadow  ">
             <div class="flex flex-col align-text-top items-center m-8">
                 <img src="{% static '/icons/plus-solid.svg' %}" style="height: 100px; width: 100px;" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
@@ -60,14 +60,14 @@
                 <h1  class="mb-2 text-4xl font-bold tracking-tight text-gray-900 ">New card</h1>
             </div>
             </div>
-{% elif type == 'image_card' %}          
+{% elif type == 'image_card' %}
 <div cursor: pointer;" class="w-full my-4 max-w bg-white border border-gray-200 rounded-lg shadow  ">
     <div class="flex flex-col align-text-top items-center m-8">
         {% if card_url %}
         <img class="h-auto max-w-full" src="{{card_url}}" alt="image description">
         {% endif %}
     </div>
-    </div>    
+    </div>
 {% endif %}
 
 {% if user.is_authenticated %}
@@ -75,4 +75,3 @@
     <button hx-indicator="#spinner" hx-get="/card/{{ id }}/edit/title" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">edit title</button>
 </div>
 {% endif %}
-

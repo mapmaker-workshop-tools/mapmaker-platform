@@ -25,10 +25,10 @@ def standard_email(username, subject, recipient, CTA_TEXT, CTA_URL, TOP_TEXT, BO
     msg.send()
 
 
-    
+
 def welcome_new_marketing_lead(recipient):
-    standard_email(recipient, 
-                'Thanks for joining the Mapmaker email list', 
+    standard_email(recipient,
+                'Thanks for joining the Mapmaker email list',
                 recipient,
                 'Read our blog',
                 'https://mapmaker.nl/blog',
@@ -36,11 +36,11 @@ def welcome_new_marketing_lead(recipient):
                 'If you have any questions, or want to get in touch feel free to send a message: https://mapmaker.nl/contact'
                 )
     mp.track(recipient, 'Marketing list email confirmation received',{})
-    
-    
+
+
 def confirm_new_order(recipient):
-    standard_email(recipient, 
-                'We received your request', 
+    standard_email(recipient,
+                'We received your request',
                 recipient,
                 'Read our blog',
                 'https://mapmaker.nl/blog',
@@ -49,9 +49,9 @@ def confirm_new_order(recipient):
                 )
     mp.track(recipient, 'Contact form confirmation email received',{})
 
-    
-    
-    
+
+
+
     sender = 'mapmaker.server@gmail.com'
     bcc_recipients = ['peter@petervandoorn.com']
     email = EmailMessage(
@@ -62,12 +62,12 @@ def confirm_new_order(recipient):
         reply_to=[sender],
     )
     email.send()
-    
-    
+
+
 def welcome_new_user(recipient, workshop_name):
     mp.track(recipient, 'Welcome email received',{})
-    standard_email(recipient, 
-                'Here is your mapmaker account for'+workshop_name, 
+    standard_email(recipient,
+                'Here is your mapmaker account for'+workshop_name,
                 recipient,
                 'Log in to: '+workshop_name,
                 'https://mapmaker.nl/user/login',
@@ -87,15 +87,15 @@ def notify_followers_new_post(cardid):
         message += comment.author.first_name +' from ' + comment.author.organisation + " said: " + comment.comment_text + "\n"
     for follower in followers:
         mp.track(follower.user_like.email, 'Post update email received',{'Card':card.id})
-        standard_email(follower.user_like.first_name, 
-                "New update in Mapmaker on card: " + card.title, 
+        standard_email(follower.user_like.first_name,
+                "New update in Mapmaker on card: " + card.title,
                 follower.user_like.email,
                 'View ' +card.title,
                 'https://mapmaker.nl/dashboard',
                 message,
                 'Log in to mapmaker.nl to join the discussion, if you forgot your password simply reset it here: https://mapmaker.nl/user/reset_password/'
                 )
-        
+
 
 
 
@@ -124,41 +124,38 @@ def workshop_summary(workshopid):
     populairuser_bycomment = Comment.objects.values("author").annotate(count=Count('author')).order_by("-count")[:3]
     for card in populaircard_bycomment:
         message += "-- "+card.cardtype + " " + card.title +' from ' + card.author.first_name + "\n"
-    
+
     message += '\n\nThese are the cards with the most followers: \n'
     for card in populaircard_bylikes:
         fetch_card = Card.objects.get(id=card['card_liked'])
         number_of_likes = str(card['count'])
-        message += "-- "+ number_of_likes +" Followers for: " + fetch_card.title +' from ' + fetch_card.author.first_name + "\n"   
-        
+        message += "-- "+ number_of_likes +" Followers for: " + fetch_card.title +' from ' + fetch_card.author.first_name + "\n"
+
     message += '\n\nSome of you went all out during the workshop, here are some of the most active users during the workshop: \n'
     for user in populairuser_byresource:
         fetch_user = User.objects.get(id=user['owner'])
         number_of_resources = str(user['count'])
-        message += "-- "+fetch_user.first_name +' from ' + fetch_user.organisation + " shared "+ number_of_resources +" resources!"+ "\n" 
-    
+        message += "-- "+fetch_user.first_name +' from ' + fetch_user.organisation + " shared "+ number_of_resources +" resources!"+ "\n"
+
     message += '-------------------------\n'
     for user in populairuser_bycomment:
         fetch_user = User.objects.get(id=user['author'])
         number_of_comments = str(user['count'])
-        message += "-- "+fetch_user.first_name +' from ' + fetch_card.author.organisation + " wrote "+ number_of_comments +" updates!"+ "\n" 
+        message += "-- "+fetch_user.first_name +' from ' + fetch_card.author.organisation + " wrote "+ number_of_comments +" updates!"+ "\n"
     userIDlist =[]
     for i in participants:
         userIDlist.append(i.customuser_id)
     #Get all the participants to this session --> This ensures we can query their details in templates
     participants = User.objects.filter(pk__in=userIDlist)
-    
+
     connection.open()
     for participant in participants:
         mp.track(participant.email, 'Workshop summary received',{'Workshop':workshop.id})
-        standard_email(participant.first_name, 
-                subject, 
+        standard_email(participant.first_name,
+                subject,
                 participant.email,
                 'Log in to go back to workshop: ' +workshop.workshop_name,
                 'https://mapmaker.nl/dashboard',
                 message,
                 'Log in to mapmaker.nl to join the discussion, if you forgot your password simply reset it here: https://mapmaker.nl/user/reset_password/'
-                )    
-    
-
-
+                )

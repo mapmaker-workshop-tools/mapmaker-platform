@@ -62,7 +62,7 @@
         <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="stats1" role="tabpanel" aria-labelledby="stats-tab">
             {% include 'workshop_details.html' with workshop=workshop participants=participants %}
         </div>
-        
+
         <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="about" role="tabpanel" aria-labelledby="about-tab">
             <div class="flex min-h-full items-center justify-center py-40 px-4 sm:px-6 lg:px-8 bg">
                 <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
@@ -94,11 +94,11 @@
     function copyurltoclipboard() {
       // Get the text field
       var copyText = document.getElementById("myInput");
-    
+
       // Select the text field
-      copyText.select(); 
+      copyText.select();
       copyText.setSelectionRange(0, 99999); // For mobile devices
-    
+
        // Copy the text inside the text field
       navigator.clipboard.writeText(copyText.value);
     }
