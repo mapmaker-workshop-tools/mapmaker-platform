@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
 from workshop.models import Workshop, Card

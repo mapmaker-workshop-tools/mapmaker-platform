@@ -29,7 +29,7 @@ def index(request):
         form = EmailMarketing()
     return render(request, 'homepage.html', {'form':form})
 
-def sign_up_marketing_email(request):
+def sign_up_marketing_email(self, request):
     if request.method == "POST":
         form = EmailMarketing(request.POST)
         if form.is_valid():
@@ -39,7 +39,7 @@ def sign_up_marketing_email(request):
             )
             new_marketing_lead.save()
             mp.track(email, 'New user signed up for marketing' , {'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],} )
-            mp.people_set(email, {'$created'       : self.date_created,})
+            mp.people_set(email, {'$created': self.date_created,})
             welcome_new_marketing_lead(email)
             return render(request, 'confirm_waitinglist.html')
         else:

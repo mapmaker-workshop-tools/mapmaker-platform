@@ -5,10 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from random import randrange
 from core.utils import mp
 from core.settings import BASE_DIR
+from .managers import CustomUserManager
+
 
 avatar_path = BASE_DIR / 'staticfiles/images/avatar.jpg'
 
-from .managers import CustomUserManager
 # Created using: https://testdriven.io/blog/django-custom-user-model/
 
 

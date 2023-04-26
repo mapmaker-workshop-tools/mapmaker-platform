@@ -8,9 +8,7 @@ from django.db.models import Case, When
 import json
 import ast
 import re
-from django.http import HttpResponse
 from .utils import create_image
-from workshop.models import Card
 from core.utils import mp, signer
 from datetime import timedelta
 
@@ -25,19 +23,19 @@ def index(request):
         legend = {
             'legend_label_1': current_workshop.legend_label_1,
             'legend_hex_color_1': current_workshop.legend_hex_color_1,
-            'legend_label_1':current_workshop.legend_icon_1,
+            'legend_icon_1':current_workshop.legend_icon_1,
             'legend_label_2': current_workshop.legend_label_2,
             'legend_hex_color_2': current_workshop.legend_hex_color_2,
-            'legend_label_2':current_workshop.legend_icon_2,
+            'legend_icon_2':current_workshop.legend_icon_2,
             'legend_label_3': current_workshop.legend_label_3,
             'legend_hex_color_3': current_workshop.legend_hex_color_3,
-            'legend_label_3':current_workshop.legend_icon_3,
+            'legend_icon_3':current_workshop.legend_icon_3,
             'legend_label_4': current_workshop.legend_label_4,
             'legend_hex_color_4': current_workshop.legend_hex_color_4,
-            'legend_label_4':current_workshop.legend_icon_4,
+            'legend_icon_4':current_workshop.legend_icon_4,
             'legend_label_5': current_workshop.legend_label_5,
             'legend_hex_color_5': current_workshop.legend_hex_color_5,
-            'legend_label_5':current_workshop.legend_icon_5,
+            'legend_icon_5':current_workshop.legend_icon_5,
         }
         workshop_secret = signer.sign_object({'workshopid':current_workshop.id})
         cards = Card.objects.filter(workshop=current_workshop)
@@ -91,19 +89,19 @@ def view_only(request, workshop_secret):
         legend = {
             'legend_label_1': current_workshop.legend_label_1,
             'legend_hex_color_1': current_workshop.legend_hex_color_1,
-            'legend_label_1':current_workshop.legend_icon_1,
+            'legend_icon_1':current_workshop.legend_icon_1,
             'legend_label_2': current_workshop.legend_label_2,
             'legend_hex_color_2': current_workshop.legend_hex_color_2,
-            'legend_label_2':current_workshop.legend_icon_2,
+            'legend_icon_2':current_workshop.legend_icon_2,
             'legend_label_3': current_workshop.legend_label_3,
             'legend_hex_color_3': current_workshop.legend_hex_color_3,
-            'legend_label_3':current_workshop.legend_icon_3,
+            'legend_icon_3':current_workshop.legend_icon_3,
             'legend_label_4': current_workshop.legend_label_4,
             'legend_hex_color_4': current_workshop.legend_hex_color_4,
-            'legend_label_4':current_workshop.legend_icon_4,
+            'legend_icon_4':current_workshop.legend_icon_4,
             'legend_label_5': current_workshop.legend_label_5,
             'legend_hex_color_5': current_workshop.legend_hex_color_5,
-            'legend_label_5':current_workshop.legend_icon_5,
+            'legend_icon_5':current_workshop.legend_icon_5,
         }
         cards = Card.objects.filter(workshop=current_workshop)
         participants = Workshop.participants.through.objects.filter(workshop=current_workshop)

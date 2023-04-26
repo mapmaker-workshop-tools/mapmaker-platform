@@ -16,8 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from django.contrib import admin
-
 admin.site.site_header = 'Mapmaker.nl'                    # default: "Django Administration"
 admin.site.index_title = 'Databases'                 # default: "Site administration"
 admin.site.site_title = 'Makmaker Admin' # default: "Django site admin"

@@ -9,6 +9,7 @@ from workshop.models import Workshop
 from core.utils import mp, signer
 from emailhandler.standard_emails import welcome_new_user
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
 
 
 # Create your views here.
@@ -104,7 +105,14 @@ def profile(request):
     CustomUserLoginForm()
     mp.track(user.email, 'User profile', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
-    return render(request, 'userprofile.html', {'user': user,'cardcount':cardcount,'likecount':likecount, 'resourcecount':resourcecount, 'commentcount':commentcount, 'form':CustomUserProfile, 'workshop':workshop})
+    return render(request, 'userprofile.html', 
+                  {'user': user,
+                   'cardcount':cardcount,
+                   'likecount':likecount, 
+                   'resourcecount':resourcecount, 
+                   'commentcount':commentcount, 
+                   'form':CustomUserProfile, 
+                   'workshop':workshop})
 
 @login_required  
 def profile_edit(request, id):
@@ -126,7 +134,7 @@ def profile_edit(request, id):
             mp.track(email, 'User profile updated', {
     'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],})
             #return redirect('/user/profile')
-            return render(request, 'user_profile_table_edit.html', context)
+            return render(request, 'user_profile_table_edit.html')
         elif request.method == 'GET':
             user = request.user
             workshops = Workshop.objects.filter(participants__email=user.email)

@@ -41,10 +41,7 @@ class Workshop(models.Model):
                         workshop=Workshop.objects.latest('date_created'),
                         title=str(randrange(20000)),
                         description='')
-                card.save()
-            legend = Legenda(workshop=Workshop.objects.latest('date_created'))
-            legend.save()
-            
+                card.save()            
         return super().save(*args, **kwargs) 
         
     def __str__(self):

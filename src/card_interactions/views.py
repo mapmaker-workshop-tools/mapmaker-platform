@@ -308,10 +308,7 @@ def delete_comment(request, id, comment_id):
             'card title': card.title,
             'workshop': card.workshop.workshop_name,
             'comment': comment_delete.comment_text,
-            'comment': comment_delete.id,
-            
             'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
-            
             })
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by('date_created')
