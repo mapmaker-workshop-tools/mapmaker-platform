@@ -80,20 +80,20 @@
 	
 
 <!--Nav-->	
-<nav class="border-gray-200 px-2 sm:px-4 py-2.5 rounded " style="background-color: #ffef39; z-index: 10000; position:absolute; width: 100%; top:0px; left: 0px; position: fixed;">
+<nav class="border-gray-200 px-2 sm:px-4 py-2.5 rounded " style="background-color: #fae050; z-index: 10000; position:absolute; width: 100%; top:0px; left: 0px; position: fixed;">
 <div class="container flex flex-wrap items-center justify-between mx-auto">
 	{% if user.is_authenticated%}
 	<a href="/dashboard" class="flex items-center">
-		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
 	{% else %}
 	{% if workshop_secret %}
-	<a href="/dashboard/guest/{{workshop_secret}}" class="flex items-center">
-		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
+	<a href="/dashboard/guest/{{workshop_secret}}" class="flex items-center ">
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
 	{% else%}
 	<a href="/" class="flex items-center">
-		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-6 mr-3 sm:h-9" alt="mapmaker Logo" />
+		<img src="{% static '/images/mapmaker_logo.png' %}" class="h-10 mr-3 sm:h-9" alt="mapmaker Logo" />
 	</a>
 	{% endif %}
 	
@@ -176,7 +176,7 @@
 </div>
 </nav>
 
-<div style="height: 100px; background-color: #ffef39;"></div>
+<div style="height: 100px; background-color: #fae050;"></div>
 
 	
 	{% block content%}{% endblock %}

@@ -4,7 +4,7 @@
 
 {% block content %}
 <!--Hero-->
-<section style="background-color: #ffef39;">
+<section style="background-color: #fae050;">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
       <div class="flex flex-col justify-center">
         <h1 class="mb-4 text-4xl tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl ">See the</h1>
@@ -12,15 +12,14 @@
 
         <p class="mb-8 text-lg font-normal text-gray-900 lg:text-xl ">Mapmaker aligns your team while working on a complex problem.</p>
           {% include 'sign_up_marketing.html' %}
-
       </div>
       <div class="flex flex-col justify-center">
-        <img src="{% static '/images/heroimage.png' %}" />
+        <img class="h-full m-8 max-w-full" src="{% static '/images/HeaderPhoto.png' %}" alt="Main header photo" />
       </div>
   </div>
 </section>
 <!--The wave-->
-<div class="relative -mt-12 lg:-mt-24" style="background-color: #ffef39;">
+<div class="relative -mt-12 lg:-mt-24" style="background-color: #fae050;">
   <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
       <g transform="translate(-2.000000, 44.000000)" fill="#FFFFFF" fill-rule="nonzero">
@@ -48,38 +47,29 @@
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">The workshop kit</h2>
             <p class="mb-4">Mapmaker is a toolkit which is used in collobarative workshops. You can combine elements and connect them. Emerging from this is a landscape of knowledge, ideas and insights.</p>
             <br>
-            <a href="/blog" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
+            <a href="/product/cards" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
               The Kit
             </a>
         </div>
-        <div class="grid grid-cols-2 gap-4 mt-8">
-            <img class="w-full rounded-lg" src="{% static '/images/workshop.png' %}" alt="office content 1">
-            <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{% static '/images/joephero.png' %}" alt="office content 2">
-
+        <div">
+            <img  class="w-full" src="{% static '/images/Kit.png' %}" alt="workshop kit photo">
         </div>
     </div>
 </section>
 <section class="bg-gray-50 ">
   <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-    <div class="grid grid-cols-2 gap-4 mt-8">
-      <img class="w-full rounded-lg" src="{% static '/images/cards3.jpeg' %}" alt="office content 1">
-      <img class="mt-4 w-full lg:mt-10 rounded-lg" src="{% static '/images/cards4.jpeg' %}" alt="office content 2">
-
-  </div>
+      <img class="w-full rounded-lg" src="{% static '/images/Online.png' %}" alt="Preview of online workshop on laptop">
       <div class="mt-4 md:mt-0">
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">Bring your workshop to life with our rewritable cards.</h2>
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">Continue online</h2>
 
-          <p class="mb-6 font-light text-gray-500 md:text-lg ">Create your own mappings on any topic you lie, using the beautiful Mapmaker custom cards. Break complex problems down into small bite-size chunks without using endless post its. And after the session; you continue working in the Mapmaker custom dashboard. </p>
-          <a href="/product/cards" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-            Learn more about our custom cardset
-          </a>
-          <a href="/contact" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-            Order custom card set
+          <p class="mb-6 font-light text-gray-500 md:text-lg ">When the workshop is done, you often want to continue working. The days of fuzzy pictures of post-its are over. Archive all your data on mapmaker.nl and keep the conversation going. </p>
+          <a href="/product/platform" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
+            The online platform
           </a>
       </div>
   </div>
 </section>
-
+<!--
 <section class="bg-white ">
   <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
       <div class="font-light text-gray-500 sm:text-lg ">
@@ -114,7 +104,7 @@
         </div>
     </div>
   </section>
-  
+-->
 
 
 <section class="container mx-auto text-center p-6 " >
@@ -124,8 +114,8 @@
   <h3 class="my-4 text-3xl leading-tight">
     Get invited to early access of mapmaker.nl
   </h3>
-  <a href="/contact" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-    Get in touch
+  <a href="/contact" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
+    The online platform
   </a>
 </section>
 
