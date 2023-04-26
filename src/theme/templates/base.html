@@ -127,46 +127,46 @@
 	<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
 	</button>
 	<div class="hidden w-full md:block md:w-auto" id="navbar-default">
-	<ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white  md: "style="background-color: #78E7BF; color: black; box-shadow: 3px 3px;">
+	<ul class="flex flex-col p-4 mt-4  rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
 		
 		{% if user.is_authenticated%}
 		<li>
-			<a href="/dashboard" class="block py-2 pl-3 pr-4 md:p-0 " aria-current="page">Dashboard</a>
+			<a href="/dashboard" class="block py-2 pl-3 pr-4 md:p-0 hover:text-gray-500" aria-current="page">Dashboard</a>
 		</li>
 		{% if workshop.workshop_owner == user %}
 		<li>
-			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 md:p-0 " aria-current="page">Workshop settings</a>
+			<a href="/workshop/settings" class="block py-2 pl-3 pr-4 md:p-0 hover:text-gray-500" aria-current="page">Workshop settings</a>
 		</li>
 		{% endif%}
 		<li>
-			<a href="/user/profile" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Profile</a>
+			<a href="/user/profile" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Profile</a>
 		</li>
 		{% if workshop_secret %}
 		<li>
-			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Share Workshop</a>
+			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Share Workshop</a>
 		</li>
 		{% endif %}
 		<li>
-		<a href="/user/logout" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Log out</a>
+		<a href="/user/logout" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Log out</a>
 		</li>
 		{% else %}
 		{% if workshop_secret %}
 		<li>
-			<a href="/user/register/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Complete registration to edit</a>
+			<a href="/user/register/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Complete registration to edit</a>
 		</li>
 		<li>
-			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Share Workshop</a>
+			<a href="/workshop/share/{{workshop_secret}}" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Share Workshop</a>
 		</li>
 
 		{% else%}
 		<li>
-			<a href="/contact" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Contact</a>
+			<a href="/contact" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Contact</a>
 		</li>
 		<li>
-			<a href="/blog" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Blog</a>
+			<a href="/blog" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Blog</a>
 		</li>
 		<li>
-			<a href="/user/login" class="block py-2 pl-3 pr-4  md:p-0 " aria-current="page">Log in</a>
+			<a href="/user/login" class="block py-2 pl-3 pr-4  md:p-0 hover:text-gray-500" aria-current="page">Log in</a>
 		</li>
 		{% endif %}
 		{% endif %}
