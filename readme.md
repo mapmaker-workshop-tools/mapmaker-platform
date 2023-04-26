@@ -7,6 +7,10 @@
 ![Response time](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fupptime%2Fupptime%2Fmaster%2Fapi%2Fgoogle%2Fresponse-time.json)
 ![Uptime](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fupptime%2Fupptime%2Fmaster%2Fapi%2Fgoogle%2Fuptime.json)
 
+![Uptime](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2two-trick-pony-NL%2Fupptime%2Fmaster%2Fapi%mapmaker%2Fuptime.json)
+![Response time](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fupptime%2Fupptime%2Fmaster%2Fapi%2Fgoogle%2Fresponse-time.json)
+
+
 <img width="1613" alt="Schermafbeelding 2023-04-25 om 19 31 58" src="https://user-images.githubusercontent.com/71013416/234356599-8273b213-1533-49d1-abf3-1c6fd0315caf.png">
 
 <img width="1305" alt="Schermafbeelding 2023-04-25 om 19 34 44" src="https://user-images.githubusercontent.com/71013416/234357045-882da973-53bc-4dfc-973b-b2f5fcc49ff2.png">
