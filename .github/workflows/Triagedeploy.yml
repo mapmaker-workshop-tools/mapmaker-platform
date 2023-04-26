@@ -21,11 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: ⚙️  Updating to the latest versions
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
+          python -m pip install --upgrade pip
+          pip install ruff
+      # Include `--format=github` to enable automatic inline annotations.
+      - name: Run Ruff Linter
+        run: ruff check --format=github .
       - name: 🤐 Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
