@@ -20,4 +20,3 @@ whitenoise
 uwsgi
 django-admin-interface
 django_psdb_engine
-pre-commit
