@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   test_django:
-    uses: your-username/your-repo/.github/workflows/django-test.yaml@main
+    uses: two-trick-pony-NL/mapmaker/.github/workflows/tests.yml@test
   linter:
     name: 🔎 Linter
     runs-on: ubuntu-latest
