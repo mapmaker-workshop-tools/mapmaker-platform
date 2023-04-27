@@ -224,6 +224,7 @@ jobs:
 
   validatedeployment:
     name: 🤨 Server up?
+    needs: [testsuite, linter]
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
