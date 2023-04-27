@@ -9,7 +9,7 @@ class UsersManagersTests(TestCase):
 
     def test_create_user(self):
         User = get_user_model()
-        user = User.objects.create_user(email="normal@user.com", password="foo")
+        user = User.objects.create_user(email="normal@user.com", password="foo", avatar=None)
         assert user.email == "normal@user.com"
         assert user.is_active
         assert not user.is_staff
@@ -28,7 +28,7 @@ class UsersManagersTests(TestCase):
 
     def test_create_superuser(self):
         User = get_user_model()
-        admin_user = User.objects.create_superuser(email="super@user.com", password="foo")
+        admin_user = User.objects.create_superuser(email="super@user.com", password="foo", avatar=None)
         assert admin_user.email == "super@user.com"
         assert admin_user.is_active
         assert admin_user.is_staff
