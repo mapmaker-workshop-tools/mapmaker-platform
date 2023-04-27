@@ -13,6 +13,45 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 jobs:
+  testsuite:
+    name: 🦺 Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install -r Infrastructure/requirements.txt
+      - name: 🤐 Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
+          envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
+          envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          envkey_DB_USER: ${{ secrets.DATABASE_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          envkey_DB_HOST: ${{ secrets.DATABASE_HOST }}
+          envkey_DB_NAME: "mapmaker_dev"
+          envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
+          envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
+          envkey_MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
+          envkey_SECURE_SETTINGS: True
+          envkey_DEBUG: True
+          envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
+          envkey_S3_AWS_STORAGE_BUCKET_NAME: ${{ secrets.S3_AWS_STORAGE_BUCKET_NAME}}
+          envkey_S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY}}
+          envkey_S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY}}
+          directory: src/core
+          file_name: .env
+          fail_on_empty: false
+      - name: 🤷🏻‍♂️ Running tests
+        run: |
+          cd src
+          python3 manage.py test --noinput
   linter:
     name: 🔎 Linter
     runs-on: ubuntu-latest
@@ -64,8 +103,8 @@ jobs:
             Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjango:
-      name: 🚨 Prod Django
-      needs: [startnotification, linter]
+      name: 🏗️ Building Production Django Image
+      needs: [startnotification, linter, testsuite]
       runs-on: ubuntu-latest
       steps:
         - name: 🗂  Getting code from Github
@@ -142,7 +181,7 @@ jobs:
 
 
   deployimages:
-    name: 🚀 Deploying the containers to AWS Lightsail
+    name: 🚀 Enabling latest images
     needs: [builddjango]
     runs-on: ubuntu-latest
     steps:
