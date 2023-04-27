@@ -1,13 +1,14 @@
-from django.shortcuts import render
-from django.shortcuts import render, HttpResponse
-from django.contrib.auth.decorators import login_required
-from workshop.models import Workshop, Card
-from card_interactions.models import Follower, Comment, Resource
-from users.models import CustomUser
-from django.db.models import Case, When
 import ast
-from core.utils import mp, signer, qrgenerator
+
+from card_interactions.models import Comment, Follower, Resource
+from core.utils import mp, qrgenerator, signer
+from django.contrib.auth.decorators import login_required
+from django.db.models import Case, When
+from django.shortcuts import HttpResponse, render
 from emailhandler.standard_emails import workshop_summary
+from users.models import CustomUser
+
+from workshop.models import Card, Workshop
 
 
 # Create your views here.
@@ -22,8 +23,8 @@ def workshop_settings(request):
     resourcecount = Resource.objects.filter(card__workshop=current_workshop).count()
     participants = Workshop.participants.through.objects.filter(workshop=current_workshop)
     participants.count()
-    workshop_secret = signer.sign_object({'workshopid':current_workshop.id})
-    # Here we fetch and order the cards in this workshop 
+    workshop_secret = signer.sign_object({"workshopid":current_workshop.id})
+    # Here we fetch and order the cards in this workshop
     if not current_workshop.card_order:
         ordered_cards = cards
     else:
@@ -40,42 +41,42 @@ def workshop_settings(request):
 
     context = {
             "firstname": current_user.first_name,
-            'cards': ordered_cards, 
-            "participants": participants, 
-            "workshop": current_workshop, 
-            "cardscount": cards.count() -200, 
+            "cards": ordered_cards,
+            "participants": participants,
+            "workshop": current_workshop,
+            "cardscount": cards.count() -200,
             "participantcount": participants.count(),
             "likecount":likecount,
             "commentcount":commentcount,
             "resourcecount":resourcecount,
             "workshop_secret":workshop_secret,
-            "qrcode":qrcode
+            "qrcode":qrcode,
             }
-    mp.track(request.user.email, 'Workshop settings', {
-            'workshop': current_workshop.workshop_name,
-            
-            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+    mp.track(request.user.email, "Workshop settings", {
+            "workshop": current_workshop.workshop_name,
+
+            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
             })
-    return render(request, 'workshop_settings.html', context)
-    
-    
+    return render(request, "workshop_settings.html", context)
+
+
 
 def share_workshop(request, workshop_secret):
-    workshopid_unsigned = int(signer.unsign_object(workshop_secret)['workshopid'])
-    current_workshop = Workshop.objects.get(id=workshopid_unsigned)  
+    workshopid_unsigned = int(signer.unsign_object(workshop_secret)["workshopid"])
+    current_workshop = Workshop.objects.get(id=workshopid_unsigned)
     qrcode = qrgenerator("https://mapmaker.nl/user/register/"+workshop_secret, workshop_secret)
     context = {"workshop":current_workshop, "workshop_secret":workshop_secret, "qrcode":qrcode}
-    return render(request, 'workshop_share.html', context)
+    return render(request, "workshop_share.html", context)
 
-@login_required  
+@login_required
 def trigger_summary_email(request):
     current_user = request.user
     current_workshop = current_user.active_workshop
     id = current_workshop.id
     workshop_summary(id)
-    mp.track(request.user.email, 'Workshop summary sent ', {
-            'workshop': current_workshop.workshop_name,
-            'HTTP_USER_AGENT': request.META['HTTP_USER_AGENT'],
+    mp.track(request.user.email, "Workshop summary sent ", {
+            "workshop": current_workshop.workshop_name,
+            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
             })
-    print('sending email to participants')
-    return HttpResponse(status='204')
+    print("sending email to participants")
+    return HttpResponse(status="204")

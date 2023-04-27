@@ -1,16 +1,17 @@
-import mixpanel
-from .settings import env
-import qrcode
 import base64
 from io import BytesIO
 
-
+import mixpanel
+import qrcode
 from django.core.signing import TimestampSigner
+
+from .settings import env
+
 signer = TimestampSigner()
 
 
 mp = mixpanel.Mixpanel(
-  env('MIXPANEL_TOKEN'),
+  env("MIXPANEL_TOKEN"),
   consumer=mixpanel.Consumer(api_host="api-eu.mixpanel.com"),
 )
 

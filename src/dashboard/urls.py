@@ -1,8 +1,10 @@
-"""core URL Configuration
+"""core URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
+
+Examples
+--------
 Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
@@ -14,16 +16,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+
 from dashboard import views
 
-
-
 urlpatterns = [
-    path('', views.index, name='dashboard'),
-    path('guest/<str:workshop_secret>', views.view_only, name='view only dashboard'),
-    path('update', views.handle_grid_update, name='handle_network_update'),
-    path('close', views.close, name='close card'),
-    path('zoom_in', views.zoom_in),
-    path('zoom_out', views.zoom_out),
-    path('download', views.download_image),
+    path("", views.index, name="dashboard"),
+    path("guest/<str:workshop_secret>", views.view_only, name="view only dashboard"),
+    path("update", views.handle_grid_update, name="handle_network_update"),
+    path("close", views.close, name="close card"),
+    path("zoom_in", views.zoom_in),
+    path("zoom_out", views.zoom_out),
+    path("download", views.download_image),
 ]

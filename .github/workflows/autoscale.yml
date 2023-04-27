@@ -5,7 +5,7 @@ on:
 
 env:
   AWS_REGION: eu-central-1
-  AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
+  AWS_LIGHTSAIL_SERVICE_NAME: mapmaker
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
@@ -36,4 +36,4 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Autoscaling
-        run: python Infrastructure/AWS/autoscale.py 
+        run: python Infrastructure/AWS/autoscale.py

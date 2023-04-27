@@ -1,6 +1,6 @@
-from django.test import TestCase
-
 # Create your tests here.
+import contextlib
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
@@ -10,16 +10,15 @@ class UsersManagersTests(TestCase):
     def test_create_user(self):
         User = get_user_model()
         user = User.objects.create_user(email="normal@user.com", password="foo")
-        self.assertEqual(user.email, "normal@user.com")
-        self.assertTrue(user.is_active)
-        self.assertFalse(user.is_staff)
-        self.assertFalse(user.is_superuser)
-        try:
+        assert user.email == "normal@user.com"
+        assert user.is_active
+        assert not user.is_staff
+        assert not user.is_superuser
+        with contextlib.suppress(AttributeError):
             # username is None for the AbstractUser option
             # username does not exist for the AbstractBaseUser option
-            self.assertIsNone(user.username)
-        except AttributeError:
-            pass
+            assert user.username is None
+
         with self.assertRaises(TypeError):
             User.objects.create_user()
         with self.assertRaises(TypeError):
@@ -30,16 +29,15 @@ class UsersManagersTests(TestCase):
     def test_create_superuser(self):
         User = get_user_model()
         admin_user = User.objects.create_superuser(email="super@user.com", password="foo")
-        self.assertEqual(admin_user.email, "super@user.com")
-        self.assertTrue(admin_user.is_active)
-        self.assertTrue(admin_user.is_staff)
-        self.assertTrue(admin_user.is_superuser)
-        try:
+        assert admin_user.email == "super@user.com"
+        assert admin_user.is_active
+        assert admin_user.is_staff
+        assert admin_user.is_superuser
+        with contextlib.suppress(AttributeError):
             # username is None for the AbstractUser option
             # username does not exist for the AbstractBaseUser option
-            self.assertIsNone(admin_user.username)
-        except AttributeError:
-            pass
+            assert admin_user.username is None
+
         with self.assertRaises(ValueError):
             User.objects.create_superuser(
                 email="super@user.com", password="foo", is_superuser=False)

@@ -16,13 +16,13 @@
                         </p>
                         <p class="text-sm text-gray-500 truncate ">
                             <a href="{{resource.document_url}}" target="popup"> {{resource.document_url|truncatechars:50 }} </a>
-                        </p> 
+                        </p>
                     </div>
                 </a>
                     {% if resource.owner == request.user %}
                     by you
                             <button type="button" hx-indicator="#spinner" hx-confirm="Are you sure you wish to delete this resource?" hx-target="#resources" hx-swap="outerHTML" hx-DELETE="/card/{{ id }}/resource/{{resource.id}}/delete/" class="py-2.5 px-5 m-4 mr-2 mb-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700    dark:hover:text-white dark:hover:bg-gray-700">
-                                Delete 
+                                Delete
                             </button>
                     {% else %}
                     <div class=" p-2 inline-flex items-center text-base text-gray-900 ">
@@ -33,12 +33,12 @@
                     </div>
 
                     {% endif %}
-                    
+
                 </div>
             </li>
                 {% empty %}
                 <p class="ml-auto text-xs p-4 m-4 text-gray-500 ">No resources yet, add one!</p>
-        {% endfor %}        
+        {% endfor %}
     </ul>
     {% if user.is_authenticated %}
     <div id="addresource">

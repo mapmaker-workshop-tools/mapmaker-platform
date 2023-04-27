@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from workshop.models import Workshop, Card
+from workshop.models import Card, Workshop
 
 
 # Create your views here.
@@ -15,4 +15,3 @@ def getnetwork(request, workshop_id):
         parent = Card.objects.get(pk=card.parentnode)
         networkdata.append([card.title, parent.title])
     return HttpResponse(networkdata)
-

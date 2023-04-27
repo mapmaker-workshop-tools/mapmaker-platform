@@ -23,15 +23,15 @@
         </a>
         {% endif %}
     </div>
-    
+
         {% include "new_title.html" with author=author workshop=workshop card_image=card_image%}
- 
+
         <div class=" bg-grey-100 my-3">
             <div class="bg-grey-100">
                 <div class="bg-gray-50 rounded-lg shadow">
                     <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/pen-nib-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Author </h5> 
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Author </h5>
                     </div>
                     <div class="items-center  sm:flex">
                             <img class="w-28 h-28 mx-10 rounded-full sm:rounded-none sm:rounded-l-lg" src="{{author.avatar.url}}" alt="{{author.first_name}} Avatar">
@@ -42,8 +42,8 @@
                             <span class="text-gray-500 dark:text-gray-400">{{author.organisation}}</span>
                             <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{author.email}} <br> {{author.linkedin}}</p>
                         </div>
-                    </div>  
-                </div>           
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -52,7 +52,7 @@
                 <div class="bg-gray-50 rounded-lg shadow">
                     <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/heart-solid.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Followers </h5> 
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Followers </h5>
                     </div>
                     <div class="items-center m-4 py-4 sm:flex">
                         {% if user.is_authenticated%}
@@ -77,8 +77,8 @@
                     {% empty %}
                     <p class="ml-auto text-xs p-4 m-4 text-gray-500 ">No followers yet, be the first!</p>
                 {% endfor %}
-            </div>  
-                </div>           
+            </div>
+                </div>
             </div>
         </div>
 
@@ -87,15 +87,15 @@
                 <div class="bg-gray-50 rounded-lg shadow">
                     <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/Notes.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Description </h5> 
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Description </h5>
                     </div>
                     <div class="items-center  sm:flex">
-                        <div class="items-center m-4 p-4 sm:flex"> 
+                        <div class="items-center m-4 p-4 sm:flex">
                             {% include "new_description.html" with card=card %}
-        
+
                         </div>
-                    </div>  
-                </div>           
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -104,12 +104,12 @@
                 <div class="bg-gray-50 rounded-lg shadow">
                     <div class="flex mx-4 pt-4 px-4">
                         <img src="{% static '/icons/Resources.svg' %}" class=" h-4 w-4 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Resources </h5> 
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Resources </h5>
                     </div>
                     <div class="items-center  mx-4 px-4  ">
-                            {% include 'resources.html' with resources=resources id=id %}       
-                    </div>  
-                </div>           
+                            {% include 'resources.html' with resources=resources id=id %}
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -122,8 +122,8 @@
                     </div>
                     <div class="items-center  mx-4 px-4  ">
                         {% include 'typecomment.html' with comments=comments %}
-                    </div>  
-                </div>           
+                    </div>
+                </div>
             </div>
         </div>
     </div>

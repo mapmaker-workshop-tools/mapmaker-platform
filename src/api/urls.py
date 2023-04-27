@@ -1,8 +1,10 @@
-"""core URL Configuration
+"""core URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
+
+Examples
+--------
 Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
@@ -14,10 +16,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+
 from api import views
 
-
 urlpatterns = [
-    path('v1/', views.status, name='status'),
-    path('v1/getnetwork/<int:workshop_id>/', views.getnetwork, name='getnetwork')
+    path("v1/", views.status, name="status"),
+    path("v1/getnetwork/<int:workshop_id>/", views.getnetwork, name="getnetwork"),
 ]

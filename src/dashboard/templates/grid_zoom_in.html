@@ -19,11 +19,11 @@
     .gridcontainer div {
         width: var(--s);
         margin: var(--m);
-        height: calc(var(--s)*1.1547); 
+        height: calc(var(--s)*1.1547);
         display: inline-block;
         font-size:initial;
         clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
-        margin-bottom: calc(var(--m) - var(--s)*0.2885); 
+        margin-bottom: calc(var(--m) - var(--s)*0.2885);
         overflow: hidden;
     }
     /*
@@ -36,8 +36,8 @@
         width: calc(var(--s)/2 + var(--m));
         float: left;
         height: 100%;
-        shape-outside: repeating-linear-gradient(     
-                        #0000 0 calc(var(--f) - 3px),      
+        shape-outside: repeating-linear-gradient(
+                        #0000 0 calc(var(--f) - 3px),
                         #000  0 var(--f));
     }
     .hexagonhidden {
@@ -47,7 +47,7 @@
         color: #fff;
         font-size: 1;
         background: #fff;
-        
+
     }
     .hexagonhidden img {
         display: block;
@@ -88,12 +88,12 @@
         <form class="gridcontainer sortable" hx-indicator="#spinner" hx-post="/dashboard/update" hx-trigger="end">
         {% for card in cards %}
         {% if card.cardtype == 'empty' %}
-            <div class="hexagonhidden flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/create"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagonhidden flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/create"><input type='hidden' name='item' value='{{ card.id}}'/>
                 <img style="filter: invert(100%)  brightness(119%) contrast(119%);" src="{% static '/icons/plus-solid.svg' %}" class=" h-6 w-6 pb-2 mr-3 sm:h-9" alt="mapmaker Logo" />
-                <b>Create new card</b>       
+                <b>Create new card</b>
             </div>
         {% elif card.cardtype == 'legend_1' %}
-            <div class="hexagon flex items-center" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_1}}; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon flex items-center" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_1}}; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>
                 <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
@@ -103,7 +103,7 @@
                  {{workshop.legend_label_1}}
             </div>
         {% elif card.cardtype == 'legend_2' %}
-            <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_2}};"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_2}};"><input type='hidden' name='item' value='{{ card.id}}'/>
                 <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
@@ -112,7 +112,7 @@
                 {{workshop.legend_label_2}}
             </div>
         {% elif card.cardtype == 'legend_3' %}
-            <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_3}};"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_3}};"><input type='hidden' name='item' value='{{ card.id}}'/>
                 <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
@@ -121,7 +121,7 @@
                 {{workshop.legend_label_3}}
             </div>
         {% elif card.cardtype == 'legend_4' %}
-            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_4}};"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_4}};"><input type='hidden' name='item' value='{{ card.id}}'/>
                 <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
@@ -130,7 +130,7 @@
                 {{workshop.legend_label_4}}
             </div>
             {% elif card.cardtype == 'legend_5' %}
-            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_5}};"><input type='hidden' name='item' value='{{ card.id}}'/>            
+            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_5}};"><input type='hidden' name='item' value='{{ card.id}}'/>
                 <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
@@ -151,7 +151,7 @@
 <!--Zoom function-->
 <script>
 function setZoom(zoom,el) {
-    
+
     transformOrigin = [0,0];
     el = el || instance.getContainer();
     var p = ["webkit", "moz", "ms", "o"],
@@ -165,7 +165,7 @@ function setZoom(zoom,el) {
 
     el.style["transform"] = s;
     el.style["transformOrigin"] = oString;
-    
+
 }
 
 //setZoom(5,document.getElementsByClassName('container')[0]);

@@ -1,7 +1,7 @@
 name: 🧪 Triage deployment
 on:
   push:
-    branches:    
+    branches:
       - '**'        # matches every branch
       - '!master'   # excludes master
 permissions:
@@ -9,23 +9,39 @@ permissions:
 
 env:
   AWS_REGION: eu-central-1
-  AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
+  AWS_LIGHTSAIL_SERVICE_NAME: mapmaker
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 jobs:
- 
+  linter:
+    name: 🔎 Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+      # Include `--format=github` to enable automatic inline annotations.
+      - name: Run Ruff
+        run: ruff check --format=github .
   buildcontainers:
     name: 🌎 Deploying to Triage env
-
+    needs: [linter]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: ⚙️  Updating to the latest versions
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
+
       - name: 🤐 Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -111,7 +127,7 @@ jobs:
           aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
           --containers file://Infrastructure/AWS/deploymentconfig.json \
           --public-endpoint file://Infrastructure/AWS/publicendpoint.json
-            
+
   pull-request:
     needs: [buildcontainers]
     name: 🔃 Creating Pull request to merge with Master
@@ -126,4 +142,4 @@ jobs:
           pr_title: "🤖 Merge and Deploy ${{ github.ref }}"
           pr_body: "Verify the code is working on triage.mapmaker.nl If you merge this pull-request the code will be deployed to production. Check out the changes here: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
           pr_label: "automatic-pullrequest"
-          github_token: ${{ secrets.GH_TOKEN }} 
+          github_token: ${{ secrets.GH_TOKEN }}

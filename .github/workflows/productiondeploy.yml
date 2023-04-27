@@ -8,13 +8,29 @@ permissions:
 
 env:
   AWS_REGION: eu-central-1
-  AWS_LIGHTSAIL_SERVICE_NAME: mapmaker 
+  AWS_LIGHTSAIL_SERVICE_NAME: mapmaker
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 jobs:
+  linter:
+    name: 🔎 Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+      # Include `--format=github` to enable automatic inline annotations.
+      - name: Run Ruff
+        run: ruff check --format=github .
   startnotification:
-    name: 💬 Starting deployment 
+    name: 💬 Starting deployment
     runs-on: ubuntu-latest
     steps:
       - name: send telegram message on push
@@ -26,7 +42,7 @@ jobs:
           message: |
             🏗️ New deployment started - run ${{ github.run_id }}
             Details:
-            - By: ${{ github.actor }} 
+            - By: ${{ github.actor }}
             - Description: ${{ github.event.commits[0].message }}
             - Code: https://github.com/${{ github.repository }}/commit/${{github.sha}}
             - Build: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -44,7 +60,7 @@ jobs:
           message: |
             ✅ Deployment succesful - run ${{ github.run_id }}
             🌎 server is up - we checked!
-            Site: https://mapmaker.nl 
+            Site: https://mapmaker.nl
             Deployment log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   builddjango:
@@ -118,11 +134,11 @@ jobs:
               🚨 Deployment failed 🚨
               Build ${{ github.run_id }} failed
               Something went wrong while building the Django container
-              
+
               See the details here:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-  
+
 
 
   deployimages:
@@ -205,6 +221,5 @@ jobs:
             🚨 Deployment failed 🚨
             Build ${{ github.run_id }} failed
 
-            The server did not come online after deploying to AWS. 
+            The server did not come online after deploying to AWS.
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  

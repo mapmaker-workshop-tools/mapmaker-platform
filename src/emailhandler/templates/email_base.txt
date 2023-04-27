@@ -2,7 +2,7 @@ Hi {{ username }},
 
 {{TOP_TEXT|linebreaks}}
 
-To {{CTA_TEXT}} click this link: 
+To {{CTA_TEXT}} click this link:
 {{CTA_URL}}
 
 {{BOTTOM_TEXT}}
