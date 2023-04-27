@@ -72,6 +72,7 @@ jobs:
           python3 manage.py test --noinput
   buildcontainers:
     name: 🌎 Deploying Triage
+
     needs: [linter, testsuite]
     runs-on: ubuntu-latest
     steps:
