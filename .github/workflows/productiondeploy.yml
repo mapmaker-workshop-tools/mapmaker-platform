@@ -65,7 +65,7 @@ jobs:
 
   builddjango:
       name: 🚨 Prod Django
-      needs: [startnotification]
+      needs: [startnotification, linter]
       runs-on: ubuntu-latest
       steps:
         - name: 🗂  Getting code from Github
