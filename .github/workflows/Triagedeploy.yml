@@ -32,7 +32,7 @@ jobs:
         run: ruff check --format=github .
 
   testsuite:
-    name: 🦺 Tests
+    name: 🦺  Testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
           python3 manage.py test --noinput
   buildcontainers:
     name: 🌎 Deploying to Triage env
-    needs: [linter]
+    needs: [linter, testsuite]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
