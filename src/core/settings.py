@@ -116,6 +116,7 @@ DATABASES = {
         "PORT": "3306",
         'OPTIONS': {
             'sql_mode': 'traditional',
+            'auth_plugin': 'mysql_native_password'
 
     },
 }}
