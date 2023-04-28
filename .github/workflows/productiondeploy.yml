@@ -182,7 +182,7 @@ jobs:
 
   deployimages:
     name: 🚀 Enabling latest images
-    needs: [builddjango]
+    needs: [checklightsailstatus]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting config files from Github
@@ -263,3 +263,33 @@ jobs:
 
             The server did not come online after deploying to AWS.
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+  checklightsailstatus:
+    name: 🚦Check if we are currently deploying
+    needs: [builddjango]
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: 🗂  Getting config files from Github
+        uses: actions/checkout@v2
+      - name: 🏢 Install Amazon Client
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install || true
+          aws --version
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+      - name: 🤐 Log in to AWS Lightsail with Secrets
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: 🙋🏻‍♂️ Checking current version
+        run: aws lightsail get-container-service-deployments --service-name mapmaker --output json
+      - name: ⏱ Checking if the container went live
+        run: python Infrastructure/AWS/checkdeploymentsuccess.py
+      - name: =========== All done. Cleaning up ♻️  ===========
+        run: ls
