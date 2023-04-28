@@ -223,8 +223,8 @@ jobs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   validatedeployment:
-    name: 🤨 Server up?
-    needs: [testsuite, linter]
+    name: 🙋🏻‍♂️ Check new version live
+    needs: [checklightsailstatus]
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
@@ -290,6 +290,6 @@ jobs:
       - name: 🙋🏻‍♂️ Checking current version
         run: aws lightsail get-container-service-deployments --service-name mapmaker --output json
       - name: ⏱ Checking if the container went live
-        run: python Infrastructure/AWS/checkdeploymentsuccess.py
+        run: python Infrastructure/AWS/checkdeploymentstatus.py
       - name: =========== All done. Cleaning up ♻️  ===========
         run: ls
