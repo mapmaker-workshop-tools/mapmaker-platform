@@ -3,6 +3,7 @@ import contextlib
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.test import Client
 
 
 class UsersManagersTests(TestCase):
@@ -18,6 +19,10 @@ class UsersManagersTests(TestCase):
             # username is None for the AbstractUser option
             # username does not exist for the AbstractBaseUser option
             assert user.username is None
+        #log in the user
+        c = Client()
+        logged_in = c.login(username="normal@user.com", password='foo')
+        self.assertTrue(logged_in) 
 
         with self.assertRaises(TypeError):
             User.objects.create_user()
@@ -41,3 +46,10 @@ class UsersManagersTests(TestCase):
         with self.assertRaises(ValueError):
             User.objects.create_superuser(
                 email="super@user.com", password="foo", is_superuser=False)
+
+    def test_login(self):
+        User = get_user_model()
+        user = User.objects.create_user(email="normal@user.com", password="foo", avatar=None)
+        c = Client()
+        logged_in = c.login(username="normal@user.com", password='foo')
+        self.assertTrue(logged_in) 
