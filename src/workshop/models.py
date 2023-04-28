@@ -16,7 +16,7 @@ class Workshop(models.Model):
     workshop_owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name = "workshop_owners")
     card_order = models.TextField(null=True, blank=True)
     legend_label_1 = models.CharField(blank=False, max_length=40, default="legend_1")
-    legend_hex_color_1 = models.CharField(blank=False, max_length=6, default="78E7BF")
+    legend_hex_color_1 = models.CharField(blank=False, max_length=6, default="00000")
     legend_icon_1 = models.CharField(blank=False, max_length=40, default="thumbs-up-solid.svg")
     legend_label_2 = models.CharField(blank=False, max_length=40, default="legend_2")
     legend_hex_color_2 = models.CharField(blank=False, max_length=6, default="51c1ff")
@@ -28,7 +28,7 @@ class Workshop(models.Model):
     legend_hex_color_4 = models.CharField(blank=False, max_length=6, default="E6799D")
     legend_icon_4 = models.CharField(blank=False, max_length=40, default="thumbs-up-solid.svg")
     legend_label_5 = models.CharField(blank=False, max_length=40, default="legend_5")
-    legend_hex_color_5 = models.CharField(blank=False, max_length=6, default="000000")
+    legend_hex_color_5 = models.CharField(blank=False, max_length=6, default="78E7BF")
     legend_icon_5 = models.CharField(blank=False, max_length=40, default="thumbs-up-solid.svg")
 
     # If we save a new Workshop (new because no primary key yet) we add 100 empty cards to database
