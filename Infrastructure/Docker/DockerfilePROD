@@ -11,15 +11,6 @@ ENV PYTHONUNBUFFERED 1
 #EXPOSE 80
 EXPOSE 8000
 
-RUN apt-get update \
-    && apt-get -y install lsb-release \
-    && curl -sLo mysql.deb https://dev.mysql.com/get/mysql-apt-config_0.8.19-1_all.deb \
-    && DEBIAN_FRONTEND=noninteractive dpkg -i mysql.deb \
-    && rm mysql.deb \
-    && apt-get update \
-    && apt-get -y install libmysqlclient-dev \
-    && pip install mysqlclient==2.0.3
-
 # Copy the dependencies file to the working directory
 COPY Infrastructure/requirements.txt .
 RUN pip3 install --upgrade pip
