@@ -223,8 +223,8 @@ jobs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   validatedeployment:
-    name: 🙋🏻‍♂️ Check new version live
-    needs: [checklightsailstatus]
+    name:  🙋🏻‍♂️ Check new version live
+    needs: [testsuite, linter]
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
