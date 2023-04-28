@@ -55,7 +55,7 @@ def workshop_settings(request):
     mp.track(request.user.email, "Workshop settings", {
             "workshop": current_workshop.workshop_name,
 
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
             })
     return render(request, "workshop_settings.html", context)
 
@@ -76,7 +76,7 @@ def trigger_summary_email(request):
     workshop_summary(id)
     mp.track(request.user.email, "Workshop summary sent ", {
             "workshop": current_workshop.workshop_name,
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
             })
     print("sending email to participants")
     return HttpResponse(status="204")
