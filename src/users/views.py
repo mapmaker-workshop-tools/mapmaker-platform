@@ -25,7 +25,7 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save()
             messages.add_message(request, messages.INFO, "welcome back " + user.first_name)
-            mp.track(user.email, "Logged in" , {"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]} )
+            mp.track(user.email, "Logged in" , {} )
             mp.people_set(user.email, {
             "$last_login"    : datetime.now()})
             return redirect("/dashboard")
@@ -66,7 +66,7 @@ def register(request, workshop_secret):
                 return redirect("/user/register/"+workshop_secret)
             if CustomUser.objects.filter(email=email).exists():
                 messages.add_message(request, messages.INFO, "You already have an account, please login or reset your password")
-                mp.track(email, "User tried to register with existing account" , {"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]} )
+                mp.track(email, "User tried to register with existing account" , {} )
                 return redirect("/user/login")
             new_user = CustomUser(
                 email = email,
@@ -81,7 +81,7 @@ def register(request, workshop_secret):
             new_user = authenticate(request, username=email, password=password)
             welcome_new_user(email, workshop.workshop_name)
             login(request, new_user)
-            mp.track(email, "New user registered" , {"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]} )
+            mp.track(email, "New user registered" , {} )
             mp.people_set(email, {
             "$last_login"    : datetime.now()})
             return redirect("/dashboard")
@@ -154,7 +154,7 @@ def delete_user(request, id):
         user = CustomUser.objects.get(id=id)
         mp.track(user.email, "User deleted", {
         "user": user.email,
-        "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+        
         })
         mp.people_delete(user.email, {})
         logout(request)

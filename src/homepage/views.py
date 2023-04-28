@@ -18,7 +18,7 @@ def index(request):
                 email = email,
             )
             new_marketing_lead.save()
-            mp.track(email, "New user signed up for marketing" , {"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]} )
+            mp.track(email, "New user signed up for marketing" , {} )
             mp.people_set(email, {"$created": str(timezone.now)})
             messages.add_message(request, messages.INFO, "Signed up for waiting list")
             welcome_new_marketing_lead(email)
@@ -27,7 +27,7 @@ def index(request):
             messages.add_message(request, messages.INFO, "Please provide a valid email address")
             return redirect("/")
     else:
-        mp.track("unknown user", "Homepage",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+        mp.track("unknown user", "Homepage",{})
         form = EmailMarketing()
     return render(request, "homepage.html", {"form":form})
 
@@ -40,7 +40,7 @@ def sign_up_marketing_email(self, request):
                 email = email,
             )
             new_marketing_lead.save()
-            mp.track(email, "New user signed up for marketing" , {"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]} )
+            mp.track(email, "New user signed up for marketing" , {} )
             mp.people_set(email, {"$created": self.date_created})
             welcome_new_marketing_lead(email)
             return render(request, "confirm_waitinglist.html")
@@ -53,27 +53,27 @@ def sign_up_marketing_email(self, request):
 
 
 def legal_terms(request):
-    mp.track("unknown user", "termsandconditions",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+    mp.track("unknown user", "termsandconditions",{})
     return render(request, "terms.html", {})
 
 def legal_privacy(request):
-    mp.track("unknown user", "privacypolicy",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+    mp.track("unknown user", "privacypolicy",{})
     return render(request, "privacy.html", {})
 
 def product_cards(request):
-    mp.track("unknown user", "productcards",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+    mp.track("unknown user", "productcards",{})
     return render(request, "productcards.html", {})
 
 def product_platform(request):
-    mp.track("unknown user", "productplatform",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+    mp.track("unknown user", "productplatform",{})
     return render(request, "productplatform.html", {})
 
 def product_workshop(request):
-    mp.track("unknown user", "productworkshop",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+    mp.track("unknown user", "productworkshop",{})
     return render(request, "productworkshop.html", {})
 
 def blog(request):
-    mp.track("unknown user", "blog",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+    mp.track("unknown user", "blog",{})
     return render(request, "blog.html", {})
 
 def contact(request):
@@ -87,7 +87,7 @@ def contact(request):
                 description = description,
             )
             new_order.save()
-            mp.track(email, "New order received" , {"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]} )
+            mp.track(email, "New order received" , {} )
             mp.people_set(email, {"$created": str(timezone.now)})
             confirm_new_order(email)
             return render(request, "confirm_contact.html")
@@ -95,6 +95,6 @@ def contact(request):
             messages.add_message(request, messages.INFO, "Please provide a valid email address")
             return redirect("/")
     else:
-        mp.track("unknown user", "order page",{"HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+        mp.track("unknown user", "order page",{})
         form = Orderform()
         return render(request, "request_order.html", {"form":form})

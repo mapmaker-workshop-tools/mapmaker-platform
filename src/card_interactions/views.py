@@ -52,7 +52,7 @@ def get_card_details(request, id):
         "card id": card.id,
         "workshop": card.workshop.workshop_name,
         "anonymous": False,
-        "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+        
         })
     except:
         mp.track("Anonymous", "Viewed card", {
@@ -60,7 +60,7 @@ def get_card_details(request, id):
         "card id": card.id,
         "workshop": card.workshop.workshop_name,
         "anonymous": True,
-        "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+        
         })
     return render(request, "drawer.html", context)
 
@@ -97,7 +97,7 @@ def create_card(request, id):
     "card id": card.id,
     "workshop": card.workshop.workshop_name,
 
-    "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+    
 
     })
     return render(request, "drawer.html", context)
@@ -127,7 +127,7 @@ def edit_card_title(request, id):
             "card title": card.title,
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
 
             })
             return render(request, "new_title.html", {"title":form.cleaned_data["title"], "id":id, "type":card.cardtype, "workshop": card.workshop})
@@ -151,7 +151,7 @@ def edit_card_description(request, id):
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
 
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
 
 
             })
@@ -186,7 +186,7 @@ def register_like(request, id):
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
 
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
 
             })
             messages.add_message(request, messages.INFO, "You followed card" +card.title)
@@ -209,7 +209,7 @@ def delete_card(request, id):
         "card id": card.id,
         "workshop": card.workshop.workshop_name,
 
-        "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+        
 
 
         })
@@ -237,7 +237,7 @@ def create_resource(request, id):
             "resource id": resource.id,
             "workshop": card.workshop.workshop_name,
 
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
 
             })
             resource.save()
@@ -274,7 +274,7 @@ def create_comment(request, id, notify):
             "comment id": new_comment.id,
             "workshop": card.workshop.workshop_name,
 
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
 
 
             })
@@ -288,7 +288,7 @@ def create_comment(request, id, notify):
                 "workshop": card.workshop.workshop_name,
                 "comment": new_comment.comment_text,
 
-                "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+                
 
 
                 })
@@ -305,7 +305,7 @@ def delete_comment(request, id, comment_id):
             "card title": card.title,
             "workshop": card.workshop.workshop_name,
             "comment": comment_delete.comment_text,
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
             })
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by("date_created")
@@ -324,7 +324,7 @@ def delete_resource(request, id, resource_id):
             "resource description": resource_delete.document_description,
             "resource id": resource_delete.id,
 
-            "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
+            
 
             })
         resource_delete.delete()
