@@ -115,7 +115,7 @@ jobs:
             envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
             envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
             envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-            envkey_DB_USER: ${{ secrets.DB_USER }}
+            envkey_DB_USER: ${{ secrets.DB_PROD_USER }}
             envkey_DB_PASSWORD: ${{ secrets.DB_PROD_PASSWORD }}
             envkey_DB_HOST: ${{ secrets.DB_PROD_HOST }}
             envkey_DB_NAME: ${{ secrets.DB_PROD_NAME }}
