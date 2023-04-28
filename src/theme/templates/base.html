@@ -13,7 +13,7 @@
 	<meta property="og:url" content="https://mapmaker.nl">
 	<meta property="og:description" content="Mapmaker aligns your teams while youre working on complex problems.">
 	<meta property="og:type" content="business.business">
-	<meta property="og:image" content="https://mapmaker.nl/static/images/heroimage.png">
+	<meta property="og:image" content="{% static '/images/HeaderPhoto.png' %}">
 	<meta property="og:image" content="https://mapmaker.nl/static/images/joephero.png">
 	<meta name="description" content="Mapmaker Homepage" />
 	<meta name="keywords" content="Mapmaker workshop online tool netwerk" />
@@ -81,15 +81,6 @@
     });
 </script>
 <body id="main" style="background-color: #F7F7F7;" class="leading-normal tracking-normal text-grey-800 gradient" style="font-family: 'Source Sans Pro', sans-serif;" >
-	{% if messages %}
-	<ul class="messages">
-		{% for message in messages %}
-		<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50  " role="alert">
-			<span class="font-medium">Info alert!</span> {{ message }}
-		</div>
-		{% endfor %}
-	</ul>
-	{% endif %}
 
 
 <!--Nav-->
@@ -190,6 +181,15 @@
 </div>
 </nav>
 <div style="height: 70px;"></div>
+{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50  " role="alert">
+			<span class="font-medium">Info alert!</span> {{ message }}
+		</div>
+		{% endfor %}
+	</ul>
+	{% endif %}
 
 
 	{% block content%}
