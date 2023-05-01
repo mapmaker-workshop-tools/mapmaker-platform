@@ -1,0 +1,16 @@
+name: Project card assignment
+
+on:
+    project_card:
+        types: [moved]
+
+jobs:
+    auto-assign:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Auto-assign card'
+              uses: pozil/auto-assign-issue@v1
+              with:
+                  repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+                  assignees: two-trick-pony-NL, joepnl
+                  removePreviousAssignees: true

@@ -322,6 +322,7 @@ def delete_resource(request, id, resource_id):
         return render(request, "resources.html", {"resources": resources, "id":id})
     return None
 
+@login_required
 def clear_card(id):
     card = Card.objects.get(id=id)
     followers = Follower.objects.filter(card_liked=card)
@@ -331,7 +332,7 @@ def clear_card(id):
     comments.delete()
     resources.delete()
 
-
+@login_required
 def upload_image(request, id):
     card = Card.objects.get(id=id)
     if request.method == "POST":
