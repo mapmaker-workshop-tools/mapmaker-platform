@@ -54,7 +54,7 @@ class Card(models.Model):
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False,related_name = "card_author")
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, related_name = "workshop")
-    title = models.CharField(max_length=100, unique=False, blank=False)
+    title = models.CharField(max_length=100, unique=False, blank=True)
     description = models.TextField(blank=True)
     followers = models.ManyToManyField(CustomUser, blank=True, related_name = "card_followers")
     image_Url = models.URLField(blank=True, default="https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png")

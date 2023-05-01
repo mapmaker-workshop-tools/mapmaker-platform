@@ -106,17 +106,6 @@ def create_card(request, id):
 def edit_card_title(request, id):
     card = Card.objects.get(id=id)
     if request.method == "POST":
-        if card.cardtype == "image_card":
-            form = imageCardTitle(request.POST, request.FILES)
-            if form.is_valid():
-                img = form.cleaned_data["image"]
-                print(img)
-                card.image.delete()
-                card.image.save("image.png", img)
-                print("Saved form")
-            else:
-                print("NOT VALID")
-        else:
             form = CardTitle(request.POST)
             if form.is_valid():
                 card.title = form.data["title"]
@@ -131,13 +120,13 @@ def edit_card_title(request, id):
             "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
 
             })
-            return render(request, "new_title.html", {"title":form.data["title"], "id":id, "type":card.cardtype, "workshop": card.workshop})
+            return render(request, "new_title.html", {"title":form.data["title"], "card": card, "id":id, "type":card.cardtype, "workshop": card.workshop})
     else:
         if card.cardtype == "image_card":
             form = imageCardTitle()
         else:
             form = CardTitle()
-    return render(request, "edit_title.html", {"form": form, "cardid": id ,"title":card.title, "type":card.cardtype, "workshop": card.workshop})
+    return render(request, "edit_title.html", {"form": form, "cardid": id ,"title":card.title,"card":card, "type":card.cardtype, "workshop": card.workshop})
 
 @login_required
 def edit_card_description(request, id):
@@ -341,3 +330,12 @@ def clear_card(id):
     followers.delete()
     comments.delete()
     resources.delete()
+
+
+def upload_image(request, id):
+    card = Card.objects.get(id=id)
+    if request.method == "POST":
+        card.image = request.FILES["file"]
+        card.save()
+        print("saved image")
+        return get_card_details(request, id)

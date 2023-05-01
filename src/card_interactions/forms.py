@@ -42,13 +42,12 @@ class CardTitle(forms.Form):
         
 
 class imageCardTitle(forms.ModelForm):
-    class Meta:
-        model = Card
-        fields = ["image"]
+    #model = Card
+    #fields = ["image"]
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.fields["image"].label = ""
+
 
 
 
