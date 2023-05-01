@@ -119,8 +119,9 @@ def edit_card_title(request, id):
         else:
             form = CardTitle(request.POST)
             if form.is_valid():
-                card.title = form.cleaned_data["title"]
-                card.cardtype = CARD_TYPE_CHOICES[int(form.cleaned_data["cardtype"])-1][1]
+                card.title = form.data["title"]
+                cardtype_id = int(form.data["card_type"])-1
+                card.cardtype = CARD_TYPE_CHOICES[int(cardtype_id)][1]
                 card.author = request.user
                 card.save()
             mp.track(request.user.email, "Card title updated", {
@@ -130,7 +131,7 @@ def edit_card_title(request, id):
             "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"],
 
             })
-            return render(request, "new_title.html", {"title":form.cleaned_data["title"], "id":id, "type":card.cardtype, "workshop": card.workshop})
+            return render(request, "new_title.html", {"title":form.data["title"], "id":id, "type":card.cardtype, "workshop": card.workshop})
     else:
         if card.cardtype == "image_card":
             form = imageCardTitle()
