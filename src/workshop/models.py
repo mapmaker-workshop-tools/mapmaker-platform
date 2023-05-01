@@ -3,6 +3,10 @@ from random import randrange
 from django.db import models
 from django.utils import timezone
 from users.models import CustomUser
+import random
+from django.conf import settings
+from zipfile import ZipFile
+import shutil
 
 
 # Create your models here.
@@ -62,3 +66,18 @@ class Card(models.Model):
 
     def __str__(self) -> str:
         return self.workshop.workshop_name + " - " + self.title
+    
+    
+class ImportImages(models.Model):
+    zip_import = models.FileField(blank=True)
+    workshop = models.ForeignKey(Workshop, blank=False, on_delete=models.CASCADE, related_name="workshop_images")
+    
+    def save(self, delete_zip_import=True, *args, **kwargs):
+        super(ImportImages, self).save(*args, **kwargs)
+        
+        workshop = Workshop.objects.get(id=self.workshop.id)
+        cards = Card.objects.filter(workshop=workshop, cardtype='empty')
+        shutil.unpack_archive(self.zip_import, 'dir_out')
+            
+        """for i in cards:
+            print(random.sample(cards, 3))"""
