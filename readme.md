@@ -15,8 +15,7 @@
 
 # Mapmaker
 Mapmaker is a workshop platform consisting of a unique cardset, a methodology and a online collaboration platform.
-This repository contains all![Uploading Schermafbeelding 2023-04-25 om 19.31.58.png…]()
- the assets, instructions and the cardset designs. For more information visit: mapmaker.nl
+This repository contains all the assets, instructions and the cardset designs. For more information visit: mapmaker.nl
 
 ### Learn more
 #### About our offering
@@ -56,4 +55,5 @@ Under noncode in this repository you will find the latest iteration of our custo
 
 # The platform
 Under the src folder you'll find all source code for web platform. It's ran off of Django and you'll need to provide your own database to run it.
+
 
