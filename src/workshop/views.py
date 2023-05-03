@@ -55,7 +55,7 @@ def workshop_settings(request):
     mp.track(request.user.email, "Workshop settings", {
             "workshop": current_workshop.workshop_name,
             "environment": ENVIRONMENT,
-            
+
             })
     return render(request, "workshop_settings.html", context)
 

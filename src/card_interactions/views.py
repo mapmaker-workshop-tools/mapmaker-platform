@@ -53,7 +53,7 @@ def get_card_details(request, id):
         "workshop": card.workshop.workshop_name,
         "anonymous": False,
         "environment": ENVIRONMENT,
-        
+
         })
     except:
         mp.track("Anonymous", "Viewed card", {
@@ -62,7 +62,7 @@ def get_card_details(request, id):
         "workshop": card.workshop.workshop_name,
         "anonymous": True,
         "environment": ENVIRONMENT,
-        
+
         })
     return render(request, "drawer.html", context)
 
@@ -99,7 +99,7 @@ def create_card(request, id):
     "card id": card.id,
     "workshop": card.workshop.workshop_name,
     "environment": ENVIRONMENT,
-    
+
 
     })
     return render(request, "drawer.html", context)
@@ -130,7 +130,7 @@ def edit_card_title(request, id):
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
             "environment": ENVIRONMENT,
-            
+
 
             })
             return render(request, "new_title.html", {"title":form.cleaned_data["title"], "id":id, "type":card.cardtype, "workshop": card.workshop})
@@ -155,7 +155,7 @@ def edit_card_description(request, id):
             "workshop": card.workshop.workshop_name,
             "environment": ENVIRONMENT,
 
-            
+
 
 
             })
@@ -191,7 +191,7 @@ def register_like(request, id):
             "workshop": card.workshop.workshop_name,
             "environment": ENVIRONMENT,
 
-            
+
 
             })
             messages.add_message(request, messages.INFO, "You followed card" +card.title)
@@ -215,7 +215,7 @@ def delete_card(request, id):
         "workshop": card.workshop.workshop_name,
         "environment": ENVIRONMENT,
 
-        
+
 
 
         })
@@ -244,7 +244,7 @@ def create_resource(request, id):
             "workshop": card.workshop.workshop_name,
             "environment": ENVIRONMENT,
 
-            
+
 
             })
             resource.save()
@@ -282,7 +282,7 @@ def create_comment(request, id, notify):
             "workshop": card.workshop.workshop_name,
             "environment": ENVIRONMENT,
 
-            
+
 
 
             })
@@ -297,7 +297,7 @@ def create_comment(request, id, notify):
                 "comment": new_comment.comment_text,
                 "environment": ENVIRONMENT,
 
-                
+
 
 
                 })
@@ -315,7 +315,7 @@ def delete_comment(request, id, comment_id):
             "workshop": card.workshop.workshop_name,
             "comment": comment_delete.comment_text,
             "environment": ENVIRONMENT,
-            
+
             })
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by("date_created")
@@ -335,7 +335,7 @@ def delete_resource(request, id, resource_id):
             "resource id": resource_delete.id,
             "environment": ENVIRONMENT,
 
-            
+
 
             })
         resource_delete.delete()
