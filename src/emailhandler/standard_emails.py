@@ -7,7 +7,7 @@ from workshop.models import Card, Workshop
 from users.models import CustomUser as User
 from card_interactions.models import Follower, Comment, Resource
 from core.utils import mp
-
+from core.settings import ENVIRONMENT
 connection = mail.get_connection()
 
 
@@ -35,7 +35,7 @@ def welcome_new_marketing_lead(recipient):
                 'Welcome to Mapmaker! Thanks for joining the Mapmaker email list, we will let you know once we launch! In the meantime:',
                 'If you have any questions, or want to get in touch feel free to send a message: https://mapmaker.nl/contact'
                 )
-    mp.track(recipient, 'Marketing list email confirmation received',{})
+    mp.track(recipient, 'Marketing list email confirmation received',{"environment": ENVIRONMENT,})
 
 
 def confirm_new_order(recipient):
@@ -47,7 +47,7 @@ def confirm_new_order(recipient):
                 'Thanks for your message! We love questions. We will get back to you asap, usually within 24H. In the meantime:',
                 'If you have any questions, or want to get in touch feel free to send a message: https://mapmaker.nl/contact'
                 )
-    mp.track(recipient, 'Contact form confirmation email received',{})
+    mp.track(recipient, 'Contact form confirmation email received',{"environment": ENVIRONMENT,})
 
 
 
@@ -65,7 +65,7 @@ def confirm_new_order(recipient):
 
 
 def welcome_new_user(recipient, workshop_name):
-    mp.track(recipient, 'Welcome email received',{})
+    mp.track(recipient, 'Welcome email received',{"environment": ENVIRONMENT,})
     standard_email(recipient,
                 'Here is your mapmaker account for'+workshop_name,
                 recipient,
@@ -86,7 +86,7 @@ def notify_followers_new_post(cardid):
     for comment in last_comments:
         message += comment.author.first_name +' from ' + comment.author.organisation + " said: " + comment.comment_text + "\n"
     for follower in followers:
-        mp.track(follower.user_like.email, 'Post update email received',{'Card':card.id})
+        mp.track(follower.user_like.email, 'Post update email received',{'Card':card.id, "environment": ENVIRONMENT,})
         standard_email(follower.user_like.first_name,
                 "New update in Mapmaker on card: " + card.title,
                 follower.user_like.email,
@@ -150,7 +150,7 @@ def workshop_summary(workshopid):
 
     connection.open()
     for participant in participants:
-        mp.track(participant.email, 'Workshop summary received',{'Workshop':workshop.id})
+        mp.track(participant.email, 'Workshop summary received',{'Workshop':workshop.id, "environment": ENVIRONMENT,})
         standard_email(participant.first_name,
                 subject,
                 participant.email,

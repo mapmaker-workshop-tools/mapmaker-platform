@@ -11,7 +11,7 @@ from django.db.models import Case, When
 from django.shortcuts import HttpResponse, redirect, render
 from users.models import CustomUser
 from workshop.models import Card, Workshop
-
+from core.settings import ENVIRONMENT
 from .utils import create_image
 
 
@@ -67,7 +67,7 @@ def index(request):
                 "zoomlevel": str(current_user.zoom_level),
                 "workshop_secret": workshop_secret,
                 "participantcount": participants.count()}
-        mp.track(request.user.email, "Dashboard loaded ", {"workshop": current_workshop.workshop_name, "anonymous": False,
+        mp.track(request.user.email, "Dashboard loaded ", {"workshop": current_workshop.workshop_name, "anonymous": False, "environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"] })
         return render(request, "dashboard_index.html", context)
     else:
@@ -131,7 +131,7 @@ def view_only(request, workshop_secret):
                 "zoomlevel": "0",
                 "workshop_secret": workshop_secret,
                 "participantcount": participants.count()}
-        mp.track("Anonymous", "Dashboard loaded ", {"workshop": current_workshop.workshop_name, "anonymous": True,
+        mp.track("Anonymous", "Dashboard loaded ", {"workshop": current_workshop.workshop_name, "anonymous": True, "environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"] })
         return render(request, "dashboard_index.html", context)
 
@@ -146,7 +146,7 @@ def handle_grid_update(request):
         t = Workshop.objects.get(id=current_workshop.id)
         t.card_order = jsonStr
         t.save()
-        mp.track(request.user.email, "Moved card", {"workshop": current_workshop.workshop_name,
+        mp.track(request.user.email, "Moved card", {"workshop": current_workshop.workshop_name, "environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"] })
         return HttpResponse(status=204)
     elif request.method == "GET":
@@ -194,7 +194,7 @@ def zoom_in(request):
         order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
     context = {"cards": ordered_cards, "zoomlevel": t.zoom_level, "workshop": current_workshop}
-    mp.track(request.user.email, "Zoom in", {"workshop": current_workshop.workshop_name,
+    mp.track(request.user.email, "Zoom in", {"workshop": current_workshop.workshop_name, "environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return render(request, "adjust_zoom.html", context)
 
@@ -221,7 +221,7 @@ def zoom_out(request):
         order_cards = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(get_card_order_list)])
         ordered_cards = cards.filter(pk__in=get_card_order_list).order_by(order_cards)
     context = {"cards": ordered_cards, "zoomlevel": t.zoom_level, "workshop": current_workshop}
-    mp.track(request.user.email, "Zoom out", {"workshop": current_workshop.workshop_name,
+    mp.track(request.user.email, "Zoom out", {"workshop": current_workshop.workshop_name,"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return render(request, "adjust_zoom.html", context)
 
@@ -232,6 +232,6 @@ def download_image(request):
     template = index(request)
     data = {"html": template, "render_when_ready":True, "ms_delay":1000}
     image_url = create_image(data)
-    mp.track(request.user.email, "Workshop image downloaded", {"workshop": workshop,
+    mp.track(request.user.email, "Workshop image downloaded", {"workshop": workshop, "environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return redirect(image_url)

@@ -24,7 +24,7 @@ environ.Env.read_env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
-
+ENVIRONMENT = env("ENVIRONMENT") #Either triage or production --> Mostly used in analytics tracking
 
 
 # SECURITY WARNING: don't run with debug turned on in production!

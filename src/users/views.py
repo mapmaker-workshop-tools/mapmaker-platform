@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponse, redirect, render
 from emailhandler.standard_emails import welcome_new_user
 from workshop.models import Workshop
-
+from core.settings import ENVIRONMENT
 from users.models import CustomUser
 
 from .forms import CustomUserLoginForm, CustomUserProfile, CustomUserRegisterToWorkshop
@@ -25,7 +25,7 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save()
             messages.add_message(request, messages.INFO, "welcome back " + user.first_name)
-            mp.track(user.email, "Logged in" , {} )
+            mp.track(user.email, "Logged in" , {"environment": ENVIRONMENT,} )
             mp.people_set(user.email, {
             "$last_login"    : datetime.now()})
             return redirect("/dashboard")
@@ -38,7 +38,7 @@ def login_user(request):
 
 @login_required
 def logout_view(request):
-    mp.track(request.user.email, "Log out", {
+    mp.track(request.user.email, "Log out", {"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     logout(request)
     messages.add_message(request, messages.INFO, "Logged out")
@@ -66,7 +66,7 @@ def register(request, workshop_secret):
                 return redirect("/user/register/"+workshop_secret)
             if CustomUser.objects.filter(email=email).exists():
                 messages.add_message(request, messages.INFO, "You already have an account, please login or reset your password")
-                mp.track(email, "User tried to register with existing account" , {} )
+                mp.track(email, "User tried to register with existing account" , {"environment": ENVIRONMENT} )
                 return redirect("/user/login")
             new_user = CustomUser(
                 email = email,
@@ -81,7 +81,7 @@ def register(request, workshop_secret):
             new_user = authenticate(request, username=email, password=password)
             welcome_new_user(email, workshop.workshop_name)
             login(request, new_user)
-            mp.track(email, "New user registered" , {} )
+            mp.track(email, "New user registered" , {"environment": ENVIRONMENT,} )
             mp.people_set(email, {
             "$last_login"    : datetime.now()})
             return redirect("/dashboard")
@@ -105,7 +105,7 @@ def profile(request):
     resourcecount = Resource.objects.filter(owner=user).count()
     likecount = Follower.objects.filter(user_like=user).count()
     CustomUserLoginForm()
-    mp.track(user.email, "User profile", {
+    mp.track(user.email, "User profile", {"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return render(request, "userprofile.html",
                   {"user": user,
@@ -133,7 +133,7 @@ def profile_edit(request, id):
             t.linkedin = linkedin
             t.organisation = organisation
             t.save()
-            mp.track(email, "User profile updated", {
+            mp.track(email, "User profile updated", {"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
             return render(request, "user_profile_table_edit.html")
         elif request.method == "GET":
@@ -154,7 +154,7 @@ def delete_user(request, id):
         user = CustomUser.objects.get(id=id)
         mp.track(user.email, "User deleted", {
         "user": user.email,
-        
+        "environment": ENVIRONMENT,
         })
         mp.people_delete(user.email, {})
         logout(request)

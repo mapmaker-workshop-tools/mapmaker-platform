@@ -11,7 +11,7 @@ from workshop.models import Card
 
 from .forms import CARD_TYPE_CHOICES, CardComment, CardDescription, CardResource, CardTitle, imageCardTitle
 from .models import Comment, Follower, Resource
-
+from core.settings import ENVIRONMENT
 
 def get_card_details(request, id):
     card = Card.objects.get(id=id)
@@ -52,6 +52,7 @@ def get_card_details(request, id):
         "card id": card.id,
         "workshop": card.workshop.workshop_name,
         "anonymous": False,
+        "environment": ENVIRONMENT,
         
         })
     except:
@@ -60,6 +61,7 @@ def get_card_details(request, id):
         "card id": card.id,
         "workshop": card.workshop.workshop_name,
         "anonymous": True,
+        "environment": ENVIRONMENT,
         
         })
     return render(request, "drawer.html", context)
@@ -96,7 +98,7 @@ def create_card(request, id):
     "card title": card.title,
     "card id": card.id,
     "workshop": card.workshop.workshop_name,
-
+    "environment": ENVIRONMENT,
     
 
     })
@@ -127,6 +129,7 @@ def edit_card_title(request, id):
             "card title": card.title,
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT,
             
 
             })
@@ -150,6 +153,7 @@ def edit_card_description(request, id):
             "card title": card.title,
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT,
 
             
 
@@ -185,6 +189,7 @@ def register_like(request, id):
             "card title": card.title,
             "card id": card.id,
             "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT,
 
             
 
@@ -208,6 +213,7 @@ def delete_card(request, id):
         "card title": card.title,
         "card id": card.id,
         "workshop": card.workshop.workshop_name,
+        "environment": ENVIRONMENT,
 
         
 
@@ -236,6 +242,7 @@ def create_resource(request, id):
             "card id": card.id,
             "resource id": resource.id,
             "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT,
 
             
 
@@ -273,6 +280,7 @@ def create_comment(request, id, notify):
             "card id": card.id,
             "comment id": new_comment.id,
             "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT,
 
             
 
@@ -287,6 +295,7 @@ def create_comment(request, id, notify):
                 "comment id": new_comment.id,
                 "workshop": card.workshop.workshop_name,
                 "comment": new_comment.comment_text,
+                "environment": ENVIRONMENT,
 
                 
 
@@ -305,6 +314,7 @@ def delete_comment(request, id, comment_id):
             "card title": card.title,
             "workshop": card.workshop.workshop_name,
             "comment": comment_delete.comment_text,
+            "environment": ENVIRONMENT,
             
             })
         comments = Comment.objects.filter(card=card)
@@ -323,6 +333,7 @@ def delete_resource(request, id, resource_id):
             "workshop": card.workshop.workshop_name,
             "resource description": resource_delete.document_description,
             "resource id": resource_delete.id,
+            "environment": ENVIRONMENT,
 
             
 

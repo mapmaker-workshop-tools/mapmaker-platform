@@ -3,7 +3,6 @@ repos:
     rev: v2.3.0
     hooks:
     -   id: check-yaml
-    -   id: trailing-whitespace
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   # Ruff version.
   rev: 'v0.0.263'
