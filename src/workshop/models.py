@@ -1,8 +1,15 @@
 from random import randrange
-
+import os
 from django.db import models
 from django.utils import timezone
 from users.models import CustomUser
+import random
+from django.conf import settings
+import zipfile
+import io
+from PIL import Image
+import tempfile
+
 
 
 # Create your models here.
@@ -54,7 +61,7 @@ class Card(models.Model):
     date_created = models.DateTimeField(default=timezone.now, editable=False)
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=False,related_name = "card_author")
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, related_name = "workshop")
-    title = models.CharField(max_length=100, unique=False, blank=False)
+    title = models.CharField(max_length=100, unique=False, blank=True)
     description = models.TextField(blank=True)
     followers = models.ManyToManyField(CustomUser, blank=True, related_name = "card_followers")
     image_Url = models.URLField(blank=True, default="https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png")
@@ -62,3 +69,38 @@ class Card(models.Model):
 
     def __str__(self) -> str:
         return self.workshop.workshop_name + " - " + self.title
+    
+    
+class ImportImages(models.Model):
+    zip_import = models.FileField(blank=True, upload_to="media/temporary/",)
+    workshop = models.ForeignKey(Workshop, blank=False, on_delete=models.CASCADE, related_name="workshop_images")
+        
+    def save(self, delete_zip_import=True, *args, **kwargs):
+        super(ImportImages, self).save(*args, **kwargs) #Saving the instance
+        workshop = Workshop.objects.get(id=self.workshop.id) #Getting the workshop
+        
+        imgzip = self.zip_import.open() #Opening the zip file that was sent
+        zippedImgs = zipfile.ZipFile(imgzip) #Converting it
+        with tempfile.TemporaryDirectory() as temporaryfolder: #creating a temporary
+            pass
+
+        #Adding each image from zip file to temporaryfolder
+        for i in range(len(zippedImgs.namelist())):
+            file_in_zip = zippedImgs.namelist()[i]
+            if (".png" in file_in_zip or ".PNG" in file_in_zip):
+                data = zippedImgs.extract(file_in_zip, path=temporaryfolder)
+            else:
+                print("")
+        #looping over temporaryfolder and adding the cards to workshop
+        for filename in temporaryfolder:
+            f = os.path.join(temporaryfolder, filename)
+            cards = Card.objects.filter(workshop=workshop, cardtype='empty')
+            next_card = cards.latest('pk')
+            next_card.image = filename
+            next_card.cardtype = 'image_card'
+            next_card.title = 'Uploaded by Mapmaker'
+            next_card.save()
+        
+            
+    def __str__(self) -> str:
+        return "import: " + str(self.id) +" into workshop: "+self.workshop.workshop_name 

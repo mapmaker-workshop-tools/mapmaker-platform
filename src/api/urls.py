@@ -21,5 +21,5 @@ from api import views
 
 urlpatterns = [
     path("v1/", views.status, name="status"),
-    path("v1/getnetwork/<int:workshop_id>/", views.getnetwork, name="getnetwork"),
+    path("v1/importcards/<int:workshop_id>/", views.import_images_as_cards, name="import images"),
 ]

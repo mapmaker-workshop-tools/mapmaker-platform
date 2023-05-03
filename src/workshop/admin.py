@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Card, Workshop
+from .models import Card, Workshop, ImportImages
 
 admin.autodiscover()
 
@@ -22,3 +22,4 @@ class CardAdmin(admin.ModelAdmin):
 
 admin.site.register(Workshop, WorkshopAdmin)
 admin.site.register(Card, CardAdmin)
+admin.site.register(ImportImages)

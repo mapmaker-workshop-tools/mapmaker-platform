@@ -32,10 +32,12 @@ while True:
         print("\n###   New Version found   ###")
         print("New version live and active. ")
         print("Validating if Django is running...")
-        url = 'https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com/api/v1/'
-        response = requests.get(url)
-        if response.status_code == 200:
-            print("Django server confirmed running")
+        url_prod = 'https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com/api/v1/'
+        url_triage = 'https://triage.mapmaker.nl/api/v1/'
+        response_prod = requests.get(url_prod)
+        response_triage = requests.get(url_triage)
+        if response_prod.status_code == 200 and response_triage.status_code == 200:
+            print("Django servers confirmed running")
             print("DONE")
             exit(0)
         else:

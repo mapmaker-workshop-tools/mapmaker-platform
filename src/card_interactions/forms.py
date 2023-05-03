@@ -4,9 +4,9 @@ from workshop.models import Card
 CARD_TYPE_CHOICES =(
     ("1", "legend_1"),
     ("2", "legend_2"),
-    ("3", "legend_4"),
-    ("4", "legend_5"),
-    ("5", "legend_3"),
+    ("3", "legend_3"),
+    ("4", "legend_4"),
+    ("5", "legend_5"),
     ("6", "image_card"),
 )
 
@@ -34,23 +34,20 @@ class CardForm(forms.Form):
 
 
 class CardTitle(forms.Form):
-    cardtype = forms.ChoiceField(choices = CARD_TYPE_CHOICES, widget=forms.Select(attrs={"class": tailwind_class}))
-    title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={"class": tailwind_class, "placeholder": "Write a new title", "label": ""}))
+    #cardtype = forms.ChoiceField(choices = CARD_TYPE_CHOICES, widget=forms.Select(attrs={"class": tailwind_class}))
+    #title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={"class": tailwind_class, "placeholder": "Write a new title", "label": ""}))
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.fields["cardtype"].label = ""
-        self.fields["title"].label = ""
-
+        
 
 class imageCardTitle(forms.ModelForm):
-    class Meta:
-        model = Card
-        fields = ["image"]
+    #model = Card
+    #fields = ["image"]
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.fields["image"].label = ""
+
 
 
 
