@@ -30,7 +30,7 @@ def index(request):
     else:
         mp.track("unknown user", "Homepage",{"environment": ENVIRONMENT,})
         form = EmailMarketing()
-    return render(request, "homepage.html", {"form":form})
+    return render(request, "homepage.html", {"form":form,})
 
 def sign_up_marketing_email(self, request):
     if request.method == "POST":

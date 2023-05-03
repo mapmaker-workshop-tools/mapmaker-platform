@@ -25,7 +25,8 @@ environ.Env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 ENVIRONMENT = env("ENVIRONMENT") #Either triage or production --> Mostly used in analytics tracking
-
+MAINTENANCEMODE = env("MAINTENANCEMODE")
+MAINTENANCETEXT = env("MAINTENANCETEXT")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
@@ -91,6 +92,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
+                "core.context_processor.get_maintenancemode",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
