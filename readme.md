@@ -29,8 +29,9 @@ We documented the code of the platform in this repository under 'src'. For more 
 # Open Source and Creative Commons
 The collection of works are published on Github and under the BY-NC-ND creative commons license.  This is because we value transparency, as well as want others to benefit from our work. This means you'll be able to host your own sessions using the materials, code and methodology we developed. Restrictions do apply: we do not permit: using the works for commercial purposes, redistribution and modification. If you do want to use these materials send us a message at mapmaker.nl/contact to work out a license agreement.
 
-<img src="https://user-images.githubusercontent.com/71013416/230730932-b32e5048-5d7f-4f81-9df1-bfc658f6f5e4.png" width="100">
 #### How does Creative commons work?
+<img src="https://user-images.githubusercontent.com/71013416/230730932-b32e5048-5d7f-4f81-9df1-bfc658f6f5e4.png" width="100">
+
 It's very simple, it is like when you tell someone the magic ingredient of a recipe. Some people choose not to tell what is in the recipe (like coca-cola) others tell what's in it but ask you not to make the same product and there may even be people that will not put any restrictions on how you use the recipe.
 
 For Mapmaker: we chose to tell everyone how our product works under the following conditions:
