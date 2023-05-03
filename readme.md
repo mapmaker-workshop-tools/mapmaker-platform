@@ -30,6 +30,8 @@ EMAIL_HOST_USER=
 EMAIL_HOST_PASSWORD=
 #Django settings
 DJANGO_SECRET_KEY=
+MAINTENANCEMODE=False
+MAINTENANCETEXT="Mapmaker might be unresponsive. Try again in a few minutes."
 DEBUG=False
 # S3 storage keys
 S3_AWS_STORAGE_BUCKET_NAME=
