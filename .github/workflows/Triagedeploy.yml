@@ -106,7 +106,7 @@ jobs:
           envkey_S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY}}
           envkey_S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY}}
           envkey_ENVIRONMENT: triage
-          envkey_MAINTENANCEMODE: False
+          envkey_MAINTENANCEMODE: True
           envkey_MAINTENANCETEXT: THIS IS TRIAGE Mapmaker might be unresponsive. Try again in a few minutes
 
           directory: src/core
