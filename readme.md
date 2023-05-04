@@ -63,6 +63,16 @@ or
 `python src/manage.py makemigrations` or `python src/manage.py migrate` for migrations
 4. The repository also includes workflows to deploy to production. This requires you also have a Lightsail account with the correct names. 
 
+## If you want to use Docker
+Then you can use the dockerfiles to build your container. Make sure to run this from the root folder and not src as the command has the path to the dockerfile already. The command also presumes you have the .env file already in the `core` folder. 
+
+`docker build -t mapmaker:latest -f ./Infrastructure/Docker/DockerfilePROD .`
+
+## Use of NGINX is recommended: 
+It is recommended that you use nginx as a webserver in front of Django. We offer a container that also copies in the staticfiles into the nginx. For this we offer both a dockerfile as a default.conf file to set up nginx correctly. Both can be found in the `infrastructure/nginx` folder. Or to build a dockerfile
+
+`docker build -t nginx:latest -f ./Infrastructure/nginx/Dockerfile .`
+
 # How to contribute:
 If you want to add features or fix bugs then by all means open a pullrequest for us to review your code. 
 
