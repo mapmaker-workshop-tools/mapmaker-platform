@@ -20,6 +20,21 @@ Mapmaker is the online platform for the Mapmaker methodology. We open sourced th
 - Our development [platform](https://triage.mapmaker.nl) -- for testing new versions
 - Upptime status [platform](https://status.mapmaker.nl) -- Is our server up or down
 
+## Features: 
+
+### A beautiful Hexagon grid for you to lay all out all your workshop cards
+#### Create your workshop using the grid
+![Screenshot 2023-05-04 at 10 24 25](https://user-images.githubusercontent.com/71013416/236150235-a7335581-74f2-4265-9c67-5e7bd1c73031.png)
+
+#### Add resources, comments to cards
+![Screenshot 2023-05-04 at 10 23 48](https://user-images.githubusercontent.com/71013416/236151209-350da061-a251-4f59-ab1d-ec1508256ad7.png)
+
+![Screenshot 2023-05-04 at 10 24 01](https://user-images.githubusercontent.com/71013416/236151088-2d9179f8-ae84-4f71-850c-8bd9f7323be0.png)
+
+
+#### Follow cards and stay in touch with other workshop participants
+
+
 ## Help I can't code: is there a way to use the platform without knowing how to code?
 Yes definetly drop us a [message](https://mapmaker.nl/contact) and we'll work something out. We use our version of the platform for all our workshops and it runs very smooth.  
 
