@@ -24,9 +24,11 @@ Mapmaker is the online platform for the Mapmaker methodology. We open sourced th
 
 ### A beautiful Hexagon grid for you to lay all out all your workshop cards
 #### Create your workshop using the grid
+Add, move and update cards as your workshop progresses to end up with the systems map that reflects your situation.
 ![Screenshot 2023-05-04 at 10 24 25](https://user-images.githubusercontent.com/71013416/236150235-a7335581-74f2-4265-9c67-5e7bd1c73031.png)
 
 #### Add resources, comments to cards
+After the workshop you can add links to important documents, research or other need-to-knows related to a topic. You can also discuss topics with comments and follow cards so you get a notification if anything is updated.
 ![Screenshot 2023-05-04 at 10 23 48](https://user-images.githubusercontent.com/71013416/236151209-350da061-a251-4f59-ab1d-ec1508256ad7.png)
 
 ![Screenshot 2023-05-04 at 10 24 01](https://user-images.githubusercontent.com/71013416/236151088-2d9179f8-ae84-4f71-850c-8bd9f7323be0.png)
