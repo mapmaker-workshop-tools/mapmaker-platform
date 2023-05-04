@@ -1,9 +1,6 @@
 name: 💡 Google Lighthouse Check
 
-on:
-  push:
-    branches:
-      - '**'        # matches every branch
+on: pull_request_target
 
 jobs:
   lighthouse:
@@ -14,4 +11,4 @@ jobs:
     - name: Lighthouse
       uses: foo-software/lighthouse-check-action@master
       with:
-        urls: 'https://mapmaker.nl'
+        urls: 'https://triage.mapmaker.nl'
