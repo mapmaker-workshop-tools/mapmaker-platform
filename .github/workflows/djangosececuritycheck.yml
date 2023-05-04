@@ -1,4 +1,4 @@
-name: Django Security Check
+name: 👮🏻‍♀️ Django Security Check
 
 on: pull_request_target
 
@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 1
+      - name: go to correct folder
+        run: cd/src
       - name: Scan Django settings for security issues
         id: check
         uses: victoriadrake/django-security-check@master

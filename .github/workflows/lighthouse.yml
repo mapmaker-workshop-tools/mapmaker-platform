@@ -1,17 +1,14 @@
-name: Google Lighthouse Check
+name: 💡 Google Lighthouse Check
 
 on: pull_request_target
 
 jobs:
-  audit:
+  lighthouse:
+    name: 💡 Lighthouse
     runs-on: ubuntu-latest
     steps:
-    - name: Audit live URL
-      uses: jakejarvis/lighthouse-action@master
+    - uses: actions/checkout@master
+    - name: Lighthouse
+      uses: foo-software/lighthouse-check-action@master
       with:
-        url: 'https://mapmaker.nl'
-    - name: Upload results as an artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: report
-        path: './report'
+        urls: 'https://mapmaker.nl'
