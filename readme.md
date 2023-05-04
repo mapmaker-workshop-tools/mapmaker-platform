@@ -1,6 +1,8 @@
 <div align="center">
   <img src="https://user-images.githubusercontent.com/71013416/235667781-5f015188-a834-4409-be82-df9ca07680ed.png" alt="Logo" width="320" />
-</div>
+  
+  
+  
 
 [![📈 Autoscale](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/autoscale.yml/badge.svg?branch=master)](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/autoscale.yml)
 [![🚀 Production deployment](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/productiondeploy.yml/badge.svg)](https://github.com/two-trick-pony-NL/mapmaker/actions/workflows/productiondeploy.yml)
@@ -8,6 +10,7 @@
 ![Response time](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fupptime%2Fupptime%2Fmaster%2Fapi%2Fgoogle%2Fresponse-time.json)
 ![Uptime](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fupptime%2Fupptime%2Fmaster%2Fapi%2Fgoogle%2Fuptime.json)
 ![banner](https://user-images.githubusercontent.com/71013416/235923153-98dfe26f-e4b1-4577-bed3-493384429f4b.png)
+</div>
 
 # Mapmaker -- Platform
 Mapmaker is the online platform for the Mapmaker methodology. We open sourced the project so we can be transparant on what we do. It also allows you to run the platform on your own hardware if you choose to do so. 
