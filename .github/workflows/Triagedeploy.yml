@@ -233,3 +233,14 @@ jobs:
 
             The server did not come online after deploying to AWS.
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+  lighthouse:
+    needs: [validatedeployment, pull-request]
+    name: 💡 Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Lighthouse
+      uses: foo-software/lighthouse-check-action@master
+      with:
+        urls: 'https://mapmaker.nl,https://mapmaker.nl/blog,https://mapmaker.nl/login'
