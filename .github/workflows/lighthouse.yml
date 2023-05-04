@@ -1,6 +1,9 @@
 name: 💡 Google Lighthouse Check
 
-on: pull_request_target
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
 
 jobs:
   lighthouse:

@@ -1,6 +1,9 @@
 name: 👮🏻‍♀️ Django Security Check
 
-on: pull_request_target
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
 
 env:
   SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
