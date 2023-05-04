@@ -1,11 +1,6 @@
-name: 🚨 Lighthouse Test
+name: Google Lighthouse Check
 
-# Only trigger, when the build workflow succeeded
-on:
-  workflow_run:
-    workflows: ["Triagedeploy"]
-    types:
-      - completed
+on: pull_request_target
 
 jobs:
   lighthouse:
@@ -20,6 +15,5 @@ jobs:
             https://triage.mapmaker.nl/blog
             https://triage.mapmaker.nl/contact
             https://triage.mapmaker.nl/login
-          budgetPath: ./budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           temporaryPublicStorage: true # upload lighthouse report to the temporary storage
