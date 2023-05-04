@@ -3,17 +3,15 @@ name: Google Lighthouse Check
 on: pull_request_target
 
 jobs:
-  lighthouse:
+  audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v10
-        with:
-          urls: |
-            https://triage.mapmaker.nl/
-            https://triage.mapmaker.nl/blog
-            https://triage.mapmaker.nl/contact
-            https://triage.mapmaker.nl/login
-          uploadArtifacts: true # save results as an action artifacts
-          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+    - name: Audit live URL
+      uses: jakejarvis/lighthouse-action@master
+      with:
+        url: 'https://mapmaker.nl'
+    - name: Upload results as an artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: report
+        path: './report'
