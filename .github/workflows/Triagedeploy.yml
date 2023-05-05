@@ -17,7 +17,9 @@ jobs:
   done:
     needs: [buildcontainers, validatedeployment]
     name: 👍🏻
-    run: ls
+    runs-on: ubuntu-latest
+    steps:
+      run: ls
   linter:
     name: 🔎 Linter
     runs-on: ubuntu-latest
