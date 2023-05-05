@@ -2,8 +2,7 @@ name:  🔀 Pull request
 
 on:
   push:
-    branches:
-      - 'triage'
+    branches: [ "triage" ]
 
 jobs:
   pull-request:
