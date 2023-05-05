@@ -5,6 +5,7 @@ on:
     branches:
       - '**'        # matches every branch
       - '!master'   # excludes master
+      - '!triage'   # excludes master
 
 jobs:
   pull-request:
@@ -15,9 +16,9 @@ jobs:
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          destination_branch: "master"
+          destination_branch: "triage"
           pr_assignee: "two-trick-pony-NL"
-          pr_title: "🤖 Merge into Master: ${{ github.ref }}"
-          pr_body: "This PR is opened automatically on code commit. You can now validate the changes on https://triage.mapmaker.nl. These lines of code changed: https://github.com/${{ github.repository }}/commit/${{github.sha}}. Merging this PR will trigger a deployment to production."
+          pr_title: "🤖 Merge into triage: ${{ github.ref }}"
+          pr_body: "This PR is opened automatically on code commit. Add more code or merge. If you merge the version will be deployed to https://triage.mapmaker.nl. These lines of code changed: https://github.com/${{ github.repository }}/commit/${{github.sha}}."
           pr_label: "automatic-pullrequest"
           github_token: ${{ secrets.GH_TOKEN }}
