@@ -200,15 +200,10 @@ def delete_card(request, id):
         card.author = CustomUser(pk=5)
         card.save()
         mp.track(request.user.email, "Card deleted", {
-        "card title": card.title,
-        "card id": card.id,
-        "workshop": card.workshop.workshop_name,
-        "environment": ENVIRONMENT,
-
-
-
-
-        })
+            "card title": card.title,
+            "card id": card.id,
+            "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT,})
         messages.add_message(request, messages.INFO, "Card deleted")
         clear_card(id)
         return render(request, "empty.html")
@@ -228,15 +223,11 @@ def create_resource(request, id):
                 date_modified = timezone.now,
             )
             mp.track(request.user.email, "Resource created", {
-            "card title": card.title,
-            "card id": card.id,
-            "resource id": resource.id,
-            "workshop": card.workshop.workshop_name,
-            "environment": ENVIRONMENT,
-
-
-
-            })
+                "card title": card.title,
+                "card id": card.id,
+                "resource id": resource.id,
+                "workshop": card.workshop.workshop_name,
+                "environment": ENVIRONMENT})
             resource.save()
             comment = Comment(
                 card = card,
@@ -266,31 +257,21 @@ def create_comment(request, id, notify):
                     )
             new_comment.save()
             mp.track(request.user.email, "Comment created", {
-            "card title": card.title,
-            "card id": card.id,
-            "comment id": new_comment.id,
-            "workshop": card.workshop.workshop_name,
-            "environment": ENVIRONMENT,
-
-
-
-
-            })
-            comments = Comment.objects.filter(card=card)
-            if notify == "yes":
-                notify_followers_new_post(id)
-                mp.track(request.user.email, "Comment notification sent", {
                 "card title": card.title,
                 "card id": card.id,
                 "comment id": new_comment.id,
                 "workshop": card.workshop.workshop_name,
-                "comment": new_comment.comment_text,
-                "environment": ENVIRONMENT,
-
-
-
-
-                })
+                "environment": ENVIRONMENT})
+            comments = Comment.objects.filter(card=card)
+            if notify == "yes":
+                notify_followers_new_post(id)
+                mp.track(request.user.email, "Comment notification sent", {
+                    "card title": card.title,
+                    "card id": card.id,
+                    "comment id": new_comment.id,
+                    "workshop": card.workshop.workshop_name,
+                    "comment": new_comment.comment_text,
+                    "environment": ENVIRONMENT})
             return render(request, "comment.html", {"comments": comments})
     else:
         return HttpResponse(status=404)
@@ -304,9 +285,7 @@ def delete_comment(request, id, comment_id):
             "card title": card.title,
             "workshop": card.workshop.workshop_name,
             "comment": comment_delete.comment_text,
-            "environment": ENVIRONMENT,
-
-            })
+            "environment": ENVIRONMENT})
         comments = Comment.objects.filter(card=card)
         comments = comments.order_by("date_created")
         comment_delete.delete()
@@ -323,11 +302,7 @@ def delete_resource(request, id, resource_id):
             "workshop": card.workshop.workshop_name,
             "resource description": resource_delete.document_description,
             "resource id": resource_delete.id,
-            "environment": ENVIRONMENT,
-
-
-
-            })
+            "environment": ENVIRONMENT})
         resource_delete.delete()
         resources = Resource.objects.filter(card=card)
         return render(request, "resources.html", {"resources": resources, "id":id})
@@ -349,5 +324,4 @@ def upload_image(request, id):
     if request.method == "POST":
         card.image = request.FILES["file"]
         card.save()
-        print("saved image")
         return get_card_details(request, id)

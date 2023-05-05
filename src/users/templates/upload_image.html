@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8 bg">
+<div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
+    <div>
+    <h1 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-800">Add an avatar to your account</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myfile"><br><br>
+        <button type="submit" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Upload</button>
+      </form>
+</div>
+</div>
+
+{% endblock %}
