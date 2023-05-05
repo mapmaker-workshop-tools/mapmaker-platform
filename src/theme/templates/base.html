@@ -130,7 +130,13 @@
 		</li>
 		{% endif%}
 		<li>
-			<a href="/user/profile" class="block py-2 pl-3 pr-4  p-2  md:p-0 hover:text-gray-500" aria-current="page">Profile</a>
+			<a href="/user/profile" class="block py-2 pl-3 pr-4  p-2  md:p-0 hover:text-gray-500" aria-current="page">Profile  
+			{%  if user.avatar and user.organisation and user.linkedin %}
+
+			{% else %}
+				<span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-red-500 bg-red-300 rounded-full"></span>
+			{% endif %}
+			</a>
 		</li>
 		{% if workshop_secret %}
 		<li>
