@@ -9,7 +9,7 @@
             <div class="max-w-2xl mb-4">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Profile</h1>
                 <p class="mt-6 text-lg leading-8 text-gray-600">This is your profile. Here you find your key information, you can change the workshop you're following and view your key statistics</p>
-              </div>
+            </div>
             <div class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8">
                 <div class="flex flex-col items-center pb-10">
                     {% if not user.avatar.url%}
@@ -51,7 +51,7 @@
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact details</h2>
         </div>
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 ">
+        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 flex-wrap">
             {% include 'user_profile_table.html' with user=user%}
             <button hx-indicator="#spinner" hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300  dark:hover:bg-gray-700 dark:focus:ring-gray-800" >
                 Click To Edit

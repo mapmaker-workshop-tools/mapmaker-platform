@@ -1,27 +1,56 @@
-<dl id="table">
-    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">First name</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.first_name}}</dd>
-    </div>
-    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">Last name</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.last_name}}</dd>
-    </div>
-    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">Email address</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.email}}</dd>
-    </div>
-    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">organisation</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.organisation}}</dd>
-    </div>
-    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">Linkedin</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.linkedin}}</dd>
-    </div>
-    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">Active workshop</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{user.active_workshop}}</dd>
-    </div>
-  </dd>
-</dl>
+<div id="table" class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      </thead>
+      <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  First Name
+              </th>
+              <td class="px-6 py-4">
+                {{user.first_name}}
+              </td>
+          </tr>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                Last Name
+            </th>
+            <td class="px-6 py-4">
+              {{user.last_name}}
+            </td>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  Email
+              </th>
+              <td class="px-6 py-4">
+                {{user.email}}
+              </td>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Organisation
+                </th>
+                <td class="px-6 py-4">
+                  {{user.organisation}}
+                </td>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      LinkedIn
+                  </th>
+                  <td class="px-6 py-4">
+                    {{user.linkedin}}
+                  </td>
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Active Workshop
+                    </th>
+                    <td class="px-6 py-4">
+                      {{user.active_workshop}}
+                    </td>
+                </tr>
+              </tr>
+            </tr>
+          </tr>
+        </tr>
+      </tbody>
+  </table>
+</div>
