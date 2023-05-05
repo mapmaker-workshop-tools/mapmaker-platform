@@ -1,0 +1,22 @@
+name:  🔀 Pull request
+
+on:
+  push:
+    branches:
+      - 'triage'
+
+jobs:
+  pull-request:
+    name: 🔃 Creating Pull request to merge with Master
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "master"
+          pr_assignee: "two-trick-pony-NL"
+          pr_title: "🚨 Merge and Deploy to production 🚨"
+          pr_body: "🚨 Verify the code is working on triage.mapmaker.nl 🚨 If you merge this pull-request the code will be deployed to production. Check out the changes here: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
+          pr_label: "automatic-pullrequest"
+          github_token: ${{ secrets.GH_TOKEN }}
