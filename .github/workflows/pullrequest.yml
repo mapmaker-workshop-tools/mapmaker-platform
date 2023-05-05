@@ -1,0 +1,24 @@
+name:  🔀 Pull request
+
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
+      - '!master'   # excludes master
+      - '!triage'   # excludes master
+
+jobs:
+  pull-request:
+    name: 🔃 Creating Pull request to merge with Master
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "triage"
+          pr_assignee: "two-trick-pony-NL"
+          pr_title: "🤖 Merge into triage: ${{ github.ref }}"
+          pr_body: "This PR is opened automatically on code commit. Add more code or merge. If you merge the version will be deployed to https://triage.mapmaker.nl. These lines of code changed: https://github.com/${{ github.repository }}/commit/${{github.sha}}."
+          pr_label: "automatic-pullrequest"
+          github_token: ${{ secrets.GH_TOKEN }}
