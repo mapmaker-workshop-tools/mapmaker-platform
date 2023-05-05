@@ -24,6 +24,7 @@ admin.site.site_title = "Makmaker Admin" # default: "Django site admin"
 
 
 urlpatterns = [
+    path('admin/', include('massadmin.urls')),
     path("admin/", admin.site.urls),
     path("dashboard/", include("dashboard.urls")),
     path("workshop/", include("workshop.urls")),

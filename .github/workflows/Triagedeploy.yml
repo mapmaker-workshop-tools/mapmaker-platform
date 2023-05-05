@@ -11,9 +11,17 @@ env:
   AWS_REGION: eu-central-1
   AWS_LIGHTSAIL_SERVICE_NAME: mapmaker
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  group: 'deployment'
   cancel-in-progress: true
 jobs:
+  done:
+    needs: [buildcontainers, validatedeployment]
+    name: 👍🏻
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Done
+        run: ls
   linter:
     name: 🔎 Linter
     runs-on: ubuntu-latest
@@ -175,23 +183,6 @@ jobs:
           aws lightsail create-container-service-deployment --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
           --containers file://Infrastructure/AWS/deploymentconfig.json \
           --public-endpoint file://Infrastructure/AWS/publicendpoint.json
-
-
-  pull-request:
-    needs: [buildcontainers, linter, validatedeployment]
-    name: 🔃 Creating Pull request to merge with Master
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "master"
-          pr_assignee: "two-trick-pony-NL"
-          pr_title: "🤖 Merge and Deploy ${{ github.ref }}"
-          pr_body: "Verify the code is working on triage.mapmaker.nl If you merge this pull-request the code will be deployed to production. Check out the changes here: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
-          pr_label: "automatic-pullrequest"
-          github_token: ${{ secrets.GH_TOKEN }}
 
   validatedeployment:
     name:  🎚 Switching to new container
