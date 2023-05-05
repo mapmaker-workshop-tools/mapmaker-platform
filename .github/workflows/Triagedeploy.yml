@@ -1,9 +1,7 @@
 name: 🦺 Triage deployment
 on:
   push:
-    branches:
-      - '**'        # matches every branch
-      - '!master'   # excludes master
+    branches: [ "triage" ]
 permissions:
   contents: read
 
