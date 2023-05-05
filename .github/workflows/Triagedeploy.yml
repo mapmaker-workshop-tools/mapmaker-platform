@@ -176,23 +176,6 @@ jobs:
           --containers file://Infrastructure/AWS/deploymentconfig.json \
           --public-endpoint file://Infrastructure/AWS/publicendpoint.json
 
-
-  pull-request:
-    needs: [buildcontainers, linter, validatedeployment]
-    name: 🔃 Creating Pull request to merge with Master
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "master"
-          pr_assignee: "two-trick-pony-NL"
-          pr_title: "🤖 Merge and Deploy ${{ github.ref }}"
-          pr_body: "Verify the code is working on triage.mapmaker.nl If you merge this pull-request the code will be deployed to production. Check out the changes here: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
-          pr_label: "automatic-pullrequest"
-          github_token: ${{ secrets.GH_TOKEN }}
-
   validatedeployment:
     name:  🎚 Switching to new container
     runs-on: ubuntu-latest
@@ -233,14 +216,3 @@ jobs:
 
             The server did not come online after deploying to AWS.
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-  lighthouse:
-    needs: [validatedeployment, pull-request]
-    name: 💡 Lighthouse
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: Lighthouse
-      uses: foo-software/lighthouse-check-action@master
-      with:
-        urls: 'https://mapmaker.nl,https://mapmaker.nl/blog,https://mapmaker.nl/login'
