@@ -24,6 +24,7 @@ urlpatterns = [
     path("login", views.login_user, name="login"),
     path("profile", views.profile, name="user profile"),
     path("profile/<int:id>/edit", views.profile_edit, name="user profile"),
+    path("profile/<int:id>/upload/image", views.profile_edit_upload_image, name="upload image"),
     path("logout", views.logout_view, name="logout"),
     path("<int:id>/delete", views.delete_user, name="user delete"),
     path("register/<str:workshop_secret>", views.register, name="register"),

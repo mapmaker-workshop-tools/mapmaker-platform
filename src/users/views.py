@@ -25,24 +25,26 @@ def login_user(request):
             user.last_login = datetime.now()
             user.save()
             messages.add_message(request, messages.INFO, "welcome back " + user.first_name)
-            mp.track(user.email, "Logged in" , {"environment": ENVIRONMENT,} )
+            mp.track(user.email, "Logged in", {"environment": ENVIRONMENT})
             mp.people_set(user.email, {
-            "$last_login"    : datetime.now()})
+                "$last_login": datetime.now()})
             return redirect("/dashboard")
         else:
             messages.add_message(request, messages.INFO, "Invalid username or password")
             return redirect("/user/login")
     else:
         form = CustomUserLoginForm()
-        return render(request, "login.html", {"form":form})
+        return render(request, "login.html", {"form": form})
+
 
 @login_required
 def logout_view(request):
     mp.track(request.user.email, "Log out", {"environment": ENVIRONMENT,
-    "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
+        "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     logout(request)
     messages.add_message(request, messages.INFO, "Logged out")
     return redirect("/")
+
 
 def register(request, workshop_secret):
     try:
@@ -108,13 +110,13 @@ def profile(request):
     mp.track(user.email, "User profile", {"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return render(request, "userprofile.html",
-                  {"user": user,
-                   "cardcount":cardcount,
-                   "likecount":likecount,
-                   "resourcecount":resourcecount,
-                   "commentcount":commentcount,
-                   "form":CustomUserProfile,
-                   "workshop":workshop})
+                {"user": user,
+                "cardcount":cardcount,
+                "likecount":likecount,
+                "resourcecount":resourcecount,
+                "commentcount":commentcount,
+                "form":CustomUserProfile,
+                "workshop":workshop})
 
 @login_required
 def profile_edit(request, id):
@@ -144,6 +146,19 @@ def profile_edit(request, id):
         return None
     else:
         return HttpResponse(status=403)
+
+    
+@login_required
+def profile_edit_upload_image(request, id):
+    user = request.user
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        t = CustomUser.objects.get(email=user.email)
+        t.avatar = myfile
+        t.save()
+        return redirect("/user/profile")
+    else:
+        return render(request, "upload_image.html", {"user":user})
 
 @login_required
 def delete_user(request, id):
