@@ -10,7 +10,7 @@
     </div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="myfile"><br><br>
+        <input type="file" name="myfile"  accept="image/png, image/jpeg">><br><br>
         <button type="submit" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Upload</button>
       </form>
 </div>

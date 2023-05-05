@@ -12,14 +12,6 @@ concurrency:
   group: 'deployment'
   cancel-in-progress: true
 jobs:
-  done:
-    needs: [buildcontainers, validatedeployment]
-    name: 👍🏻
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Done
-        run: ls
   linter:
     name: 🔎 Linter
     runs-on: ubuntu-latest
