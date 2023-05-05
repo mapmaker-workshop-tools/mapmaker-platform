@@ -19,7 +19,9 @@ jobs:
     name: 👍🏻
     runs-on: ubuntu-latest
     steps:
-      run: ls
+      - uses: actions/checkout@v3
+      - name: Done
+        run: ls
   linter:
     name: 🔎 Linter
     runs-on: ubuntu-latest
