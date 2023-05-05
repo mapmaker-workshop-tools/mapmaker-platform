@@ -21,75 +21,50 @@
                     {% endif %}
                     <h5 class="mb-1 text-xl font-medium text-gray-900 ">{{user.first_name}} {{user.last_name}}</h5>
                     <span class="text-m text-gray-500 ">{{user.organisation}}</span>
-                    <ul class="flex text-sm font-light">
-                        <li class="mr-2">
-                            <a href="{{user.linkedin}}" class="hover:underline">
-                                <span class="font-semibold text-gray-900 "><i class="fa-brands fa-linkedin"></i></span>
-                                <span>{{user.linkedin}}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="mailto:{{user.email}}" class="hover:underline">
-                                <span class="font-semibold text-gray-900 "> <i class="fa-solid fa-envelope"></i></span>
-                                <span>{{user.email}}</span>
-                            </a>
-                        </li>
-                    </ul>
                     <div class="flex mt-4 space-x-3 md:mt-6">
                         <a href="#" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Upload picture</a>
                     </div>
-
+                    </div>
+                    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 flex-wrap">
+                            {% include 'user_profile_table.html' with user=user%}
+                        </div>
+                        <button hx-indicator="#spinner" hx-swap="outerHTML" hx-target="#userdetails" hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300  dark:hover:bg-gray-700 dark:focus:ring-gray-800" >
+                            Click To Edit
+                        </button>
+                        <button type="button" hx-indicator="#spinner" hx-get="/user/{{user.id}}/delete" hx-target="#main" hx-confirm="Are you sure you wish to delete your account? This cannot be reversed" class="m-4 py-2.5  text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5 text-center   dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete account</button>  
                     </div>
             </div>
         </div>
         </div>
     </div>
-
-<div class=" basis-/4 overflow-hidden bg-white shadow sm:rounded-lg mb-8 m-3 p-5">
-    <div class="bg-white py-24 sm:py-32">
-        <div class="max-w-2xl mb-4 ">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact details</h2>
-        </div>
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div hx-target="this" hx-indicator="#spinner" hx-swap="outerHTML" class="border-t border-gray-200 flex-wrap">
-            {% include 'user_profile_table.html' with user=user%}
-            <button hx-indicator="#spinner" hx-get="profile/{{user.id}}/edit" class="m-4 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300  dark:hover:bg-gray-700 dark:focus:ring-gray-800" >
-                Click To Edit
-            </button>
-            <button type="button" hx-indicator="#spinner" hx-get="/user/{{user.id}}/delete" hx-target="#main" hx-confirm="Are you sure you wish to delete your account? This cannot be reversed" class="m-4 py-2.5  text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-5 text-center   dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete account</button>
-
-
-        </div>
-    </div>
-    </div>
-</div>
 <div class=" basis-2/4 overflow-hidden bg-white shadow sm:rounded-lg mb-8 m-3 p-5">
     <div class="bg-white py-24 sm:py-32">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8">Key stats</h1>
 
-  <div class="mx-auto max-w-7xl px-6 lg:px-8 ">
+<div class="mx-auto max-w-7xl px-6 lg:px-8 ">
     <dl class="grid grid-cols-1 gap-y-16 gap-x-8 text-center lg:grid-cols-3">
-      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
         <dt class="text-base leading-7 text-gray-600">Cards Created</dt>
         <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{cardcount}}</dd>
-      </div>
+        </div>
 
-      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
         <dt class="text-base leading-7 text-gray-600">Comments Posted</dt>
         <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{commentcount}}</dd>
-      </div>
+        </div>
 
-      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
         <dt class="text-base leading-7 text-gray-600">Resources Added</dt>
         <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{resourcecount}}</dd>
-      </div>
+        </div>
 
-      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
         <dt class="text-base leading-7 text-gray-600">Cards Liked</dt>
         <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{likecount}}</dd>
-      </div>
+        </div>
     </dl>
-  </div>
+    </div>
 </div>
 </div>
 

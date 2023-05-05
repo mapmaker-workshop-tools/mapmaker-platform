@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "massadmin",
     "workshop",
     "users",  # customusers so we have more fields on usertable
     "card_interactions",

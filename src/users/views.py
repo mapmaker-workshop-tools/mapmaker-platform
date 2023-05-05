@@ -108,16 +108,19 @@ def profile(request):
     mp.track(user.email, "User profile", {"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return render(request, "userprofile.html",
-                  {"user": user,
-                   "cardcount":cardcount,
-                   "likecount":likecount,
-                   "resourcecount":resourcecount,
-                   "commentcount":commentcount,
-                   "form":CustomUserProfile,
-                   "workshop":workshop})
+                {"user": user,
+                "cardcount":cardcount,
+                "likecount":likecount,
+                "resourcecount":resourcecount,
+                "commentcount":commentcount,
+                "form":CustomUserProfile,
+                "workshop":workshop})
 
 @login_required
 def profile_edit(request, id):
+    user = request.user
+    workshops = Workshop.objects.filter(participants__email=user.email)
+    context = {"workshops": workshops, "user":user}
     if request.user.id == id:
         if request.method == "POST":
             firstname = request.POST["firstName"]
@@ -133,13 +136,11 @@ def profile_edit(request, id):
             t.linkedin = linkedin
             t.organisation = organisation
             t.save()
+            user = CustomUser.objects.get(email=email)
             mp.track(email, "User profile updated", {"environment": ENVIRONMENT,
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
-            return render(request, "user_profile_table_edit.html")
+            return render(request, "user_profile_table.html", {"workshops": workshops, "user":user})
         elif request.method == "GET":
-            user = request.user
-            workshops = Workshop.objects.filter(participants__email=user.email)
-            context = {"workshops": workshops}
             return render(request, "user_profile_table_edit.html", context)
         return None
     else:
