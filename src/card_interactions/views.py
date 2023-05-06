@@ -87,7 +87,6 @@ def create_card(request, id):
         "description": "Add a new description",
         "followers": followers,
         "id": card.id,
-        "card_image": card.image_Url,
         "user_follows_card": user_follows_card,
         "resources": resources,
         "comments": comments,
@@ -317,6 +316,7 @@ def clear_card(id):
     followers.delete()
     comments.delete()
     resources.delete()
+    card.image.delete()
 
 @login_required
 def upload_image(request, id):

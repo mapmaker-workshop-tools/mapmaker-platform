@@ -22,7 +22,7 @@
             {% if card.image %}
             {% if type != 'image_card' %}
             <div class="items-center  sm:flex">
-                <img class="h-auto max-w-full" src="{{card.image.url}}" alt="image description">
+                <img class="h-auto max-w-full" src="{{card.image.thumbnails.large.url}}" alt="image description">
             </div>
             {% endif %}
             {% endif %}
