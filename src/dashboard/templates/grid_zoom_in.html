@@ -94,7 +94,7 @@
             </div>
         {% elif card.cardtype == 'legend_1' %}
             <div class="hexagon flex items-center" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_1}}; color: #fff"><input type='hidden' name='item' value='{{ card.id}}'/>
-                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
+                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.thumbnails.small.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
                 <br><br>
@@ -104,7 +104,7 @@
             </div>
         {% elif card.cardtype == 'legend_2' %}
             <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_2}};"><input type='hidden' name='item' value='{{ card.id}}'/>
-                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
+                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.thumbnails.small.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
                 <br><br>
@@ -113,7 +113,7 @@
             </div>
         {% elif card.cardtype == 'legend_3' %}
             <div class="hexagon flex items-center"  hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_3}};"><input type='hidden' name='item' value='{{ card.id}}'/>
-                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
+                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.thumbnails.small.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
                 <br><br>
@@ -122,7 +122,7 @@
             </div>
         {% elif card.cardtype == 'legend_4' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_4}};"><input type='hidden' name='item' value='{{ card.id}}'/>
-                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
+                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.thumbnails.small.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
                 <br><br>
@@ -131,7 +131,7 @@
             </div>
             {% elif card.cardtype == 'legend_5' %}
             <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background: #{{workshop.legend_hex_color_5}};"><input type='hidden' name='item' value='{{ card.id}}'/>
-                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.url}}" alt="Rounded avatar">
+                <img class="w-10 h-10 m-2 rounded-full" src="{{card.author.avatar.thumbnails.small.url}}" alt="Rounded avatar">
                 {{ card.author.first_name}}  {{ card.author.last_name}}<br><br>
                 <b>{{ card.title|truncatechars:20}}</b>
                 <br><br>

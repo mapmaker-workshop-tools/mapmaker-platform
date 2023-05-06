@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from thumbnails.fields import ImageField
+
 
 from .managers import CustomUserManager
 
@@ -24,10 +26,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     organisation = models.CharField(max_length=100, unique=False, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    avatar_url = models.CharField(max_length=500, blank=True, default="https://api.dicebear.com/5.x/pixel-art/svg?seed="+str(randrange(1000)))
     active_workshop = models.ForeignKey("workshop.Workshop", on_delete=models.SET("none"), blank=True, null=True)
     zoom_level = models.CharField(max_length=1, blank=True, default=0)
-    avatar = models.FileField(upload_to="media/avatars/", null=True, blank=True)
+    avatar = ImageField(upload_to="media/avatars/", null=True, blank=True, pregenerated_sizes=["small", "medium", "large"])
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
