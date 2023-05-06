@@ -6,7 +6,11 @@
         <li class="py-3 sm:py-4">
             <div class="flex items-center space-x-4">
                 <div class="flex-shrink-0">
-                    <img class="w-8 h-8 rounded-full" src=" {{comment.author.avatar.url}}" alt="Author profile image">
+                    {% if comment.author.avatar %}
+                    <img class="w-8 h-8 rounded-full" src="{{comment.author.avatar.thumbnails.small.url}}" alt="{{participant.first_name }} image">
+                    {% else %}
+                    <img class="w-8 h-8 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="{{participant.first_name }} image">
+                    {% endif%}
                 </div>
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold  text-gray-900 truncate ">

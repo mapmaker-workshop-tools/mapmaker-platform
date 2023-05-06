@@ -107,7 +107,7 @@
                 {{ card.title|truncatechars:1}}
             </div>
             {% elif card.cardtype == 'image_card' %}
-            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background-image: url('{{card.image.url}}'); background-size: cover; background-position: center;"><input type='hidden' name='item' value='{{ card.id}}'/>
+            <div class="hexagon" hx-indicator="#spinner" hx-target="#drawer" hx-get="/card/{{ card.id }}/open" style="background-image: url('{{card.image.thumbnails.small.url}}'); background-size: cover; background-position: center;"><input type='hidden' name='item' value='{{ card.id}}'/>
 
             </div>
         {% endif %}

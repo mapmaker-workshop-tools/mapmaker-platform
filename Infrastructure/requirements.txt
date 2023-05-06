@@ -19,3 +19,4 @@ whitenoise
 uwsgi
 django-admin-interface
 django-mass-edit
+django-thumbnails

@@ -28,7 +28,11 @@
                     <div class=" p-2 inline-flex items-center text-base text-gray-900 ">
                         {{resource.owner.first_name}} {{resource.owner.last_name}}
                         <div class="flex-shrink-0 p-2">
-                            <img class="w-8 h-8 rounded-full" src="{{resource.owner.avatar_url}}" alt="Resource owner avatar image">
+                            {% if follower.avatar %}
+                            <img class="w-8 h-8 rounded-full" src="{{resource.owner.avatar.thumbnails.small.url}}" alt="Resource owner avatar image">
+                            {% else %}
+                            <img class="w-8 h-8 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Resource owner avatar image">
+                            {% endif%}
                         </div>
                     </div>
 
