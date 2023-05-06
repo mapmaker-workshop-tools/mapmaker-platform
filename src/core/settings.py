@@ -70,7 +70,11 @@ INSTALLED_APPS = [
     "fontawesomefree",
     "api",
     "emailhandler",
+    "thumbnails"
 ]
+
+from core.utils import IMAGE_RESIZE_SETTINGS
+THUMBNAILS = IMAGE_RESIZE_SETTINGS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

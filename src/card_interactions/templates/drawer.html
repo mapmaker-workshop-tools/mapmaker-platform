@@ -34,7 +34,11 @@
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Author </h5>
                     </div>
                     <div class="items-center  sm:flex">
-                            <img class="w-28 h-28 mx-10 rounded-full sm:rounded-none sm:rounded-l-lg" src="{{author.avatar.url}}" alt="{{author.first_name}} Avatar">
+                        {% if author.avatar %}
+                        <img class="w-28 h-28 mx-10 rounded-full sm:rounded-none sm:rounded-l-lg" src="{{author.avatar.thumbnails.small.url}}" alt="{{participant.first_name }} image">
+                        {% else %}
+                        <img class="w-28 h-28 mx-10 rounded-full sm:rounded-none sm:rounded-l-lg" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="{{participant.first_name }} image">
+                        {% endif%}
                         <div class="p-5">
                             <h3 class="text-xl font-bold tracking-tight text-gray-900 ">
                                 {{author.first_name}} {{author.last_name}}
@@ -75,7 +79,11 @@
                         {{follower.first_name}}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
-                    <img data-tooltip-target="tooltip-{{follower.first_name}}-{{follower.id}}" class="w-10 h-10 rounded" src="{{follower.avatar.url}}" alt="Medium avatar">
+                    {% if follower.avatar %}
+                        <img data-tooltip-target="tooltip-{{follower.first_name}}-{{follower.id}}" class="w-10 h-10 rounded" src="{{follower.avatar.thumbnails.small.url}}" alt="Medium avatar">
+                        {% else %}
+                        <img data-tooltip-target="tooltip-{{follower.first_name}}-{{follower.id}}" class="w-10 h-10 rounded" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Medium avatar">
+                        {% endif%}
                     </div>
                     {% empty %}
                     <p class="ml-auto text-xs p-4 m-4 text-gray-500 ">No followers yet, be the first!</p>
