@@ -9,6 +9,7 @@ import zipfile
 import io
 from PIL import Image
 import tempfile
+from thumbnails.fields import ImageField
 
 
 # Create your models here.
@@ -63,15 +64,7 @@ class Card(models.Model):
     title = models.CharField(max_length=100, unique=False, blank=True)
     description = models.TextField(blank=True)
     followers = models.ManyToManyField(CustomUser, blank=True, related_name = "card_followers")
-    image = models.FileField(upload_to="media/cardimages/", default=None, null=True, blank=True)
-    image_thumbnail = models.FileField(upload_to="media/cardimages/", default=None, null=True, blank=True)
-    
-    def post_save(self, *args, **kwargs):
-        self.image_thumbnail = get_thumbnail(self.image,
-                            '50x50',
-                            crop='center',
-                            quality=99)
-        super(Card, self).save(*args, **kwargs)
+    image = ImageField(upload_to="media/cardimages/", default=None, null=True, blank=True, pregenerated_sizes=["small", "medium", "large"])
 
     def __str__(self) -> str:
         return self.workshop.workshop_name + " - " + self.title
