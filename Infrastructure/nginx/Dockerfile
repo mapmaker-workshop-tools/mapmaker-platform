@@ -2,7 +2,7 @@
 # to do so use this build command:
 # docker build -t nginx:latest -f Infrastructure/nginx/Dockerfile .
 
-FROM nginx:1.19.0-alpine
+FROM nginx:1.24-alpine
 # Adding temp file for cache
 RUN mkdir /tmp/nginx
 
