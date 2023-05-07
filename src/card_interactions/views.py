@@ -78,12 +78,14 @@ def create_card(request, id):
         followerIDlist.append(i.user_like)
     followers = CustomUser.objects.filter(email__in=followerIDlist)
     user_follows_card = current_user in followerIDlist
+    card_image = card.image.url if card.image else None
     form = CardComment()
     context = {
         "cardtype": card.cardtype,
         "author": request.user,
         "title": "New Card",
         "type": card.cardtype,
+        "card_image": card_image,
         "description": "Add a new description",
         "followers": followers,
         "id": card.id,
@@ -91,15 +93,12 @@ def create_card(request, id):
         "resources": resources,
         "comments": comments,
         "form": form,
-
     }
     mp.track(request.user.email, "Card created", {
     "card title": card.title,
     "card id": card.id,
     "workshop": card.workshop.workshop_name,
     "environment": ENVIRONMENT,
-
-
     })
     return render(request, "drawer.html", context)
 
@@ -316,12 +315,24 @@ def clear_card(id):
     followers.delete()
     comments.delete()
     resources.delete()
-    card.image.delete()
 
 @login_required
 def upload_image(request, id):
     card = Card.objects.get(id=id)
     if request.method == "POST":
+        mp.track(request.user.email, "Image uploaded ", {
+            "card title": card.title,
+            "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT})
         card.image = request.FILES["file"]
         card.save()
         return get_card_details(request, id)
+    
+    
+def view_image(request, id):
+    card = Card.objects.get(id=id)
+    mp.track(request.user.email, "Image fullscreen viewed", {
+            "card title": card.title,
+            "workshop": card.workshop.workshop_name,
+            "environment": ENVIRONMENT})
+    return render(request, "card_image_full_sceen.html", {"card": card, "id":id})
