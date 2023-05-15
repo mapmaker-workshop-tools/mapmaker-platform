@@ -20,3 +20,8 @@ uwsgi
 django-admin-interface
 django-mass-edit
 django-thumbnails
+Celery
+django-celery-beat 
+django-celery-results
+python-decouple
+

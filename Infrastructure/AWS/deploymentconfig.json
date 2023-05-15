@@ -13,5 +13,5 @@
   "redis-cache": {
     "image": "redis/redis-stack:latest",
     "ports": {"6379": "HTTP", "8001":"HTTP"}
-  },
+  }
   }
