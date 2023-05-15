@@ -135,6 +135,7 @@ if 'test' in sys.argv:
         'ENGINE': 'django.db.backends.sqlite3',
         'OPTIONS': {}
     }
+    CACHES = {}
 
 #Setting location of cache server (Redis in our case)
 CACHES = {
