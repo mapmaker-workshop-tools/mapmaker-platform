@@ -4,7 +4,7 @@ environ==1.0
 django-environ
 gunicorn==20.1.0
 setuptools==65.5.1
-requests==2.28.2
+requests==2.31.0
 django-ckeditor==6.5.1
 django-tailwind==3.5.0
 fontawesomefree==5.15.4
