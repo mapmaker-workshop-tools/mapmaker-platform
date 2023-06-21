@@ -13,8 +13,10 @@ from users.models import CustomUser
 from workshop.models import Card, Workshop
 from core.settings import ENVIRONMENT
 from .utils import create_image
+from django.views.decorators.cache import cache_page
 
 
+@cache_page(5)
 @login_required
 def index(request):
     if request.user.is_authenticated:
@@ -73,7 +75,7 @@ def index(request):
     else:
         return redirect("/user/login")
 
-
+@cache_page(5)
 def view_only(request, workshop_secret):
     if request.user.is_authenticated:
         return redirect("/dashboard")
@@ -136,6 +138,7 @@ def view_only(request, workshop_secret):
         return render(request, "dashboard_index.html", context)
 
 @login_required
+@cache_page(3)
 def handle_grid_update(request):
     if request.method == "POST":
         current_user = request.user
@@ -170,6 +173,7 @@ def handle_grid_update(request):
     else:
         return HttpResponse(status=403)
 
+@cache_page(60 * 15)
 def close(request):
     return render(request, "empty.html")
 
@@ -225,6 +229,7 @@ def zoom_out(request):
     "HTTP_USER_AGENT": request.META["HTTP_USER_AGENT"]})
     return render(request, "adjust_zoom.html", context)
 
+@cache_page(60 * 15)
 @login_required
 def download_image(request):
     workshop = request.user.active_workshop.workshop_name

@@ -10,12 +10,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import sys
 from pathlib import Path
-
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#Create env variables
 env = environ.Env()
 environ.Env.read_env()
 
@@ -31,6 +31,7 @@ MAINTENANCETEXT = env("MAINTENANCETEXT")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
+#Set the hosts we allow traffic from 
 ALLOWED_HOSTS = ["mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com",
                     "localhost",
                     "127.0.0.1",
@@ -39,6 +40,8 @@ ALLOWED_HOSTS = ["mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com",
                     "triage.mapmaker.nl",
                     "www.triage.mapmaker.nl",
                     ]
+
+#Set the origins we trust for forms
 CSRF_TRUSTED_ORIGINS =["https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlightsail.com",
                         "http://127.0.0.1",
                         "https://mapmaker.nl",
@@ -48,7 +51,6 @@ CSRF_TRUSTED_ORIGINS =["https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlig
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "admin_interface",
     "colorfield",
@@ -58,6 +60,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django_celery_beat', #Task worker
+    'django_celery_results', #Worker tasks
     "rest_framework",
     "massadmin",
     "workshop",
@@ -70,7 +74,7 @@ INSTALLED_APPS = [
     "fontawesomefree",
     "api",
     "emailhandler",
-    "thumbnails"
+    "thumbnails",
 ]
 
 from core.utils import IMAGE_RESIZE_SETTINGS
@@ -111,8 +115,6 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -124,15 +126,35 @@ DATABASES = {
         'OPTIONS': {
             'sql_mode': 'traditional',
             'auth_plugin': 'mysql_native_password'
-
     },
 }}
 
+#Ensure we run sqlite if we run tests
 if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'OPTIONS': {}
     }
+    CACHES = {}
+
+#Setting location of cache server (Redis in our case)
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
+#Task broker
+CELERY_BROKER_REDIS_URL="redis://localhost:6379"
+
+
+CELERY_RESULT_BACKEND = "django-db"
+
+# This configures Redis as the datastore between Django + Celery
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+
 
 
 # Password validation
