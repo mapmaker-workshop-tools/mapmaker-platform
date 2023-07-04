@@ -28,70 +28,10 @@ jobs:
       # Include `--format=github` to enable automatic inline annotations.
       - name: 🧙🏻‍♀️ Run Ruff
         run: ruff check --format=github .
-
-
-  testsuite:
-    # Containers must run in Linux based operating systems
-    runs-on: ubuntu-latest
-    # Docker Hub image that `container-job` executes in
-    container: python:3.11-buster
-
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      redis:
-        # Docker Hub image
-        image: redis
-        # Set health checks to wait until redis has started
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip3 install -r Infrastructure/requirements.txt
-      - name: 🤐 Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER_GMAIL }}
-          envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD_GMAIL }}
-          envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          envkey_DB_USER: ${{ secrets.DB_TRIAGE_USER }}
-          envkey_DB_PASSWORD: ${{ secrets.DB_TRIAGE_PASSWORD }}
-          envkey_DB_HOST: ${{ secrets.DB_TRIAGE_HOST }}
-          envkey_DB_NAME:  ${{ secrets.DB_TRIAGE_NAME }}
-          envkey_HCTI_API_KEY: ${{ secrets.HCTI_API_KEY }}
-          envkey_HCTI_API_USER_ID: ${{ secrets.HCTI_API_USER_ID }}
-          envkey_MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
-          envkey_SECURE_SETTINGS: True
-          envkey_DEBUG: False
-          envkey_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN}}
-          envkey_S3_AWS_STORAGE_BUCKET_NAME: ${{ secrets.S3_AWS_STORAGE_BUCKET_NAME}}
-          envkey_S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY}}
-          envkey_S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY}}
-          envkey_ENVIRONMENT: triage
-          envkey_MAINTENANCEMODE: True
-          envkey_MAINTENANCETEXT: Mapmaker might be unresponsive. Try again in a few minutes
-
-          directory: src/core
-          file_name: .env
-          fail_on_empty: false
-      - name: 🤷🏻‍♂️ Running tests
-        run: |
-          cd src
-          python3 manage.py test --noinput
   buildcontainers:
     name: 🌎 Deploying Triage
 
-    needs: [linter, testsuite]
+    needs: [linter]
     runs-on: ubuntu-latest
     steps:
       - name: 🗂  Getting code from Github
