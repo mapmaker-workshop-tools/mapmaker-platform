@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import sys
 from pathlib import Path
 import environ
+from fakeredis import FakeConnection
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,14 +131,6 @@ DATABASES = {
     },
 }}
 
-#Ensure we run sqlite if we run tests
-if 'test' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'OPTIONS': {}
-    }
-    CACHES = {}
-
 #Setting location of cache server (Redis in our case)
 CACHES = {
     "default": {
@@ -144,6 +138,18 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379",
     }
 }
+
+#Ensure we run sqlite if we run tests
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'OPTIONS': {}
+    } 
+    CACHES['default'] =  {
+        'OPTIONS': {'connection_class': FakeConnection}
+        }
+
+
 
 #Task broker
 CELERY_BROKER_REDIS_URL="redis://localhost:6379"
