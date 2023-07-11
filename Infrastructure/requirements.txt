@@ -24,4 +24,5 @@ Celery
 django-celery-beat 
 django-celery-results
 python-decouple
-
+fakeredis
+mock
