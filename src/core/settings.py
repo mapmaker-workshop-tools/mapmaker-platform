@@ -54,7 +54,6 @@ CSRF_TRUSTED_ORIGINS =["https://mapmaker.vdotvo9a4e2a6.eu-central-1.cs.amazonlig
 
 # Application definition
 INSTALLED_APPS = [
-    "admin_interface",
     "colorfield",
     "django.contrib.admin",
     "django.contrib.auth",
