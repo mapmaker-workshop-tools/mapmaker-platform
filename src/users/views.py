@@ -175,5 +175,4 @@ def delete_user(request, id):
         mp.people_delete(user.email, {})
         logout(request)
         user.delete()
-        print("BUTTON HIT")
         return redirect("/")
