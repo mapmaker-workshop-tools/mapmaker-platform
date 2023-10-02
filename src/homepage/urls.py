@@ -28,5 +28,5 @@ urlpatterns = [
     path("product/workshop", views.product_workshop, name="homepage"),
     path("emaillist", views.sign_up_marketing_email, name="sign up for marketing"),
     path("blog", views.blog, name="Blog"),
-    #path("contact", views.contact, name="contact"),
+    path("contact", views.contact, name="contact"),
 ]
